@@ -73,39 +73,52 @@
     * CustomerId - int, auto increament,primary key
     * CustomerName - string - minLength: 2, maxLength:15, reqiered 
 
-
 ### Global Properties
-* `List<User>`
-* `List<Game>`
+
 
 ### Controllers
 * User controller:
-    * Post - sign in to a new game    
-    requierd data: 
-        * userName
-        * age
-    If the user is valid - we will add him to the UserList, and return true, Else - we will return a matching error
-    * Get - get the list of the users that looks for a partner to the game (all the users that contains `null` in the `PartnerUserName` property)
-    * Get - get the details of the current user
-    * Put - The client sends a userName that he choosed to a partner.
-    The server will update his details to the chosen partner. And the `PartnerUserName` property of chosen partner, to his name.   
-    If the update completed succefuly - return true, And craete a new `Game` object with the 2 users as players, and the current userName as the `CurrentTurn`  
-    Else - return a matching error.
-* Game controller:
-    * Get - get all cards and `CurrentTurn`
-    * Put - The client sends a userName and the chosen cards results.
-    The server will update the `Game` object `CurrentTurn` to the other player's name.   
-    If the user managed to choose 2 cards with the same value - we will update the element in the `CardArray` that has the key of this card content - to the current user name.
-    After the update it will check if the game is over (all the element in the `CardArray` contains value), If yes - the winner usrt will get 1 point to the `score` property.
+    * Post - sign in to the system    
+    requierd data: a `Login` object
+    If the user is valid - we will check his status and navigate him to the currect main page, else a suitable message will be send to him.
+* Screens for manager:
+   * Users managmant:
+     * GetAllUsers- get all the workers in this company.
+     * The manager can manage his workers:
+         * Add user - add a new user    
+              requierd data: a `User` object
+              If the user details is valid - we will add the user to the UsersList, and return true, Else - we will return a matching error
+         * Edit user- edit worker's details 
+           requierd data: a `User` object
+           If the update was successful - we will return true, else a suitable message will be send to him.
+         * Delete user- the manager can delete worker
+           requierd data:`user id` 
+           If the delete prompt was successful - we will return true, else a suitable message will be send to him.
+         * Edit pemission - allow the worker to work in other projects, not in his team leader's group. 
+                             requierd data:`Permission` 
+                             If the permission details is valid - we will add the permission to the PermissionsList, and return true, Else - we will return a matching error
+  * Projects managmant:
+    * Add project - add a new project   
+             requierd data: a `Project` object
+             If the project details is valid - we will add the project to the ProjectsList, and return true, Else - we will return a matching error
+    * GetProjectsReports-  get all the details that the manager needs to the report. The manager can also filter the report assign to his needs
+     and to exporet it into an Excel file.
+  * Teams managmant:
+    * GetAllTeamLeaders- get all the team leaders in this company.
+    * Manage the teams: allow editing the team of a specific team leader, remove or add workers to his team.We call to `Edit user` method, to    edit the `team leader id` propert in the `User` members. (see details above.)
+* TeamLeader screnns:
+   
+* Worker screens:
+ 
 
 ***
 ## WinForms +  Angular
-###login 
+### login 
 ### Manager page
 ![picture](add_project.png)  
-![picture](add_worker.png)  
-![picture](edit_worker.png)  
 ![picture](team_management.png) 
+![picture](add_worker.png)  
+![picture](edit_worker.png)
 ### Team leader page
 ![picture](worker_list.png) 
 ![picture](graph_hours_status.png) 
