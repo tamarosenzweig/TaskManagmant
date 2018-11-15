@@ -102,7 +102,7 @@
 ## WinForms +  Angular
 ![picture](add_project.png)  
 ![picture](add_worker.png)  
-![picture](edit_worker_details.png)  
+![picture](edit_worker.png)  
 ![picture](graph_hours_status.png)  
 ![picture](home_page.png)  
 ![picture](team_management.png) 
