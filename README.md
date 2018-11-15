@@ -101,10 +101,10 @@
 ***
 ## WinForms +  Angular
 ![picture](add_project.png)  
-![picture](add worker.png)  
-![picture](edit worker.png)  
-![picture](graphHoursStatus.png)  
-![picture](home page.png)  
-![picture](team management.png) 
-![picture](worker list.png) 
+![picture](add_worker.png)  
+![picture](edit_worker_details.png)  
+![picture](graph_hours_status.png)  
+![picture](home_page.png)  
+![picture](team_management.png) 
+![picture](worker_list.png) 
  
