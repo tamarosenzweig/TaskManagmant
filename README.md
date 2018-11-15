@@ -78,10 +78,11 @@
 
 ### Controllers
 * User controller:
-    * Post - sign in to the system    
+    * Login - sign in to the system    
     requierd data: a `Login` object
     If the user is valid - we will check his status and navigate him to the currect main page, else a suitable message will be send to him.
-* Screens for manager:
+* Manager screens:
+
    * Users managmant:
      * GetAllUsers- get all the workers in this company.
      * The manager can manage his workers:
@@ -97,15 +98,18 @@
          * Edit pemission - allow the worker to work in other projects, not in his team leader's group. 
                              requierd data:`Permission` 
                              If the permission details is valid - we will add the permission to the PermissionsList, and return true, Else - we will return a matching error
+
   * Projects managmant:
     * Add project - add a new project   
              requierd data: a `Project` object
              If the project details is valid - we will add the project to the ProjectsList, and return true, Else - we will return a matching error
     * GetProjectsReports-  get all the details that the manager needs to the report. The manager can also filter the report assign to his needs
      and to exporet it into an Excel file.
+
   * Teams managmant:
     * GetAllTeamLeaders- get all the team leaders in this company.
     * Manage the teams: allow editing the team of a specific team leader, remove or add workers to his team.We call to `Edit user` method, to    edit the `team leader id` propert in the `User` members. (see details above.)
+    
 * TeamLeader screnns:
    
 * Worker screens:
