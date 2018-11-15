@@ -100,11 +100,16 @@
 
 ***
 ## WinForms +  Angular
+###login 
+### Manager page
 ![picture](add_project.png)  
 ![picture](add_worker.png)  
 ![picture](edit_worker.png)  
-![picture](graph_hours_status.png)  
-![picture](home_page.png)  
 ![picture](team_management.png) 
+### Team leader page
 ![picture](worker_list.png) 
+![picture](graph_hours_status.png) 
+### Worker page 
+![picture](home_page.png)  
+
  
