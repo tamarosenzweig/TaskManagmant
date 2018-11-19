@@ -15,12 +15,16 @@
 ## Development server
 
 To install the app in your computer you have to:
-  1. Run the `mySql` code. [my-sql-script.md] (To see some data in the live demo, you should add data to your tabels or run the data- script code.)
-     *don't forget to run the `xampp` before using this app.* 
+  1. Run the `mySql` code. (https://github.com/tamarosenzweig/TaskManagmant/blob/master/mysql-queries.md) 
+      To see some data in the live demo, you should add data to your tabels or run the data- script code.
+      (https://github.com/tamarosenzweig/TaskManagmant/blob/master/mysql-script.md)
+     *don't forget to run the `XAMPP` before using this app.* 
 
-  2. Run the `back-end` project. This is the server. Navigate to `http://localhost:4722/`. The app will automatically reload if you change any     of the source files. The details on the server you can see also in the `environments` file  in the angular app, or in the `app config` file   in the cs project (win form) in the `appSetting` attribute.
+  2. Run the `back-end` project. This is the server. Navigate to `http://localhost:4722/`. 
+     The app will automatically reload if you change any     of the source files. The details on the server you can see also in the `environments` file  in the angular app, or in the `app config` file   in the cs project (win form) in the `appSetting` attribute.
 
-  3.  Run `ng serve` for a dev server, if you want to run the angular project. Navigate to `http://localhost:4200/`. The app will automatically     reload if you change any of the source files. Or just run the `cs` project.
+  3.  Run `ng serve` for a dev server, if you want to run the angular project. Navigate to `http://localhost:4200/`. 
+      The app will automatically reload if you change any of the source files. Or just run the `cs` project.
 
 
 ## System diagram:
