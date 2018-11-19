@@ -1,0 +1,4 @@
+<li *ngIf="permission">
+  <span>{{permission.project.projectName}}</span>
+  <button (click)="deletePermission()" class="btn btn-primary btn-block btn-lg">delete</button>
+</li>

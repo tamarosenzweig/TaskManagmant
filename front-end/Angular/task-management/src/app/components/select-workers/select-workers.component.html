@@ -1,0 +1,19 @@
+<div>
+  <h4>{{title}}</h4>
+  <!-- workers-dropDownList -->
+  <app-select [list]="workers" [key]="'userId'" [value]="'userName'" [formControl]="selectedWorkerControl" [placeholder]="'Worker'"
+    (onChangeEvent)="addWorker()" ngDefaultControl></app-select>
+
+  <h4>Selected:</h4>
+  <!-- selected workers -->
+  <ul>
+    <div *ngFor="let selectedWorker of selectedWorkers">
+      <button (click)="removeWorker(selectedWorker)">-</button>
+      <li>{{selectedWorker.userName}}</li>
+    </div>
+  </ul>
+
+
+
+<button *ngIf="isTeamManagement" (click)="submit()">save</button>
+</div>

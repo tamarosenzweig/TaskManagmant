@@ -1,0 +1,19 @@
+<mat-card class="container">
+  <div class="row">
+    <div class="thumbur">
+      <i class="fa fa-lock"></i>
+    </div>
+    <h2>Add permission to workers
+      <small>in our company</small>
+    </h2>
+    <hr class="colorgraph">
+    <mat-card-content>
+
+      <h3>All projects of the team that the worker belongs to:</h3>
+      <ul>
+        <li *ngFor="let project of teamProjects">{{project.projectName}}</li>
+      </ul>
+      <app-permission-list [user]="user"></app-permission-list>
+    </mat-card-content>
+  </div>
+</mat-card>

@@ -1,0 +1,12 @@
+.mat-list-item{
+    margin: 2%;
+}
+
+.fa-play{
+    font-size: 30px;
+    margin-left: 7px;
+    margin-top: -2px;
+}
+.fa-pause{
+    font-size: 25px;
+}

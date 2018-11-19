@@ -1,0 +1,14 @@
+<div>
+  <form [formGroup]="workerHoursFormGroup" (ngSubmit)="onSubmit()">
+
+    <!-- project -->
+    <app-select [list]="projects" [key]="'projectId'" [value]="'projectName'" [formControl]="projectId" [placeholder]="'Project'"
+      ngDefaultControl></app-select>
+
+    <!-- numHours -->
+    <app-input [formControl]="numHours" [type]="'number'" [placeholder]="'Num Hours'" [min]="0" ngDefaultControl></app-input>
+
+    <button type="submit" class="button col-md-offset-2 col-md-8" [disabled]="workerHoursFormGroup.invalid">Add Worker Hours</button>
+
+  </form>
+</div>

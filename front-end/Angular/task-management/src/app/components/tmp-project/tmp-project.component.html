@@ -1,0 +1,10 @@
+<div>
+  <h3>name: {{project.projectName}}</h3>
+  <h3>{{projectPercentHours |percent}} done of this project</h3>
+  <h3>company name: {{project.customer.customerName}}</h3>
+  <h5>start date: {{project.startDate | date: 'dd/MM/yyyy'}}</h5>
+  <h5>end date: {{project.endDate | date: 'dd/MM/yyyy'}}</h5>
+  <h5>hours for this project: {{project.totalHours}}</h5>
+  <h5>worked for this project: {{projectPresenseHours| number : '1.2-2'}} hours</h5>
+  <h5>needs to work more:{{(project.totalHours-projectPresenseHours)| number : '1.2-2'}} hours</h5>
+</div>
