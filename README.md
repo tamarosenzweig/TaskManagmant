@@ -12,6 +12,10 @@
 * **Efart Zadok** - *a depeloper* - (efrat0879@gmail.com)
 * **Tamar Yankelevich- rosenzweig** - *a depeloper* - (tamary9097@gmail.com)
 
+## Description
+ 
+    * [To desciption of the project follow this link](https://github.com/AnnaKarpf/Full-stack-web-development_4578-2/blob/master/12_Web%20api/final%20project.docx)
+
 ## Development server
 
 To install the app in your computer you have to:
@@ -102,9 +106,6 @@ To install the app in your computer you have to:
     * CustomerId - int, auto increament,primary key
     * CustomerName - string - minLength: 2, maxLength:15, reqiered 
 
-### Global Properties
-
-
 ### Controllers
 
 * User controller:
@@ -144,6 +145,7 @@ To install the app in your computer you have to:
 * TeamLeader screens:
    
 * Worker screens:
+
  
 
 ***
