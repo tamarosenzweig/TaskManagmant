@@ -16,8 +16,8 @@
 
 To install the app in your computer you have to:
   1. [Run the `mySql` code](https://github.com/tamarosenzweig/TaskManagmant/blob/master/mysql-queries.md)
-      To see some data in the live demo, you should add data to your tabels or [run the data- script code].
-      (https://github.com/tamarosenzweig/TaskManagmant/blob/master/mysql-script.md)
+      To see some data in the live demo, you should add data to your tabels or
+      [Run the data- script code] (https://github.com/tamarosenzweig/TaskManagmant/blob/master/mysql-script.md)
      *don't forget to run the `XAMPP` before using this app.* 
 
   2. Run the `back-end` project. This is the server. Navigate to `http://localhost:4722/`. 
