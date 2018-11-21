@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import{TreeNode} from 'primeng/api';
-import { ProjectService, BaseService, Project } from '../../imports';
+import { TreeNode } from 'primeng/api';
+import { PresenceHoursService, BaseService, Project } from '../../imports';
 
 @Component({
   selector: 'app-project-report-list',
@@ -17,10 +17,12 @@ export class ProjectReportListComponent implements OnInit {
   projectsInfo: TreeNode[];
   colomns: { field: string, header: string }[];
 
-   //----------------CONSTRUCTOR-------------------
+  //----------------CONSTRUCTOR-------------------
 
-  constructor(private projectService: ProjectService, private baseService: BaseService) {
-    this.colomns = [  
+  constructor(
+    private presenceHoursService: PresenceHoursService,
+    private baseService: BaseService) {
+    this.colomns = [
       { field: 'name', header: 'Name' },
       { field: 'teamLeader', header: 'TeamLeader' },
       { field: 'hours', header: 'Hours' },
@@ -64,14 +66,14 @@ export class ProjectReportListComponent implements OnInit {
     let workedDays: number = this.baseService.dateDiffInDays(project.startDate, date);
     let daysPercent: number = workedDays / projectDays;
 
-    let projectPresenseHours: number = this.projectService.getPresenceHours(project);
-    let projectPercentHours: number = this.projectService.getPercentHours(project);
-    let status: string=project.isComplete ? "Finished!" : project.endDate <= new Date() ? "Time Over!" : "In Working!";
+    let projectPresenseHours: number = this.presenceHoursService.getPresenceHoursForProject(project);
+    let projectPercentHours: number = this.presenceHoursService.getPercentHoursForProject(project);
+    let status: string = project.isComplete ? "Finished!" : project.endDate <= new Date() ? "Time Over!" : "In Working!";
 
     let root = {
       //project details
       data: {
-        name:project.projectName,
+        name: project.projectName,
         teamLeader: project.teamLeader.userName,
         hours: project.totalHours,
         presence: this.baseService.toShortNumber(projectPresenseHours),
@@ -88,7 +90,7 @@ export class ProjectReportListComponent implements OnInit {
     };
     //department details
     project.departmentsHours.forEach(departmentHours => {
-      let presenceHoursForDepartment = this.projectService.getPresenceHoursForDepartment(departmentHours.department)
+      let presenceHoursForDepartment = this.presenceHoursService.getPresenceHoursForDepartment(departmentHours.department)
       let departmentNode = {
         data: {
           name: departmentHours.department.departmentName,
@@ -102,14 +104,14 @@ export class ProjectReportListComponent implements OnInit {
       };
       //workers details
       departmentHours.department.workers.forEach(worker => {
-        let presenceHoursForWorker = this.projectService.getPresenceHoursForWorker(worker)
+        let presenceHoursForWorker = this.presenceHoursService.getPresenceHoursForWorker(worker)
         let workerNode = {
           data: {
             name: worker.userName,
-              teamLeader: worker.teamLeader.userName,
+            teamLeader: worker.teamLeader.userName,
             hours: worker.workerHours[0].numHours,
             presence: this.baseService.toShortNumber(presenceHoursForWorker),
-            presencePercent: worker.workerHours[0].numHours>0 ? this.baseService.toPercent(presenceHoursForWorker / worker.workerHours[0].numHours) : '-'
+            presencePercent: worker.workerHours[0].numHours > 0 ? this.baseService.toPercent(presenceHoursForWorker / worker.workerHours[0].numHours) : '-'
           }
         };
         departmentNode.children.push(workerNode);

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService, ExcelService, Project, ProjectFilter, Global } from '../../imports';
+import {
+  ProjectService, PresenceHoursService, ExcelService,
+  Project, ProjectFilter, Global
+} from '../../imports';
 
 @Component({
   selector: 'app-report',
@@ -12,12 +15,13 @@ export class ReportComponent implements OnInit {
 
   projectsReport: Project[];
   conditions: ProjectFilter;
-  state:string;
+  state: string;
 
   //----------------CONSTRUCTOR------------------
 
   constructor(
     private projectService: ProjectService,
+    private presenceHoursService: PresenceHoursService,
     private excelService: ExcelService) {
     this.projectService.filterSubject.subscribe(
       (conditions: ProjectFilter) => {
@@ -47,7 +51,7 @@ export class ReportComponent implements OnInit {
 
   exportToExcel() {
     let data = this.projectsReport.map(project => {
-      let presenceHours: number = this.projectService.getPresenceHours(project);
+      let presenceHours: number = this.presenceHoursService.getPresenceHoursForProject(project);
       return {
         projectName: project.projectName,
         customerName: project.customer.customerName,

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
-import AsEnumerable from 'linq-es2015';
-import { Project, User, Department,ProjectFilter, Global } from '../../imports';
+import { Project,ProjectFilter, Global } from '../../imports';
 
 @Injectable()
 export class ProjectService {
@@ -48,27 +47,6 @@ export class ProjectService {
     checkUniqueValidation(project: Project): Observable<any> {
         let url: string = `${this.basicURL}/checkUniqueValidation`;
         return this.http.post(url, project);
-    }
-
-    getPresenceHours(project: Project) {
-        return AsEnumerable(project.departmentsHours).Sum(departmentHours => 
-            this.getPresenceHoursForDepartment(departmentHours.department));
-    }
-
-    getPercentHours(project: Project) {
-        return AsEnumerable(project.departmentsHours).Average(departmentHours =>
-             departmentHours.numHours!=0?
-             ( this.getPresenceHoursForDepartment(departmentHours.department) / departmentHours.numHours <= 1 ?
-              this.getPresenceHoursForDepartment(departmentHours.department) / departmentHours.numHours : 1):1
-        );
-    }
-
-    getPresenceHoursForDepartment(department: Department): number {
-        return AsEnumerable(department.workers).Sum(worker => this.getPresenceHoursForWorker(worker));
-    }
-    
-    getPresenceHoursForWorker(worker: User): number {
-        return AsEnumerable(worker.presenceHours).Sum(presenceHours => (presenceHours.endHour.getTime() - presenceHours.startHour.getTime()) / 36e5);
     }
 
     initDates(projects: Project[]) {

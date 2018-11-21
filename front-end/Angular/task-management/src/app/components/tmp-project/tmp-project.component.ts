@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProjectService, Project } from '../../imports';
+import { PresenceHoursService, Project } from '../../imports';
 
 @Component({
   selector: 'app-tmp-project',
@@ -9,7 +9,7 @@ import { ProjectService, Project } from '../../imports';
 export class TmpProjectComponent implements OnInit {
 
   //----------------PROPERTIRS-------------------
-  
+
   @Input()
   project: Project;
 
@@ -18,13 +18,13 @@ export class TmpProjectComponent implements OnInit {
 
   //----------------CONSTRUCTOR------------------
 
-  constructor(private projectService: ProjectService) { }
+  constructor(private presenceHoursService: PresenceHoursService) { }
 
   //----------------METHODS-------------------
 
   ngOnInit() {
-    this.projectPresenseHours = this.projectService.getPresenceHours(this.project);
-    this.projectPercentHours = this.projectService.getPercentHours(this.project);
+    this.projectPresenseHours = this.presenceHoursService.getPercentHoursForProject(this.project);
+    this.projectPercentHours = this.presenceHoursService.getPercentHoursForProject(this.project);
   }
 
 }
