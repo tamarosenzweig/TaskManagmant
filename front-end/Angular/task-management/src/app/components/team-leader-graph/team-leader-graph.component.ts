@@ -25,8 +25,6 @@ export class TeamLeaderGraphComponent implements OnInit {
   //----------------CONSTRUCTOR------------------
 
   constructor(private presenceHoursService: PresenceHoursService) {
-    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    this.currMonth = months[new Date().getMonth()];
     this.projectControl = new FormControl();
   }
   //----------------METHODS-------------------

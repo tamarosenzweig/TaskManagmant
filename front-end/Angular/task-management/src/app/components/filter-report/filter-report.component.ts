@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { UserService, ProjectService, User, Project } from '../../imports';
+import { UserService, ProjectService, User, Project, BaseService } from '../../imports';
 
 @Component({
   selector: 'app-filter-report',
@@ -23,6 +23,7 @@ export class FilterReportComponent implements OnInit {
   constructor(
     private userService: UserService,
     private projectService: ProjectService,
+    private baseService:BaseService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -35,7 +36,7 @@ export class FilterReportComponent implements OnInit {
       this.projectService.filterSubject.next(this.filterFormGroup.value);
     });
 
-    this.initMonths();
+    this.months=this.baseService.getMonths();
     this.initlWorkersAndTeamLeaders();
     this.initProjects();
   }
@@ -47,16 +48,6 @@ export class FilterReportComponent implements OnInit {
       teamLeaderId: [null],
       projectId: [null]
     });
-  }
-
-  initMonths() {
-    this.months = [];
-    let locale: string = 'en-US';
-    var format = new Intl.DateTimeFormat(locale, { month: 'long' })
-    for (let month: number = 0; month < 12; month++) {
-      var testDate = new Date(Date.UTC(2000, month, 1, 0, 0, 0));
-      this.months.push({ monthId: month + 1, monthName: format.format(testDate) })
-    }
   }
 
   initlWorkersAndTeamLeaders() {

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as CanvasJS from '../../../assets/js/canvasjs.min';
+import { BaseService } from '../../imports';
 
 @Component({
   selector: 'app-graph-chart',
@@ -9,7 +10,7 @@ import * as CanvasJS from '../../../assets/js/canvasjs.min';
 export class GraphChartComponent implements OnInit {
 
   @Input()
-  title: string = 'Projects Hours vs Presence Hours';
+  title: string;
 
   @Input()
   titleX: string = 'Projects';
@@ -30,7 +31,12 @@ export class GraphChartComponent implements OnInit {
   @Input()
   presenceHours: { label: string, y: number }[] = [];
 
-  constructor() { }
+  constructor(private baseService:BaseService) {
+    let months =this.baseService.getMonths();
+    let monthId:number=new Date().getMonth();
+    let currMonth:string = months.find(month=>month.monthId==monthId).monthName;
+    this.title=currMonth;
+   }
 
   ngOnInit() {
     this.renderChart();
