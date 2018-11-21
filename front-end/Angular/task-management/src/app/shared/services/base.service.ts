@@ -34,7 +34,7 @@ export class BaseService {
      * @param num a number to conver to percent
      */
     toPercent(num: number): string {
-        return `${Math.round(num * 100) / 100 * 100}%`
+        return `${Math.round(num * 10000) / 100}%`
     }
 
     /**

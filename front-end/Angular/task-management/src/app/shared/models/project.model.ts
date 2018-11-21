@@ -10,6 +10,7 @@ export class Project {
         public totalHours: number,
         public startDate: Date,
         public endDate: Date,
+        public isComplete:boolean,
         public manager?: User,
         public customer?: Customer,
         public teamLeader?: User,

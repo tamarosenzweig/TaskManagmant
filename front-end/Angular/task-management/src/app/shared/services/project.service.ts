@@ -57,7 +57,10 @@ export class ProjectService {
 
     getPercentHours(project: Project) {
         return AsEnumerable(project.departmentsHours).Average(departmentHours =>
-             this.getPresenceHoursForDepartment(departmentHours.department) / departmentHours.numHours <= 1 ? this.getPresenceHoursForDepartment(departmentHours.department) / departmentHours.numHours : 1);
+             departmentHours.numHours!=0?
+             ( this.getPresenceHoursForDepartment(departmentHours.department) / departmentHours.numHours <= 1 ?
+              this.getPresenceHoursForDepartment(departmentHours.department) / departmentHours.numHours : 1):1
+        );
     }
 
     getPresenceHoursForDepartment(department: Department): number {

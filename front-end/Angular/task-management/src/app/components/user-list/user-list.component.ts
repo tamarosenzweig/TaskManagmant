@@ -63,7 +63,7 @@ export class UserListComponent implements OnInit {
   getAllTeamWorkers() {
     let teamLeaderId:number=(<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
 
-    this.userService.getAllUsersByTeamLeader(teamLeaderId).subscribe(
+    this.userService.getAllTeamUsers(teamLeaderId).subscribe(
       (users: User[]) => {
         this.users = users.filter(user=>user.teamLeaderId==teamLeaderId);
       },

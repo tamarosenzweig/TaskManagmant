@@ -11,7 +11,7 @@
     }
 
 .my-btn {
-    width: 70%;
+    width: 100%;
     margin: 0;
     color: #fff;
     background: #f77045;
@@ -21,6 +21,7 @@
     outline: none;
     text-transform: uppercase;
     text-align: center;
+    border-radius: 30px;
 }
 
     .my-btn:hover {
@@ -34,10 +35,6 @@
         border: 0;
         transition: all .2s ease;
     }
-
-.file-upload-btn {
-    width: 100%;
-}
 
 .file-upload-content {
     text-align: center;
@@ -55,55 +52,10 @@
     left: 0;
 }
 
-.image-upload-wrap {
-    margin-top: 20px;
-    border: 4px dashed #f77045;
-    position: relative;
-}
-
-    .image-dropping,
-    .image-upload-wrap:hover {
-        background-color: #FF5722;
-        border: 4px dashed #ffffff;
-    }
-
-.image-title-wrap {
-    padding: 0 15px 15px 15px;
-    color: #222;
-}
-
-
 .file-upload-image {
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
     margin: auto;
     padding: 5%;
     border-radius: 50%;
 }
-
-.remove-image {
-    width: 87%;
-    margin: 0;
-    color: #fff;
-    background: #f77045;
-    border: none;
-    padding: 10px;
-    transition: all .2s ease;
-    outline: none;
-    text-transform: uppercase;
-}
-
-    .remove-image:hover {
-        background: #f77045;
-        color: #ffffff;
-        transition: all .2s ease;
-        cursor: pointer;
-    }
-
-    .remove-image:active {
-        border: 0;
-        transition: all .2s ease;
-    }
-    button{
-        border-radius: 30px;
-    }

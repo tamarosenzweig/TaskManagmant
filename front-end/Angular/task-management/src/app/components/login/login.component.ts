@@ -53,7 +53,7 @@ export class LoginComponent {
             localStorage.setItem(Global.USER, JSON.stringify(user));
             //enter user status to localStorage
             let status: eStatus;
-            if (user.isManager == true) {
+            if (user.managerId == null) {
               status = eStatus.MANAGER;
             }
             else

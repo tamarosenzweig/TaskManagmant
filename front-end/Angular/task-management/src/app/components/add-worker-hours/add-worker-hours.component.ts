@@ -34,7 +34,7 @@ export class AddWorkerHoursComponent implements OnInit {
   ) {
     workerHoursService.deleteWorkerHoursSubject.subscribe(
       (workerHours: WorkerHours) => {
-        let project: Project = new Project(workerHours.projectId, workerHours.project.projectName, 0, 0, 0, 0, null, null);
+        let project: Project = new Project(workerHours.projectId, workerHours.project.projectName, 0, 0, 0, 0, null, null,false);
         this.projects.push(project);
       }
     )

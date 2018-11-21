@@ -32,19 +32,26 @@ export class UserService {
 
     //GET
     getAllUsers(): Observable<any> {
-        let url: string = `${this.basicURL}/getAllUsers`;
+        let managerId:number=(<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+        let url: string = `${this.basicURL}/getAllUsers?managerId=${managerId}`;
         return this.http.get(url);
     }
- 
+    //  //GET
+    //php
+    // getAllUsers(): Observable<any> {
+    //     let url: string = "http://localhost:8080/task_management/web_api.php?funcation=getAllWorkers";        ;
+    //     return this.http.get(url);
+    // }
     //GET
-    getAllUsersByTeamLeader(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicURL}/getAllUsers?teamLeaderId=${teamLeaderId}`;
+    getAllTeamUsers(teamLeaderId: number): Observable<any> {
+        let url: string = `${this.basicURL}/getAllTeamUsers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
     //GET
     getAllTeamLeaders(): Observable<any> {
-        let url: string = `${this.basicURL}/getAllTeamLeaders`;
+        let managerId:number=(<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+        let url: string = `${this.basicURL}/getAllTeamLeaders?managerId=${managerId}`;
         return this.http.get(url);
     }
 
@@ -109,7 +116,6 @@ export class UserService {
         localStorage.removeItem(Global.STATUS);
         this.menuService.setMenu(null);
     }
-
     navigateByStatus() {
         if (localStorage.getItem(Global.STATUS) == null) {
             this.router.navigate(['taskManagement/login']);
@@ -125,7 +131,6 @@ export class UserService {
             else//status == eStatus.WORKER {
                 this.router.navigate(['taskManagement/worker/home']);
     }
-    
     async hashValue(val: string) {
         let hashVal = await sha256(val);
         return hashVal;

@@ -24,7 +24,7 @@ export class AddUserComponent {
     private router: Router
   ) {
     let managerId:number=(<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
-    this.user = new User(0, '', '', '', '', null, false, 0, 0,managerId);
+    this.user = new User(0, '', '', '', '', null, 0, 0,0);
     this.caption = 'Add User';
   }
 
@@ -46,6 +46,7 @@ export class AddUserComponent {
 
   async addUser() {
     this.user.password = this.user.confirmPassword = await this.userService.hashValue(this.user.password);
+    this.user.managerId= (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
     this.userService.addUser(this.user).subscribe(
       (created: boolean) => {
         if (created) {

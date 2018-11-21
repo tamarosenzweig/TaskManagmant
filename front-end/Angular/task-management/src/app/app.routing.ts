@@ -16,7 +16,7 @@ import {
     TeamLeaderComponent,
     TeamWorkersManagementComponent,
     WorkerHoursManagementComponent,
-    WorkersHoursStatusComponent,
+    TeamLeaderGraphComponent,
     WorkerComponent,
     HomeComponent,
     ProjectListComponent,
@@ -102,7 +102,7 @@ const appRoutes: Routes = [
                     },
 
                     {
-                        path:'workersHoursStatus',component:WorkersHoursStatusComponent,resolve:[Resolver]
+                        path:'workersHoursStatus',component:TeamLeaderGraphComponent,resolve:[Resolver]
                     },
                 ]
             },

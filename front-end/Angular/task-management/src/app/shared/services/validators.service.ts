@@ -52,7 +52,7 @@ export class ValidatorsService {
     uniqueUserValidator(user:User,ctrlName: string): AsyncValidatorFn {
         return async f => {
             if (f.value) {
-                user=new User(user.userId,null,null,null,null,null,false,0,0,0);
+                user=new User(user.userId,null,null,null,null,null,0,0,0);
                 user[ctrlName.toLowerCase()] = f.value;
                 if(ctrlName=='Password')
                 user.password= await this.userSrevice.hashValue(f.value);
@@ -68,7 +68,7 @@ export class ValidatorsService {
     uniqueProjectValidator(ctrlName: string): AsyncValidatorFn {
         return async f => {
             if (f.value) {
-               let project:Project=new Project(0,null,0,0,0,0,null,null);
+               let project:Project=new Project(0,null,0,0,0,0,null,null,false);
                 project[ctrlName.toLowerCase()] = f.value;
                 let res = await this.projectService.checkUniqueValidation(project).toPromise();
                 return res;

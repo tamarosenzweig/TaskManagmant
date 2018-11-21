@@ -25,14 +25,14 @@ export class ProjectReportListComponent implements OnInit {
       { field: 'teamLeader', header: 'TeamLeader' },
       { field: 'hours', header: 'Hours' },
       { field: 'presence', header: 'Presence' },
-      { field: 'percent', header: 'Percent' },
+      { field: 'presencePercent', header: 'Presence Percent' },
       { field: 'customer', header: 'Customer' },
       { field: 'startDate', header: 'Start' },
       { field: 'endDate', header: 'End' },
       { field: 'days', header: 'Days' },
       { field: 'workedDays', header: 'Worked' },
-      { field: 'daysPercent', header: 'Percent' },
-      { field: 'state', header: 'State' }
+      { field: 'daysPercent', header: 'Days Percent' },
+      { field: 'status', header: 'Status' }
     ];
   }
 
@@ -66,16 +66,7 @@ export class ProjectReportListComponent implements OnInit {
 
     let projectPresenseHours: number = this.projectService.getPresenceHours(project);
     let projectPercentHours: number = this.projectService.getPercentHours(project);
-    let state: string;
-
-    if (projectPercentHours == daysPercent)
-      state = "good";
-    else
-      if (projectPercentHours > daysPercent)
-        state = "excellent";
-      else
-        state = "bad"
-
+    let status: string=project.isComplete ? "Finished!" : project.endDate <= new Date() ? "Time Over!" : "In Working!";
 
     let root = {
       //project details
@@ -84,14 +75,14 @@ export class ProjectReportListComponent implements OnInit {
         teamLeader: project.teamLeader.userName,
         hours: project.totalHours,
         presence: this.baseService.toShortNumber(projectPresenseHours),
-        percent: this.baseService.toPercent(projectPercentHours),
+        presencePercent: this.baseService.toPercent(projectPercentHours),
         customer: project.customer.customerName,
         startDate: project.startDate.toLocaleDateString(),
         endDate: project.endDate.toLocaleDateString(),
         days: projectDays,
         workedDays: workedDays,
         daysPercent: this.baseService.toPercent(daysPercent),
-        state: state
+        status: status
       },
       children: []
     };
@@ -103,7 +94,7 @@ export class ProjectReportListComponent implements OnInit {
           name: departmentHours.department.departmentName,
           hours: departmentHours.numHours,
           presence: this.baseService.toShortNumber(presenceHoursForDepartment),
-          percent: departmentHours.numHours > 0 ? this.baseService.toPercent(presenceHoursForDepartment / departmentHours.numHours) : '-'
+          presencePercent: departmentHours.numHours > 0 ? this.baseService.toPercent(presenceHoursForDepartment / departmentHours.numHours) : '-'
         },
         children: [
 
@@ -116,9 +107,9 @@ export class ProjectReportListComponent implements OnInit {
           data: {
             name: worker.userName,
               teamLeader: worker.teamLeader.userName,
-            hours: worker.workerHours.length ? worker.workerHours[0].numHours : 0,
+            hours: worker.workerHours[0].numHours,
             presence: this.baseService.toShortNumber(presenceHoursForWorker),
-            percent: worker.workerHours.length ? this.baseService.toPercent(presenceHoursForWorker / worker.workerHours[0].numHours) : '-'
+            presencePercent: worker.workerHours[0].numHours>0 ? this.baseService.toPercent(presenceHoursForWorker / worker.workerHours[0].numHours) : '-'
           }
         };
         departmentNode.children.push(workerNode);

@@ -8,7 +8,6 @@ export class User {
         public password: string,
         public confirmPassword:string,
         public profileImageName: string,
-        public isManager: boolean,
         public departmentId: number,
         public teamLeaderId: number,
         public managerId: number,

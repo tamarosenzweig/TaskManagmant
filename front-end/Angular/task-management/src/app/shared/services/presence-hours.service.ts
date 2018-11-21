@@ -31,15 +31,14 @@ export class PresenceHoursService {
     }
 
     //GET
-    getPresenceStatusPerWorkers(teamLeaderId: number): Promise<any> {
-        let url: string = `${this.basicURL}/getPresenceStatusPerWorkers/?teamLeaderId=${teamLeaderId}`;
-        return this.http.get(url).toPromise();
+    getPresenceStatusPerWorkers(teamLeaderId: number):Observable<any> {
+        let url: string = `${this.basicURL}/getPresenceStatusPerWorkers?teamLeaderId=${teamLeaderId}`;
+        return this.http.get(url);
     }
 
     //GET
-    getPresenceStatusPerProjects(workerId: number): Promise<any> {
-        let url: string = `${this.basicURL}/getPresenceStatusPerProjects/?workerId=${workerId}`;
-        return this.http.get(url).toPromise();
+    getPresenceStatusPerProjects(workerId: number): Observable<any> {
+        let url: string = `${this.basicURL}/getPresenceStatusPerProjects?workerId=${workerId}`;
+        return this.http.get(url);
     }
-
 }

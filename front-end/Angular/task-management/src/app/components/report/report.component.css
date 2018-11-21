@@ -33,7 +33,9 @@ span{
        border: 0;
        color: grey;
 }
-
+button{
+    margin: 2%;
+}
    
 .requestForm {
     background: white;
@@ -46,7 +48,7 @@ span{
     bottom: 0;
     width: 25.5%;
     min-width: 250px;
-    height: max-content;
+    height: 62%;
     right: -26%;
     z-index: 2;
 }
@@ -54,20 +56,20 @@ span{
     color: gray;
     width: 35px;
     height: 42px;
-    float: left;
-    margin-left: 5%;
+    float: right;
+    margin-right: 5%;
     padding: 0;
 }
 .closeRequestForm i:nth-child(1){
     position: absolute;
     top: 3%;
-    left: 5%;
+    right: 5%;
     font-size: 20px;
 }
 .closeRequestForm i:nth-child(2){
     position: absolute;
     top: 3%;
-    left: 8%;
+    right: 8%;
     font-size: 20px;
 
 }

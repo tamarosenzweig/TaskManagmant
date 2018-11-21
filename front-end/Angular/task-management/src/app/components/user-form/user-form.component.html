@@ -1,44 +1,48 @@
 <mat-card class="container">
-    <div class="row">
-          <div class="thumbur">
-            <i class="fa fa-lock"></i>
-          </div>
-          <h2>Manage our users
-            <small>in our company</small>
-          </h2>
-          <hr class="colorgraph">
-    <mat-card-content>
-        <form [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
-
-            <!-- userName,email,password,confirmPassword -->
-           <div class="row">
-            <app-input *ngFor="let control of objectHolder.values(userFormGroup.controls)| slice:0:end;let i=index" [formControl]="control"
-              [type]="types[i]" [placeholder]="placeholders[i]" ngDefaultControl  class="col-md-6"></app-input>
-            </div>
-
-            <div class="row">
-            <!-- departmentId -->
-            <app-select *ngIf="!this.isTeamLeader.value" [list]="departments" [key]="'departmentId'" [value]="'departmentName'" [formControl]="departmentId"
-              [placeholder]="'Department'" ngDefaultControl class="col-md-6"></app-select>
-      
-            <!-- teamLeaderId -->
-            <app-select *ngIf="!this.isTeamLeader.value" [list]="teamLeaders" [key]="'userId'" [value]="'userName'" [formControl]="teamLeaderId"
-              [placeholder]="'Team leader'" ngDefaultControl class="col-md-6"></app-select>
-            </div>
-            <div class="row">
-                <mat-checkbox formControlName="isTeamLeader" (change)="teamLeader()" class="col-md-6">Is a team-leader</mat-checkbox>
-      
-                <app-upload-img (eventImage)="getImage($event)" [locationUrl]="imageUrl" class="col-md-6"></app-upload-img>
-            </div>
-          
-            <hr class="colorgraph">
-            <div class="col-xs-6 col-md-6">
-                <button type="submit" mat-flat-button color="primary" class="btn btn-primary btn-block btn-lg" [disabled]="userFormGroup.invalid||isExistEmail || isExistPassword">{{caption}}</button>
-              </div>
-
-          </form>
-    </mat-card-content>
+  <div class="row">
+    <div class="thumbur">
+      <i class="fa fa-lock"></i>
     </div>
-  </mat-card>
+    <h2>Manage our users
+      <small>in our company</small>
+    </h2>
+    <hr class="colorgraph">
+    <mat-card-content>
+      <form [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
 
-   
+        <!-- userName,email,password,confirmPassword -->
+        <div class="row">
+          <app-input *ngFor="let control of objectHolder.values(userFormGroup.controls)| slice:0:end;let i=index" [formControl]="control"
+            [type]="types[i]" [placeholder]="placeholders[i]" ngDefaultControl class="col-md-6"></app-input>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <!-- isTeamLeader -->
+              <app-check-box class="col-md-6" [checkControl]="isTeamLeader" label="Is a team-leader" (changeEvent)="teamLeader()"></app-check-box>
+            </div>
+            <div>
+              <!-- departmentId -->
+              <app-select *ngIf="!isTeamLeader.value" [list]="departments" [key]="'departmentId'" [value]="'departmentName'" [formControl]="departmentId"
+                [placeholder]="'Department'" ngDefaultControl></app-select>
+
+              <!-- teamLeaderId -->
+              <app-select *ngIf="!isTeamLeader.value" [list]="teamLeaders" [key]="'userId'" [value]="'userName'" [formControl]="teamLeaderId"
+                [placeholder]="'Team leader'" ngDefaultControl></app-select>
+            </div>
+          </div>
+
+          <app-upload-img (eventImage)="getImage($event)" [locationUrl]="imageUrl" class="col-md-6"></app-upload-img>
+
+        </div>
+
+        <hr class="colorgraph">
+        <div class="col-xs-6 col-md-6">
+          <button type="submit" mat-flat-button color="primary" class="btn btn-primary btn-block btn-lg" [disabled]="userFormGroup.invalid||isExistEmail || isExistPassword">{{caption}}</button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </div>
+</mat-card>

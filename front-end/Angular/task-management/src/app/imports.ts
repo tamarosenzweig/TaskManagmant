@@ -89,7 +89,8 @@ export { WorkerHoursManagementComponent } from './components/worker-hours-manage
 export { WorkerHoursListComponent } from './components/worker-hours-list/worker-hours-list.component';
 export { TmpWorkerHoursComponent } from './components/tmp-worker-hours/tmp-worker-hours.component';
 export { AddWorkerHoursComponent } from './components/add-worker-hours/add-worker-hours.component';
-export { WorkersHoursStatusComponent } from './components/workers-hours-status/workers-hours-status.component';
+export { TeamLeaderGraphComponent } from './components/team-leader-graph/team-leader-graph.component';
+
 export { ProjectListComponent } from './components/project-list/project-list.component';
 export { TmpProjectComponent } from './components/tmp-project/tmp-project.component';
 
@@ -102,10 +103,9 @@ export { DateAndTimeComponent } from './components/date-and-time/date-and-time.c
 export { WorkerTaskListComponent } from './components/worker-task-list/worker-task-list.component';
 export { TmpWorkerTaskComponent } from './components/tmp-worker-task/tmp-worker-task.component';
 export { TimerComponent } from './components/timer/timer.component';
-export { ProjectsGraphComponent } from './components/projects-graph/projects-graph.component';
+export { WorkerGraphComponent } from './components/worker-graph/worker-graph.component';
 
-
-export { HoursGraphComponent } from './components/hours-graph/hours-graph.component';
+export { GraphChartComponent } from './components/graph-chart/graph-chart.component';
 export { DatePickerComponent } from './components/date-picker/date-picker.component';
 export { DialogComponent } from './components/dialog/dialog.component';
 export { TreeTableComponent } from './components/tree-table/tree-table.component';

@@ -81,7 +81,7 @@ import {
   WorkerHoursListComponent,
   TmpWorkerHoursComponent,
   AddWorkerHoursComponent,
-  WorkersHoursStatusComponent,
+  TeamLeaderGraphComponent,
   ProjectListComponent,
   TmpProjectComponent,
   //Worker Screens
@@ -92,8 +92,8 @@ import {
   WorkerTaskListComponent,
   TmpWorkerTaskComponent,
   TimerComponent,
-  ProjectsGraphComponent,
-  HoursGraphComponent,
+  WorkerGraphComponent,
+  GraphChartComponent,
   DatePickerComponent,
   DialogComponent,
   TreeTableComponent,
@@ -101,6 +101,7 @@ import {
   routing
 }
   from './imports';
+import { CheckBoxComponent } from './components/check-box/check-box.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +140,7 @@ import {
     WorkerHoursListComponent,
     TmpWorkerHoursComponent,
     AddWorkerHoursComponent,
-    WorkersHoursStatusComponent,
+    TeamLeaderGraphComponent,
     ProjectListComponent,
     TmpProjectComponent,
     WorkerComponent,
@@ -149,12 +150,14 @@ import {
     WorkerTaskListComponent,
     TmpWorkerTaskComponent,
     TimerComponent,
-    ProjectsGraphComponent,
-    HoursGraphComponent,
+    WorkerGraphComponent,
+    GraphChartComponent,
     DatePickerComponent,
     DialogComponent,
     TreeTableComponent,
-    ProjectFilterPipe
+    ProjectFilterPipe,
+    CheckBoxComponent,
+
   ],
   imports: [
     BrowserModule,
