@@ -74,8 +74,11 @@ export class UserService {
     }
 
     //POST
-    deleteUser(userId: number): Observable<any> {
-        let url: string = `${this.basicURL}/deleteUser?userId=${userId}`;
+    deleteUser(user: User): Observable<any> {
+        //move user profile image to archives if exist
+        if(user.profileImageName)
+        this.removeUploadedImage(user.profileImageName,true);
+        let url: string = `${this.basicURL}/deleteUser?userId=${user.userId}`;
         return this.http.post(url, null);
     }
 
@@ -88,10 +91,11 @@ export class UserService {
     }
 
     //POST
-    removeUploadedImage(profileImageName: string): Observable<any> {
+    removeUploadedImage(profileImageName: string,moveToArchives:boolean): Observable<any> {
         let url: string = this.basicURL + `/removeUploadedImage`;
         let formData: FormData = new FormData();
         formData.append('profileImageName', profileImageName);
+        formData.append('moveToArchives',String(moveToArchives));
         return this.http.post(url, formData);
     }
 

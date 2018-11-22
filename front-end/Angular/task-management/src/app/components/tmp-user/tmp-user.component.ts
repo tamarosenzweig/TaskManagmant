@@ -63,7 +63,7 @@ export class TmpUserComponent implements OnInit {
   }
 
   deleteUser() {
-    this.userService.deleteUser(this.user.userId).subscribe(
+    this.userService.deleteUser(this.user).subscribe(
       (deleted: boolean) => {
         if (deleted) {
           this.userService.updateUserListSubject.next();
