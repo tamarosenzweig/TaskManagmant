@@ -6,7 +6,7 @@
   <div class="row">
       <app-select class="col-md-3" [list]="projects" [key]="'projectName'" [value]="'projectName'" [formControl]="projectControl"
           [placeholder]="'select project'" (onChangeEvent)="onProjectChange()" ngDefaultControl></app-select>
-      <p class="selected"><b>selected project: </b>
+      <p class="selected"><b>Project: </b>
           <span *ngIf="projectControl.value">{{projectControl.value}}</span>
           <span *ngIf="!projectControl.value">All</span>
        </p>
