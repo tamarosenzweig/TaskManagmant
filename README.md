@@ -106,6 +106,23 @@ To install the app in your computer you have to:
     * CustomerId - int, auto increament,primary key
     * CustomerName - string - minLength: 2, maxLength:15, reqiered 
 
+
+### Help Models
+
+    * Email:
+
+    * Subject - string
+    * Body - string , reqiered 
+    * ToAddress - List<string 
+    * UserName - string  
+    * Password - string
+    the last 3 properties are utomatically restarted in the c'tor.
+
+    * Login:
+
+     * Email - string -  reqiered ,pattern
+     * Password - string - minLength: 2, maxLength:20, reqiered
+
 ### Controllers
 
 * User controller:
@@ -116,7 +133,9 @@ To install the app in your computer you have to:
 * Manager screens:
 
    * Users managmant:
+
      * GetAllUsers- get all the workers in this company.
+     
      * The manager can manage his workers:
          * Add user - add a new user    
               requierd data: a `User` object
@@ -132,20 +151,48 @@ To install the app in your computer you have to:
                              If the permission details is valid - we will add the permission to the PermissionsList, and return true, Else - we will return a matching error
 
   * Projects managmant:
+
     * Add project - add a new project   
              requierd data: a `Project` object
              If the project details is valid - we will add the project to the ProjectsList, and return true, Else - we will return a matching error
+
     * GetProjectsReports-  get all the details that the manager needs to the report. The manager can also filter the report assign to his needs
      and to exporet it into an Excel file.
 
   * Teams managmant:
     * GetAllTeamLeaders- get all the team leaders in this company.
+
     * Manage the teams: allow editing the team of a specific team leader, remove or add workers to his team.We call to `Edit user` method, to    edit the `team leader id` propert in the `User` members. (see details above.)
 
 * TeamLeader screens:
+
+   * Team managmant:
+     * GetAllWorkers- get all the workers in this company,that belongs to this team leader.
+
+     * Update hours- the team leader can update (edit add or delete) the workers' hours details.
+        every data saved in a suitable list and when `save` button clicked- the server check the lists in 
+        the crud function- add user, edit user or delete hours. see details above.
+
+    * Project managmant: 
+
+        * GetAllProjects- get all the projects in this company,that belongs to this team leader.
+        The team leader can see the status of each project. 
+        (the function in the reports is `get project reports` that gets all the project's details.)
+
+    * GetPresenceStatusPerWorkers- by this function the team leader can see a graph of his workers.   
+       requierd data: `teamLeaderId`
+              
    
 * Worker screens:
 
+     * Send Email- send email from the worker to his manager.
+       requierd data: `Email` objeat and a `User` object
+       
+    * GetAllProjects- get all the projects in this company,that belongs to this worker.
+        The worker can see the status of each project. 
+        (the function in the reports is `get project reports` that gets all the project's details.)
+
+    * The worker can see also a graph of his projects by the month.
  
 
 ***

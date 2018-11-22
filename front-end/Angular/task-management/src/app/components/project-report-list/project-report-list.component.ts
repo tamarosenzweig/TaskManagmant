@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { PresenceHoursService, BaseService, Project } from '../../imports';
+import { PresenceHoursService, BaseService, Project, Global, ExcelService } from '../../imports';
 
 @Component({
   selector: 'app-project-report-list',
@@ -21,7 +21,8 @@ export class ProjectReportListComponent implements OnInit {
 
   constructor(
     private presenceHoursService: PresenceHoursService,
-    private baseService: BaseService) {
+    private baseService: BaseService,
+    private excelService: ExcelService) {
     this.colomns = [
       { field: 'name', header: 'Name' },
       { field: 'teamLeader', header: 'TeamLeader' },
@@ -43,6 +44,14 @@ export class ProjectReportListComponent implements OnInit {
   ngOnInit() {
     this.initProjectsInfo();
   }
+
+  exportToExcel() {
+   
+   
+    let userName: string = JSON.parse(localStorage.getItem(Global.USER)).userName;
+    this.excelService.exportAsExcelFile(this.projectsInfo, `${userName}_projects`);
+  }
+
 
   //  Whenever the data in the parent changes, this method gets triggered. You 
   // can act on the changes here. You will have both the previous value and the 
