@@ -109,7 +109,7 @@ To install the app in your computer you have to:
 
 ### Help Models
 
-    * Email:
+* Email:
 
     * Subject - string
     * Body - string , reqiered 
@@ -118,7 +118,7 @@ To install the app in your computer you have to:
     * Password - string
     the last 3 properties are utomatically restarted in the c'tor.
 
-    * Login:
+* Login:
 
      * Email - string -  reqiered ,pattern
      * Password - string - minLength: 2, maxLength:20, reqiered
@@ -135,7 +135,7 @@ To install the app in your computer you have to:
    * Users managmant:
 
      * GetAllUsers- get all the workers in this company.
-     
+
      * The manager can manage his workers:
          * Add user - add a new user    
               requierd data: a `User` object
