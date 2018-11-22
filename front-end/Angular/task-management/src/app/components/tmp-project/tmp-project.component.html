@@ -1,10 +1,30 @@
-<div>
-  <h3>name: {{project.projectName}}</h3>
-  <h3>{{projectPercentHours |percent}} done of this project</h3>
-  <h3>company name: {{project.customer.customerName}}</h3>
-  <h5>start date: {{project.startDate | date: 'dd/MM/yyyy'}}</h5>
-  <h5>end date: {{project.endDate | date: 'dd/MM/yyyy'}}</h5>
-  <h5>hours for this project: {{project.totalHours}}</h5>
-  <h5>worked for this project: {{projectPresenseHours| number : '1.2-2'}} hours</h5>
-  <h5>needs to work more:{{(project.totalHours-projectPresenseHours)| number : '1.2-2'}} hours</h5>
-</div>
+<mat-card class="col-md-3">
+  <mat-card-content class="mat-card-content">
+
+    <h3>{{project.projectName}}</h3>
+    <hr class="colorgraph">
+    <dl>
+      <dt>done of this project:</dt>
+      <dd>{{projectPercentHours |percent}}</dd>
+
+      <dt>company name:</dt>
+      <dd>{{project.customer.customerName}}</dd>
+
+      <dt>start date:</dt>
+      <dd>{{project.startDate | date: 'dd/MM/yyyy'}}</dd>
+
+      <dt>end date:</dt>
+      <dd>{{project.endDate | date: 'dd/MM/yyyy'}}</dd>
+
+      <dt>hours for this project:</dt>
+      <dd>{{project.totalHours}}</dd>
+
+      <dt>worked for this project:</dt>
+      <dd> {{projectPresenseHours| number : '1.2-2'}} hours</dd>
+
+      <dt>needs to work more:</dt>
+      <dd>{{(project.totalHours-projectPresenseHours)| number : '1.2-2'}} hours</dd>
+    </dl>
+
+  </mat-card-content>
+</mat-card>

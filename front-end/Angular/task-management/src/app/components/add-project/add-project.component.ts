@@ -55,7 +55,7 @@ export class AddProjectComponent implements OnInit {
 
   initFormGroup() {
     this.projectFormGroup = this.formBuilder.group({
-      projectName: ['', this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z]+$/), this.validatorsService.uniqueProjectValidator('ProjectName')],
+      projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z]+$/), this.validatorsService.uniqueProjectValidator('ProjectName')],
       customerId: ['', this.validatorsService.stringValidatorArr('customer')],
       teamLeaderId: ['', this.validatorsService.stringValidatorArr('team leader')],
       totalHours: this.getDepartmentControls(),
