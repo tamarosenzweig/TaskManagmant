@@ -35,10 +35,11 @@ export class TmpUserComponent implements OnInit {
 
   ngOnInit(): void {
     //init imageUrl
+    this.imageUrl = `${Global.UPLOADS}/UsersProfiles/`;
     if (this.user.profileImageName)
-      this.imageUrl = `${Global.UPLOADS}/UsersProfiles/${this.user.profileImageName}`;
+      this.imageUrl += this.user.profileImageName;
     else
-      this.imageUrl = '../../../assets/user_icon.png';
+      this.imageUrl += 'guest.jpg';
   }
 
   edit() {
@@ -48,16 +49,16 @@ export class TmpUserComponent implements OnInit {
   showDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '35%',
-      data: { 
+      data: {
         title: 'Delete Worker',
         msg: 'Are you sure you want to delete this worker?',
-       }
+      }
     });
 
-    dialogRef.afterClosed().subscribe((isConfirmed:boolean) => {
+    dialogRef.afterClosed().subscribe((isConfirmed: boolean) => {
       console.log(isConfirmed)
       if (isConfirmed)
-             this.deleteUser();
+        this.deleteUser();
     });
   }
 
