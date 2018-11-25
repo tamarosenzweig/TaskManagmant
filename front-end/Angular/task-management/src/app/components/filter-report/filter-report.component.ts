@@ -37,7 +37,7 @@ export class FilterReportComponent implements OnInit {
     });
 
     this.months=this.baseService.getMonths();
-    this.initlWorkersAndTeamLeaders();
+    this.initWorkersAndTeamLeaders();
     this.initProjects();
   }
 
@@ -50,7 +50,7 @@ export class FilterReportComponent implements OnInit {
     });
   }
 
-  initlWorkersAndTeamLeaders() {
+  initWorkersAndTeamLeaders() {
     this.userService.getAllUsers().subscribe(
       (workers: User[]) => {
         this.workers = workers.filter(worker => worker.teamLeaderId != null);
