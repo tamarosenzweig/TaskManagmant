@@ -31,23 +31,11 @@ export class WorkerHoursService {
         let url: string = `${this.basicURL}/getAllWorkerHours?workerId=${workerId}`;
         return this.http.get(url);
     }
-
-    //POST
-    addWorkersHours(workerHoursList: WorkerHours[]): Promise<any> {
-        let url: string = `${this.basicURL}/addWorkersHours`;
-        return this.http.post(url, workerHoursList).toPromise();
-    }
-    
+ 
     //PUT
-    editWorkersHours(workerHoursList: WorkerHours[]): Promise<any> {
-        let url: string = `${this.basicURL}/editWorkersHours`;
-        return this.http.put(url, workerHoursList).toPromise();
-    }
-
-    //POST
-    deleteWorkersHours(userIdList: number[]): Promise<any> {
-        let url: string = `${this.basicURL}/deleteWorkersHours`;
-        return this.http.post(url, userIdList).toPromise();
+    editWorkersHours(workerHours: WorkerHours): Observable<any> {
+        let url: string = `${this.basicURL}/editWorkerHours`;
+        return this.http.put(url, workerHours);
     }
 
 }

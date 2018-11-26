@@ -11,6 +11,8 @@ export class ProjectService {
     basicURL: string = Global.BASE_ENDPOINT + `/project`;
 
     filterSubject:Subject<ProjectFilter>;
+
+    project:Project;
     //----------------CONSTRUCTOR------------------
 
     constructor(private http: HttpClient) { 

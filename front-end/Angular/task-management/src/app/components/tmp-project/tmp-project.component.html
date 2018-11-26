@@ -4,7 +4,7 @@
     <h3>{{project.projectName}}</h3>
     <hr class="colorgraph">
     <dl>
-      <dt>done of this project:</dt>
+      <dt>done:</dt>
       <dd>{{projectPercentHours |percent}}</dd>
 
       <dt>company name:</dt>
@@ -16,13 +16,13 @@
       <dt>end date:</dt>
       <dd>{{project.endDate | date: 'dd/MM/yyyy'}}</dd>
 
-      <dt>hours for this project:</dt>
+      <dt>defined hours:</dt>
       <dd>{{project.totalHours}}</dd>
 
-      <dt>worked for this project:</dt>
+      <dt>worked:</dt>
       <dd> {{projectPresenseHours| number : '1.2-2'}} hours</dd>
 
-      <dt>needs to work more:</dt>
+      <dt>needs more:</dt>
       <dd>{{(project.totalHours-projectPresenseHours)| number : '1.2-2'}} hours</dd>
     </dl>
 

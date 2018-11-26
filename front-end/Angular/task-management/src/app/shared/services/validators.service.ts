@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ValidatorFn, FormGroup, AsyncValidatorFn } from '@angular/forms';
-import { UserService,ProjectService,User, Project } from '../../imports';
+import {
+    UserService, ProjectService,
+    User, Project
+} from '../../imports';
 
 
 @Injectable()
 export class ValidatorsService {
-    
-    constructor(private userSrevice: UserService,private projectService:ProjectService) { }
+
+    constructor(
+        private userSrevice: UserService,
+        private projectService: ProjectService,
+    ) { }
 
     stringValidatorArr(cntName: string, min?: number, max?: number, pattern?: RegExp): Array<ValidatorFn> {
         return [
@@ -49,13 +55,13 @@ export class ValidatorsService {
         ];
     }
 
-    uniqueUserValidator(user:User,ctrlName: string): AsyncValidatorFn {
+    uniqueUserValidator(user: User, ctrlName: string): AsyncValidatorFn {
         return async f => {
             if (f.value) {
-                user=new User(user.userId,null,null,null,null,null,0,0,0);
+                user = new User(user.userId, null, null, null, null, null, 0, 0, 0);
                 user[ctrlName.toLowerCase()] = f.value;
-                if(ctrlName=='Password')
-                user.password= await this.userSrevice.hashValue(f.value);
+                if (ctrlName == 'Password')
+                    user.password = await this.userSrevice.hashValue(f.value);
                 let res = await this.userSrevice.checkUniqueValidations(user).toPromise();
                 return res;
             }
@@ -64,11 +70,11 @@ export class ValidatorsService {
             }
         }
     }
-    
+
     uniqueProjectValidator(ctrlName: string): AsyncValidatorFn {
         return async f => {
             if (f.value) {
-               let project:Project=new Project(0,null,0,0,0,0,null,null,false);
+                let project: Project = new Project(0, null, 0, 0, 0, 0, null, null, false);
                 project[ctrlName.toLowerCase()] = f.value;
                 let res = await this.projectService.checkUniqueValidation(project).toPromise();
                 return res;
@@ -77,5 +83,14 @@ export class ValidatorsService {
                 return null;
             }
         }
+    }
+    requiredValidator(ctrlName: string): ValidatorFn {
+        return f => !f.value ? { 'val': `'${ctrlName}'  is required` } : null;
+    }
+    workerHoursValidator(presenceHours: number): ValidatorFn {
+        return f => f.value && f.value < presenceHours ? { 'val': 'Worker hours can\'t be less than presence hours' } : null;
+    }
+    workerHoursDepartmentValidator(workerHours: number, departmentHours: number, departmentHoursSum: number): ValidatorFn {
+        return f => f.value && departmentHoursSum - workerHours + f.value > departmentHours ? { 'val': 'Hours defined for workers are greater than the hours defined for this department' } : null;
     }
 }

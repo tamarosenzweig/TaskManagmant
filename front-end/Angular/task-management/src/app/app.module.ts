@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {AccordionModule} from 'primeng/accordion';
-import {TreeTableModule} from 'primeng/treetable';
+import { AccordionModule } from 'primeng/accordion';
+import { TreeTableModule } from 'primeng/treetable';
 
 import {
   MatInputModule,
@@ -48,6 +48,7 @@ import {
   InputComponent,
   SelectComponent,
   TextareaComponent,
+  CheckBoxComponent,
   LoginComponent,
   //Manger Screens
   ManagerComponent,
@@ -76,14 +77,14 @@ import {
   SelectWorkersComponent,
   //TeamLeader Screens
   TeamLeaderComponent,
-  TeamWorkersManagementComponent,
-  WorkerHoursManagementComponent,
-  WorkerHoursListComponent,
-  TmpWorkerHoursComponent,
-  AddWorkerHoursComponent,
   TeamLeaderGraphComponent,
   ProjectListComponent,
   TmpProjectComponent,
+  WorkerHoursManagementComponent,
+  ProjectHoursListComponent,
+  TmpProjectHoursComponent,
+  WorkersHoursComponent,
+  UpdateHoursDialogComponent,
   //Worker Screens
   WorkerComponent,
   HomeComponent,
@@ -101,7 +102,6 @@ import {
   routing
 }
   from './imports';
-import { CheckBoxComponent } from './components/check-box/check-box.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +113,7 @@ import { CheckBoxComponent } from './components/check-box/check-box.component';
     InputComponent,
     SelectComponent,
     TextareaComponent,
+    CheckBoxComponent,
     LoginComponent,
     ManagerComponent,
     UserManagementComponent,
@@ -135,14 +136,14 @@ import { CheckBoxComponent } from './components/check-box/check-box.component';
     TmpUserComponent,
     SelectWorkersComponent,
     TeamLeaderComponent,
-    TeamWorkersManagementComponent,
-    WorkerHoursManagementComponent,
-    WorkerHoursListComponent,
-    TmpWorkerHoursComponent,
-    AddWorkerHoursComponent,
     TeamLeaderGraphComponent,
     ProjectListComponent,
     TmpProjectComponent,
+    WorkerHoursManagementComponent,
+    ProjectHoursListComponent,
+    TmpProjectHoursComponent,
+    WorkersHoursComponent,
+    UpdateHoursDialogComponent,
     WorkerComponent,
     HomeComponent,
     SendEmailComponent,
@@ -155,9 +156,7 @@ import { CheckBoxComponent } from './components/check-box/check-box.component';
     DatePickerComponent,
     DialogComponent,
     TreeTableComponent,
-    ProjectFilterPipe,
-    CheckBoxComponent,
-
+    ProjectFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -167,7 +166,6 @@ import { CheckBoxComponent } from './components/check-box/check-box.component';
     BrowserAnimationsModule,
     AccordionModule,
     TreeTableModule,
-
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
@@ -199,7 +197,7 @@ import { CheckBoxComponent } from './components/check-box/check-box.component';
 
   ],
   entryComponents: [
-    DialogComponent, SendEmailComponent
+    DialogComponent, SendEmailComponent, UpdateHoursDialogComponent
   ],
   bootstrap: [AppComponent]
 })

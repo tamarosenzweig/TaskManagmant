@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
     //----------------METHODS-------------------
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (state.url == '/taskManagement/login') {
+        if (state.url=='/'||state.url== '/taskManagement/login') {
             if (localStorage.getItem(Global.USER) == null)
                 return true;
             this.userService.navigateByStatus();

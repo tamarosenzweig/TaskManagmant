@@ -130,7 +130,7 @@ export class UserService {
         }
         else
             if (status == eStatus.TEAM_LEADER) {
-                this.router.navigate(['taskManagement/teamLeader/teamWorkers/list']);
+                this.router.navigate(['taskManagement/teamLeader/workerHoursManagement/projectHoursList']);
             }
             else//status == eStatus.WORKER {
                 this.router.navigate(['taskManagement/worker/home']);

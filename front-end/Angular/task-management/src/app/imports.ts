@@ -49,6 +49,7 @@ export { MenuComponent } from './components/menu/menu.component';
 export { InputComponent } from './components/input/input.component';
 export { SelectComponent } from './components/select/select.component';
 export { TextareaComponent } from './components/textarea/textarea.component';
+export { CheckBoxComponent } from './components/check-box/check-box.component';
 export { LoginComponent } from './components/login/login.component';
 
 //----------------MANAGER SCREENS-------------------
@@ -84,15 +85,17 @@ export { SelectWorkersComponent } from './components/select-workers/select-worke
 //----------------TEAM-LEADER SCREENS-------------------
 
 export { TeamLeaderComponent } from './components/team-leader/team-leader.component';
-export { TeamWorkersManagementComponent } from './components/team-workers-management/team-workers-management.component';
-export { WorkerHoursManagementComponent } from './components/worker-hours-management/worker-hours-management.component';
-export { WorkerHoursListComponent } from './components/worker-hours-list/worker-hours-list.component';
-export { TmpWorkerHoursComponent } from './components/tmp-worker-hours/tmp-worker-hours.component';
-export { AddWorkerHoursComponent } from './components/add-worker-hours/add-worker-hours.component';
 export { TeamLeaderGraphComponent } from './components/team-leader-graph/team-leader-graph.component';
 
 export { ProjectListComponent } from './components/project-list/project-list.component';
 export { TmpProjectComponent } from './components/tmp-project/tmp-project.component';
+
+
+export { WorkerHoursManagementComponent } from './components/worker-hours-management/worker-hours-management.component';
+export { ProjectHoursListComponent } from './components/project-hours-list/project-hours-list.component';
+export { TmpProjectHoursComponent } from './components/tmp-project-hours/tmp-project-hours.component';
+export { WorkersHoursComponent } from './components/workers-hours/workers-hours.component';
+export { UpdateHoursDialogComponent } from './components/update-hours-dialog/update-hours-dialog.component';
 
 //----------------WORKER SCREENS-------------------
 

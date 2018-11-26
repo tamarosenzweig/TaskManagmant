@@ -14,9 +14,10 @@ import {
     TeamsManagementComponent,
     TeamManagementComponent,
     TeamLeaderComponent,
-    TeamWorkersManagementComponent,
     WorkerHoursManagementComponent,
     TeamLeaderGraphComponent,
+    ProjectHoursListComponent,
+    WorkersHoursComponent,
     WorkerComponent,
     HomeComponent,
     ProjectListComponent,
@@ -28,13 +29,13 @@ const appRoutes: Routes = [
     {
         path: 'taskManagement', children: [
             {
-                path: 'login', component: LoginComponent,canActivate: [AuthGuard],
+                path: 'login', component: LoginComponent, canActivate: [AuthGuard],
             },
             {
                 path: 'manager', component: ManagerComponent, canActivate: [AuthGuard], children: [
 
                     {
-                        path: 'userManagement', component: UserManagementComponent,resolve:[Resolver], children: [
+                        path: 'userManagement', component: UserManagementComponent, resolve: [Resolver], children: [
                             {
                                 path: 'userList', component: UserListComponent
                             },
@@ -53,7 +54,7 @@ const appRoutes: Routes = [
                         ]
                     },
                     {
-                        path: 'projectManagement',component:ProjectManagementComponent,resolve:[Resolver], children: [
+                        path: 'projectManagement', component: ProjectManagementComponent, resolve: [Resolver], children: [
                             {
                                 path: 'addProject', component: AddProjectComponent
                             },
@@ -66,11 +67,11 @@ const appRoutes: Routes = [
                         ]
                     },
                     {
-                        path: 'teamsManagement', component: TeamsManagementComponent,resolve:[Resolver], children: [
+                        path: 'teamsManagement', component: TeamsManagementComponent, resolve: [Resolver], children: [
                             {
                                 path: 'teamLeaderList', component: UserListComponent
                             },
-                           
+
                             {
                                 path: 'teamManagement/:teamLeaderId', component: TeamManagementComponent
                             },
@@ -85,34 +86,34 @@ const appRoutes: Routes = [
                 ]
             },
             {
-                path:'teamLeader',component:TeamLeaderComponent,canActivate: [AuthGuard],children:[
+                path: 'teamLeader', component: TeamLeaderComponent, canActivate: [AuthGuard], children: [
                     {
-                        path:'teamWorkers',component:TeamWorkersManagementComponent,resolve:[Resolver],children:[
+                        path: 'workerHoursManagement', component: WorkerHoursManagementComponent, children: [
                             {
-                                path:'list',component:UserListComponent
+                                path: 'projectHoursList', component: ProjectHoursListComponent, resolve: [Resolver]
                             },
                             {
-                                path:'workerHoursManagement/:id',component:WorkerHoursManagementComponent
+                                path: 'workersHours', component: WorkersHoursComponent, resolve: [Resolver]
                             },
                         ]
                     },
 
                     {
-                        path: 'ProjectList', component: ProjectListComponent,resolve:[Resolver]
+                        path: 'ProjectList', component: ProjectListComponent, resolve: [Resolver]
                     },
 
                     {
-                        path:'workersHoursStatus',component:TeamLeaderGraphComponent,resolve:[Resolver]
+                        path: 'workersHoursStatus', component: TeamLeaderGraphComponent, resolve: [Resolver]
                     },
                 ]
             },
             {
-                path:'worker',component:WorkerComponent,canActivate: [AuthGuard],children:[
+                path: 'worker', component: WorkerComponent, canActivate: [AuthGuard], children: [
                     {
-                        path:'home',component:HomeComponent,resolve:[Resolver]
+                        path: 'home', component: HomeComponent, resolve: [Resolver]
                     },
                     {
-                        path:'**',component:HomeComponent
+                        path: '**', component: HomeComponent
                     }
                 ]
             }
@@ -120,7 +121,7 @@ const appRoutes: Routes = [
     },
     //{ path: '', redirectTo:'/taskManagement/login' },
     // otherwise redirect to LoginComponent
-    { path: '**', redirectTo:'taskManagement/login', pathMatch: 'full'  }
+   { path: '**', component:LoginComponent,canActivate: [AuthGuard] }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
