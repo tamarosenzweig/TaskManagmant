@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
-  UserService, DepartmentService,ValidatorsService,
+  UserService, DepartmentService, ValidatorsService,
   User, Department,
   Global
 } from '../../imports';
@@ -36,9 +36,6 @@ export class UserFormComponent implements OnInit {
   @Input()
   user: User;
 
-  @Input()
-  showPassword: boolean = true;
-
   @Output()
   dataEvent: EventEmitter<{ user: User, imageFile: string }>;
 
@@ -47,16 +44,17 @@ export class UserFormComponent implements OnInit {
   //----------------CONSTRUCTOR------------------
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private departmentService: DepartmentService,
-    private validatorsService:ValidatorsService
+    private validatorsService: ValidatorsService
   ) {
     this.isExistEmail = false;
     this.isExistPassword = false;
     this.imageUrl = null;
     this.types = ['text', 'text', 'password', 'password'];
-    this.placeholders=['Use name','Email','Password','Confirm password'];
+    this.placeholders = ['Use name', 'Email', 'Password', 'Confirm password'];
     this.dataEvent = new EventEmitter<{ user: User, imageFile: string }>();
   }
 
@@ -73,22 +71,24 @@ export class UserFormComponent implements OnInit {
   initFormGroup() {
     this.userFormGroup = this.formBuilder.group({
       userName: [this.user.userName, this.validatorsService.stringValidatorArr('user name', 2, 15, /^[A-Za-z]+$/)],
-      email: [this.user.email, this.validatorsService.stringValidatorArr('email', 15, 30, /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/),[this.validatorsService.uniqueUserValidator(this.user,'Email')]],
-      password: [this.user.password, this.validatorsService.stringValidatorArr('password', 5, 10),[this.validatorsService.uniqueUserValidator(this.user,'Password')]],
+      email: [this.user.email, this.validatorsService.stringValidatorArr('email', 15, 30, /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/), [this.validatorsService.uniqueUserValidator(this.user, 'Email')]],
+      password: [this.user.password, this.validatorsService.stringValidatorArr('password', 5, 10), [this.validatorsService.uniqueUserValidator(this.user, 'Password')]],
       confirmPassword: [this.user.confirmPassword, this.validatorsService.stringValidatorArr('confirm password', 5, 10)],
       departmentId: [this.user.departmentId],
       teamLeaderId: [this.user.teamLeaderId],
       isTeamLeader: [this.user.teamLeaderId == null],
     });
-//unique validator
-    if (this.isTeamLeader.value == false) {
-      this.departmentId.setValidators(this.validatorsService.stringValidatorArr('department'));
-      this.teamLeaderId.setValidators(this.validatorsService.stringValidatorArr('team leader'));
-    }
-    if (this.showPassword == false) {
+    if (this.user.userId > 0) {
       this.userFormGroup.removeControl("password");
       this.userFormGroup.removeControl("confirmPassword");
       this.end = 2;
+      //team-leader-validation
+      if (this.user.teamLeaderId !=null) {
+        this.setTeamLeaderAndDepartmentValidators();
+        
+        this.cdr.detectChanges();
+        this.isTeamLeader.setAsyncValidators(this.validatorsService.workerToTeamLeaderValidator(this.user.userId));
+      }
     }
     else {
       this.confirmPassword.setValidators(this.validatorsService.confirmPasswordValidator(this.userFormGroup));
@@ -111,6 +111,10 @@ export class UserFormComponent implements OnInit {
     this.userService.getAllTeamLeaders().subscribe(
       (teamLeaders: User[]) => {
         this.teamLeaders = teamLeaders;
+        if (this.user.userId > 0 && this.user.teamLeaderId == null) {
+          let index: number = teamLeaders.findIndex(teamLeader => teamLeader.userId == this.user.userId);
+          this.teamLeaders.splice(index, 1);
+        }
       },
       err => {
         console.log(err);
@@ -122,12 +126,10 @@ export class UserFormComponent implements OnInit {
     //if the worker is team-leader:
     // the manager doesn't have to enter department and team-leader
     if (this.isTeamLeader.value == true) {
-      this.departmentId.setValidators(null);
-      this.teamLeaderId.setValidators(null);
+      this.removeTeamLeaderAndDepartmentValidators();
     }
     else {
-      this.departmentId.setValidators(this.validatorsService.stringValidatorArr('department'));
-      this.teamLeaderId.setValidators(this.validatorsService.stringValidatorArr('team leader'));
+      this.setTeamLeaderAndDepartmentValidators();
     }
 
     //reset value of departmentId and teamLeaderId
@@ -160,6 +162,16 @@ export class UserFormComponent implements OnInit {
       this.isExistPassword = false;
   }
 
+  setTeamLeaderAndDepartmentValidators() {
+    this.teamLeaderId.setAsyncValidators(this.validatorsService.TeamLeaderValidator(this.user.teamLeaderId, this.user.userId));
+    this.teamLeaderId.setValidators(this.validatorsService.requiredValidator('team leader'));
+    this.departmentId.setAsyncValidators(this.validatorsService.departmentValidator(this.user.teamLeaderId, this.user.userId));
+  }
+  removeTeamLeaderAndDepartmentValidators() {
+    this.teamLeaderId.setAsyncValidators(null);
+    this.teamLeaderId.setValidators(null);
+    this.departmentId.setAsyncValidators(null);
+  }
   //----------------GETTERS-------------------
 
   //getters of the form group controls

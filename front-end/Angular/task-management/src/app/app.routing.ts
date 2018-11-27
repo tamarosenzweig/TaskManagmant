@@ -93,7 +93,7 @@ const appRoutes: Routes = [
                                 path: 'projectHoursList', component: ProjectHoursListComponent, resolve: [Resolver]
                             },
                             {
-                                path: 'workersHours', component: WorkersHoursComponent, resolve: [Resolver]
+                                path: 'workersHours/:projectId', component: WorkersHoursComponent, resolve: [Resolver]
                             },
                         ]
                     },

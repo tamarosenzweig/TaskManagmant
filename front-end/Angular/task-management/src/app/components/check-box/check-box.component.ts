@@ -19,6 +19,9 @@ export class CheckBoxComponent{
  @Output()
  changeEvent: EventEmitter<void>
 
+ //allow access 'Object' type via interpolation
+ objectHolder: typeof Object = Object;
+ 
  //----------------CONSTRUCTOR------------------
 
  constructor() {

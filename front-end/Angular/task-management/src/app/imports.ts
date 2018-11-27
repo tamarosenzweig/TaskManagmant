@@ -28,8 +28,8 @@ export { PermissionService } from './shared/services/permission.service';
 export { PresenceHoursService } from './shared/services/presence-hours.service';
 export { ProjectService } from './shared/services/project.service';
 export { UserService } from './shared/services/user.service';
-export { ValidatorsService } from './shared/services/validators.service';
 export { WorkerHoursService } from './shared/services/worker-hours.service';
+export { ValidatorsService } from './shared/services/validators.service';
 
 //pipes
 export { ProjectFilterPipe } from './shared/pipes/project-filter.pipe';

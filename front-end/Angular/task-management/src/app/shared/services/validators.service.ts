@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ValidatorFn, FormGroup, AsyncValidatorFn } from '@angular/forms';
+import { ValidatorFn, FormGroup, AsyncValidatorFn, AbstractControl } from '@angular/forms';
 import {
-    UserService, ProjectService,
+    UserService, ProjectService, WorkerHoursService,
     User, Project
 } from '../../imports';
 
@@ -12,6 +12,7 @@ export class ValidatorsService {
     constructor(
         private userSrevice: UserService,
         private projectService: ProjectService,
+        private workerHoursService: WorkerHoursService
     ) { }
 
     stringValidatorArr(cntName: string, min?: number, max?: number, pattern?: RegExp): Array<ValidatorFn> {
@@ -93,4 +94,43 @@ export class ValidatorsService {
     workerHoursDepartmentValidator(workerHours: number, departmentHours: number, departmentHoursSum: number): ValidatorFn {
         return f => f.value && departmentHoursSum - workerHours + f.value > departmentHours ? { 'val': 'Hours defined for workers are greater than the hours defined for this department' } : null;
     }
+
+    TeamLeaderValidator(teamLeaderId: number, workerId: number): AsyncValidatorFn {
+        return async f => {
+            if (f.value && f.value != teamLeaderId) {
+                if (teamLeaderId == null) {
+                    let workers: User[] = await this.userSrevice.getAllTeamUsers(workerId).toPromise();
+                    return workers.length > 0 ? { 'val': 'Impossible to change the worker\'s status when he has workers' } : null;
+                }
+                else {
+                    let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId).toPromise();
+                    return hasUncomletedHours ?
+                        { 'val': 'Impossible to change the worker\'s status if he has defined hours' } : null;
+                }
+            }
+            return null;
+        }
+    }
+
+    workerToTeamLeaderValidator(workerId: number): AsyncValidatorFn {
+        return async f => {
+            if (f.value) {
+                let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId).toPromise();
+                return hasUncomletedHours ? { 'val': 'Impossible to change a worker to be a team-leader if he has defined hours' } : null;
+            }
+            return null;
+        }
+    }
+
+    departmentValidator(departmentId: number, workerId: number): AsyncValidatorFn {
+        return async f => {
+            if (f.value && f.value != departmentId) {  
+                    let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId).toPromise();
+                    return hasUncomletedHours ?
+                        { 'val': 'Impossible to move a department worker if he has incomplete hours' } : null;
+                }
+            return null;
+        }
+    }
+
 }

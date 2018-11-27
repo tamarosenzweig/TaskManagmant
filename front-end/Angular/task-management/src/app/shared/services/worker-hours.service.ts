@@ -31,6 +31,12 @@ export class WorkerHoursService {
         let url: string = `${this.basicURL}/getAllWorkerHours?workerId=${workerId}`;
         return this.http.get(url);
     }
+
+      //GET
+      hasUncomletedHours(workerId: number): Observable<any> {
+        let url: string = `${this.basicURL}/hasUncomletedHours?workerId=${workerId}`;
+        return this.http.get(url);
+    }
  
     //PUT
     editWorkersHours(workerHours: WorkerHours): Observable<any> {

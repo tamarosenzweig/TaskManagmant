@@ -23,8 +23,7 @@ export class TmpProjectHoursComponent implements OnInit {
   }
 
   updateWorkersHours() {
-    this.router.navigate(['taskManagement/teamLeader/workerHoursManagement/workersHours']);
-      this.projectService.project=this.project;
+    this.router.navigate(['taskManagement/teamLeader/workerHoursManagement/workersHours',this.project.projectId]);
   }
 
 }

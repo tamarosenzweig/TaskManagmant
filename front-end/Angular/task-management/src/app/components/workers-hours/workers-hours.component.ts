@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AsEnumerable } from 'linq-es2015';
 import { MatDialog } from '@angular/material';
 import {
@@ -22,6 +23,7 @@ export class WorkersHoursComponent implements OnInit {
   //----------------CONSTRUCTOR------------------
 
   constructor(
+    private activatedRoute:ActivatedRoute,
     private projectService: ProjectService,
     private presenceHoursService: PresenceHoursService,
     private workerHoursService:WorkerHoursService,
@@ -31,9 +33,19 @@ export class WorkersHoursComponent implements OnInit {
   //----------------METHODS-------------------
 
   ngOnInit() {
-    this.project = this.projectService.project;
-    this.workersHours = AsEnumerable(this.project.departmentsHours).Sum(departmentHours => AsEnumerable(departmentHours.department.workers).Sum(worker => worker.workerHours[0].numHours));
-    this.presence = this.presenceHoursService.getPresenceHoursForProject(this.project);
+    let projectId:number;
+    this.activatedRoute.params.subscribe(param=>projectId=param['projectId']);
+        this.projectService.getProjectById(projectId).subscribe(
+          (project:Project)=>{
+            this.projectService.initDates([project]);
+            this.project=project;
+            this.workersHours = AsEnumerable(this.project.departmentsHours).Sum(departmentHours => AsEnumerable(departmentHours.department.workers).Sum(worker => worker.workerHours[0].numHours));
+            this.presence = this.presenceHoursService.getPresenceHoursForProject(this.project);        
+          },
+          err=>{
+            console.log(err);
+          }
+        );
   }
 
   getPresenceHours(worker: User) {

@@ -12,7 +12,6 @@ export class ProjectService {
 
     filterSubject:Subject<ProjectFilter>;
 
-    project:Project;
     //----------------CONSTRUCTOR------------------
 
     constructor(private http: HttpClient) { 
@@ -45,6 +44,11 @@ export class ProjectService {
         return this.http.get(url);
     }
 
+    //GET
+    getProjectById(projectId:number): Observable<any> {
+        let url: string = `${this.basicURL}/getProjectById?projectId=${projectId}`;
+        return this.http.get(url);
+    }
     //POST
     checkUniqueValidation(project: Project): Observable<any> {
         let url: string = `${this.basicURL}/checkUniqueValidation`;

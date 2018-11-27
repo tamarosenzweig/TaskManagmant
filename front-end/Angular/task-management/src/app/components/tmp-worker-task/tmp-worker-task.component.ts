@@ -28,6 +28,9 @@ export class TmpWorkerTaskComponent {
   btnIcon: string;
   presenceHours: PresenceHours;
 
+  presenceSum: number;
+  stopHandle;
+  complete:boolean;
   //----------------CONSTRUCTOR------------------
 
   constructor(private presenceHoursService: PresenceHoursService) {
@@ -35,23 +38,17 @@ export class TmpWorkerTaskComponent {
     this.btnMessage = 'start your task';
     this.isStartedEvent = new EventEmitter<boolean>();
     this.btnIcon = 'fa fa-play';
+    this.complete=false;
   }
 
   //----------------METHODS-------------------
 
-  btnTaskClick() {
+   btnTaskClick() {
     if (this.isStarted == false) {
-      this.isStarted = true;
-      this.btnMessage = 'stop your task';
-      this.btnIcon='fa fa-pause';
-      this.addPresenceHours();
+      this.startTask();
     }
-
     else {
-      this.isStarted = false;
-      this.btnMessage = 'start your task';
-      this.btnIcon = 'fa fa-play';
-      this.editPresenceHours();
+      this.stopTask();
     }
     this.isStartedEvent.emit(this.isStarted);
   }
@@ -80,5 +77,26 @@ export class TmpWorkerTaskComponent {
         console.log(err);
       }
     );
+  }
+  async startTask() {
+    this.isStarted = true;
+    this.btnMessage = 'stop your task';
+    this.btnIcon = 'fa fa-pause';
+    this.addPresenceHours();
+    //check when to stop automatically
+    this.presenceSum = await this.presenceHoursService.getPresenceHoursSum(this.workerHour.projectId,this.workerHour.workerId).toPromise();
+    let timeOut:number=(this.workerHour.numHours-this.presenceSum)*60*60*1000
+    this.stopHandle = setTimeout(() => {
+      this.btnTaskClick();
+      this.complete=true;
+      alert("Your task is complete, you can turn to another task.if you need more time to this task pleas contact your team-leader")
+    }, timeOut);
+  }
+  stopTask() {
+    this.isStarted = false;
+    this.btnMessage = 'start your task';
+    this.btnIcon = 'fa fa-play';
+    this.editPresenceHours();
+    clearTimeout(this.stopHandle);
   }
 }
