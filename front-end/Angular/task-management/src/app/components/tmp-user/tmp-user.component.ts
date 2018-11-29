@@ -1,7 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { UserService, User, eListKind, Global, DialogComponent } from '../../imports';
+import {
+  UserService, WorkerHoursService, ProjectService,
+  User, eListKind,
+  Global, DialogComponent, Project
+} from '../../imports';
 
 @Component({
   selector: 'app-tmp-user',
@@ -28,7 +32,9 @@ export class TmpUserComponent implements OnInit {
   constructor(
     private router: Router,
     public dialog: MatDialog,
-    private userService: UserService
+    private userService: UserService,
+    private workerHoursService: WorkerHoursService,
+    private projectService: ProjectService
   ) { }
 
   //----------------METHODS-------------------
@@ -45,21 +51,64 @@ export class TmpUserComponent implements OnInit {
   edit() {
     this.router.navigate(['taskManagement/manager/userManagement/editUser', this.user.userId]);
   }
-
-  showDialog() {
+  delete() {
+    this.showDialog('Are you sure you want to delete this worker?',false);
+  }
+  showDialog(msg: string,autoClosing:boolean) {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '35%',
       data: {
         title: 'Delete Worker',
-        msg: 'Are you sure you want to delete this worker?',
+        msg,
+        autoClosing
       }
     });
 
     dialogRef.afterClosed().subscribe((isConfirmed: boolean) => {
       console.log(isConfirmed)
       if (isConfirmed)
-        this.deleteUser();
+        this.confirmedDelete();
     });
+  }
+
+  async confirmedDelete() {
+    //if this user is team-worker and he has incomlete hours we can't delete him
+    if (this.user.teamLeaderId != null) {
+      let projects: Project[] = await this.projectService.getProjectsByTeamLeaderId(this.user.teamLeaderId).toPromise();
+      let teamProjectIdList: number[] = projects.map(project => project.projectId);
+      this.workerHoursService.hasUncomletedHours(this.user.userId, teamProjectIdList)
+        .subscribe(
+          (hasUncomletedHours: boolean) => {
+            if (hasUncomletedHours) {
+              this.showDialog('Immposible to delete a worker who has incomplete hours',true);
+            }
+            else {
+              this.deleteUser();
+            }
+          },
+          err => {
+            console.log(err);
+          }
+        );
+    }
+    //if  this user is a team-leader and he has workers or projects we can't delete him
+    else {
+      let hasWorkes: boolean = await this.userService.hasWorkes(this.user.userId).toPromise();
+      if (hasWorkes) {
+        let msg: string = 'Impossible to delete team-leader who has workers';
+        this.showDialog(msg,true);
+        return;
+      }
+      else {
+        let hasProjects: boolean = await this.projectService.hasProjects(this.user.userId).toPromise();
+        if (hasProjects) {
+          let msg: string = 'Impossible to delete team-leader who has projects';
+          this.showDialog(msg,true);
+          return;
+        }
+      }
+      this.deleteUser();
+    }
   }
 
   deleteUser() {

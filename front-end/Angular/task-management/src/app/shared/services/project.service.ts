@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
-import { Project,ProjectFilter, Global } from '../../imports';
+import { Project, ProjectFilter, Global } from '../../imports';
 
 @Injectable()
 export class ProjectService {
@@ -10,12 +10,12 @@ export class ProjectService {
 
     basicURL: string = Global.BASE_ENDPOINT + `/project`;
 
-    filterSubject:Subject<ProjectFilter>;
+    filterSubject: Subject<ProjectFilter>;
 
     //----------------CONSTRUCTOR------------------
 
-    constructor(private http: HttpClient) { 
-        this.filterSubject=new Subject<ProjectFilter>();
+    constructor(private http: HttpClient) {
+        this.filterSubject = new Subject<ProjectFilter>();
     }
 
     //----------------METHODS-------------------
@@ -45,8 +45,13 @@ export class ProjectService {
     }
 
     //GET
-    getProjectById(projectId:number): Observable<any> {
+    getProjectById(projectId: number): Observable<any> {
         let url: string = `${this.basicURL}/getProjectById?projectId=${projectId}`;
+        return this.http.get(url);
+    }
+    //GET
+    hasProjects(teamLeaderId: number): Observable<any> {
+        let url: string = `${this.basicURL}/hasProjects?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
     //POST

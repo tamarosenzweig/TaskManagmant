@@ -8,7 +8,7 @@
     </h2>
     <hr class="colorgraph">
     <mat-card-content>
-      <form [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
+      <form *ngIf="userFormGroup" [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
 
         <!-- userName,email,password,confirmPassword -->
         <div class="row">
@@ -20,16 +20,18 @@
           <div class="col-md-6">
             <div class="row">
               <!-- isTeamLeader -->
-              <app-check-box  [checkControl]="isTeamLeader" label="Is a team-leader" (changeEvent)="teamLeader()"></app-check-box>
+              <app-check-box [checkControl]="isTeamLeader" label="Is a team-leader"></app-check-box>
             </div>
             <div>
-              <!-- departmentId -->
-              <app-select *ngIf="!isTeamLeader.value" [list]="departments" [key]="'departmentId'" [value]="'departmentName'" [formControl]="departmentId"
-                [placeholder]="'Department'" ngDefaultControl></app-select>
+              <div *ngIf="!isTeamLeader.value">
+                <!-- departmentId -->
+                <app-select  [list]="departments" key="departmentId" value="departmentName" [formControl]="departmentId"
+                  placeholder="Department" ngDefaultControl></app-select>
 
-              <!-- teamLeaderId -->
-              <app-select *ngIf="!isTeamLeader.value" [list]="teamLeaders" [key]="'userId'" [value]="'userName'" [formControl]="teamLeaderId"
-                [placeholder]="'Team leader'" ngDefaultControl></app-select>
+                <!-- teamLeaderId -->
+                <app-select [list]="teamLeaders" key="userId" value="userName" [formControl]="teamLeaderId"
+                  placeholder="Team leader" ngDefaultControl></app-select>
+              </div>
             </div>
           </div>
 
@@ -38,10 +40,9 @@
         </div>
 
         <hr class="colorgraph">
-        <div class="col-xs-6 col-md-6">
-          <button type="submit" mat-flat-button color="primary" class="btn btn-primary btn-block btn-lg" [disabled]="userFormGroup.invalid||isExistEmail || isExistPassword">{{caption}}</button>
-        </div>
-
+        <button mat-raised-button color="primary" class="col-md-12" [disabled]="userFormGroup.invalid||isExistEmail || isExistPassword">
+          {{caption}}
+        </button>
       </form>
     </mat-card-content>
   </div>

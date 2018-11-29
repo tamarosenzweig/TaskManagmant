@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ValidatorFn, FormGroup, AsyncValidatorFn, AbstractControl } from '@angular/forms';
+import { asEnumerable } from 'linq-es2015';
+import { FormGroup,FormControl,ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 import {
     UserService, ProjectService, WorkerHoursService,
     User, Project
@@ -20,7 +21,7 @@ export class ValidatorsService {
             f => !f.value ? { 'val': `${cntName} is required` } : null,
             f => f.value && max && f.value.length > max ? { 'val': `'${cntName}' is max ${max} chars` } : null,
             f => f.value && min && f.value.length < min ? { 'val': `'${cntName}' is min ${min} chars` } : null,
-            f => f.value && pattern && !f.value.match(pattern) ? { 'val': `'${cntName}' is contain only english letter` } : null
+            f => f.value && pattern && !f.value.match(pattern) ? { 'val': `'${cntName}' format is not correct` } : null
         ];
     }
 
@@ -86,7 +87,8 @@ export class ValidatorsService {
         }
     }
     requiredValidator(ctrlName: string): ValidatorFn {
-        return f => !f.value ? { 'val': `'${ctrlName}'  is required` } : null;
+        return f =>{ 
+            return !f.value ? { 'val': `'${ctrlName}'  is required` } : null};
     }
     workerHoursValidator(presenceHours: number): ValidatorFn {
         return f => f.value && f.value < presenceHours ? { 'val': 'Worker hours can\'t be less than presence hours' } : null;
@@ -95,7 +97,7 @@ export class ValidatorsService {
         return f => f.value && departmentHoursSum - workerHours + f.value > departmentHours ? { 'val': 'Hours defined for workers are greater than the hours defined for this department' } : null;
     }
 
-    TeamLeaderValidator(teamLeaderId: number, workerId: number): AsyncValidatorFn {
+    TeamLeaderValidator(teamLeaderId: number, workerId: number,teamProjectIdList:number[]): AsyncValidatorFn {
         return async f => {
             if (f.value && f.value != teamLeaderId) {
                 if (teamLeaderId == null) {
@@ -103,7 +105,7 @@ export class ValidatorsService {
                     return workers.length > 0 ? { 'val': 'Impossible to change the worker\'s status when he has workers' } : null;
                 }
                 else {
-                    let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId).toPromise();
+                    let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId,teamProjectIdList).toPromise();
                     return hasUncomletedHours ?
                         { 'val': 'Impossible to change the worker\'s status if he has defined hours' } : null;
                 }
@@ -112,25 +114,32 @@ export class ValidatorsService {
         }
     }
 
-    workerToTeamLeaderValidator(workerId: number): AsyncValidatorFn {
+    workerToTeamLeaderValidator(workerId: number,teamProjectIdList:number[]): AsyncValidatorFn {
         return async f => {
             if (f.value) {
-                let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId).toPromise();
+                let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId,teamProjectIdList).toPromise();
                 return hasUncomletedHours ? { 'val': 'Impossible to change a worker to be a team-leader if he has defined hours' } : null;
             }
             return null;
         }
     }
-
-    departmentValidator(departmentId: number, workerId: number): AsyncValidatorFn {
+    departmentValidator(departmentId: number, workerId: number,teamProjectIdList:number[]): AsyncValidatorFn {
         return async f => {
             if (f.value && f.value != departmentId) {  
-                    let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId).toPromise();
+                    let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(workerId,teamProjectIdList).toPromise();
                     return hasUncomletedHours ?
                         { 'val': 'Impossible to move a department worker if he has incomplete hours' } : null;
                 }
             return null;
         }
+    }
+    
+    sumValidator(ctrlName:string,min:number):ValidatorFn{
+       return f=>{
+            let sum:number=asEnumerable(Object.values((<FormGroup>f).controls)).Sum(x => Number((<FormControl>x).value));
+            return sum<min?{ 'val':`${ctrlName} must be greater than ${min-1}`}:null;
+        };
+
     }
 
 }

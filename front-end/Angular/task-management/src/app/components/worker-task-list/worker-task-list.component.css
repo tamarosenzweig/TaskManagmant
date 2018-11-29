@@ -1,4 +1,7 @@
 .container{
-    width:55%;
+    width:65%;
     margin: auto;
+}
+.col-md-2{
+    width:20%;
 }

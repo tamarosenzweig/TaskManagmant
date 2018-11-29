@@ -1,17 +1,20 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
-  UserService, DepartmentService, ValidatorsService,
+  UserService, DepartmentService, ProjectService, ValidatorsService,
   User, Department,
   Global
 } from '../../imports';
+import { Project } from '../../shared/models/project.model';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./../../../form-style.css']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, AfterViewInit {
+  ngAfterViewInit(): void {
+  }
 
   //----------------PROPERTIRS-------------------
 
@@ -28,6 +31,7 @@ export class UserFormComponent implements OnInit {
 
   departments: Department[];
   teamLeaders: User[];
+  teamProjectIdList: number[];
   types: string[];
   placeholders: string[];
   @Input()
@@ -44,10 +48,10 @@ export class UserFormComponent implements OnInit {
   //----------------CONSTRUCTOR------------------
 
   constructor(
-    private cdr: ChangeDetectorRef,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private departmentService: DepartmentService,
+    private projectService: ProjectService,
     private validatorsService: ValidatorsService
   ) {
     this.isExistEmail = false;
@@ -63,14 +67,13 @@ export class UserFormComponent implements OnInit {
   ngOnInit() {
     if (this.user.profileImageName != null)
       this.imageUrl = `${Global.UPLOADS}/UsersProfiles/${this.user.profileImageName}`;
-    this.initFormGroup();
     this.getAllDepartments();
     this.getAllTeamLeaders();
   }
 
-  initFormGroup() {
+  async initFormGroup() {
     this.userFormGroup = this.formBuilder.group({
-      userName: [this.user.userName, this.validatorsService.stringValidatorArr('user name', 2, 15, /^[A-Za-z]+$/)],
+      userName: [this.user.userName, this.validatorsService.stringValidatorArr('user name', 2, 15, /^[A-Za-z0-9]+$/)],
       email: [this.user.email, this.validatorsService.stringValidatorArr('email', 15, 30, /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/), [this.validatorsService.uniqueUserValidator(this.user, 'Email')]],
       password: [this.user.password, this.validatorsService.stringValidatorArr('password', 5, 10), [this.validatorsService.uniqueUserValidator(this.user, 'Password')]],
       confirmPassword: [this.user.confirmPassword, this.validatorsService.stringValidatorArr('confirm password', 5, 10)],
@@ -83,17 +86,23 @@ export class UserFormComponent implements OnInit {
       this.userFormGroup.removeControl("confirmPassword");
       this.end = 2;
       //team-leader-validation
-      if (this.user.teamLeaderId !=null) {
+      if (this.user.teamLeaderId != null) {
+        {
+          let projects: Project[] = await this.projectService.getProjectsByTeamLeaderId(this.user.teamLeaderId).toPromise();
+          this.teamProjectIdList = projects.map(project => project.projectId);
+        }
         this.setTeamLeaderAndDepartmentValidators();
-        
-        this.cdr.detectChanges();
-        this.isTeamLeader.setAsyncValidators(this.validatorsService.workerToTeamLeaderValidator(this.user.userId));
+        this.isTeamLeader.setAsyncValidators(this.validatorsService.workerToTeamLeaderValidator(this.user.userId, this.teamProjectIdList));
       }
     }
     else {
       this.confirmPassword.setValidators(this.validatorsService.confirmPasswordValidator(this.userFormGroup));
       this.end = 4;
     }
+    this.isTeamLeader.valueChanges.subscribe(
+      () => {
+        this.teamLeader();
+      });
   }
 
   getAllDepartments() {
@@ -115,6 +124,8 @@ export class UserFormComponent implements OnInit {
           let index: number = teamLeaders.findIndex(teamLeader => teamLeader.userId == this.user.userId);
           this.teamLeaders.splice(index, 1);
         }
+        this.initFormGroup();
+
       },
       err => {
         console.log(err);
@@ -123,18 +134,20 @@ export class UserFormComponent implements OnInit {
   }
 
   teamLeader() {
-    //if the worker is team-leader:
-    // the manager doesn't have to enter department and team-leader
-    if (this.isTeamLeader.value == true) {
-      this.removeTeamLeaderAndDepartmentValidators();
+    Promise.resolve(null).then(() => {
+      //if the worker is team-leader:
+      // the manager doesn't have to enter department and team-leader
+      if (this.isTeamLeader.value == true) {
+        this.removeTeamLeaderAndDepartmentValidators();
+      }
+      else {
+        this.setTeamLeaderAndDepartmentValidators();
+      }
+      //reset value of departmentId and teamLeaderId
+      this.departmentId.setValue(null);
+      this.teamLeaderId.setValue(null);
     }
-    else {
-      this.setTeamLeaderAndDepartmentValidators();
-    }
-
-    //reset value of departmentId and teamLeaderId
-    this.departmentId.setValue(null);
-    this.teamLeaderId.setValue(null);
+    );
   }
 
   onSubmit() {
@@ -163,14 +176,16 @@ export class UserFormComponent implements OnInit {
   }
 
   setTeamLeaderAndDepartmentValidators() {
-    this.teamLeaderId.setAsyncValidators(this.validatorsService.TeamLeaderValidator(this.user.teamLeaderId, this.user.userId));
+    this.teamLeaderId.setAsyncValidators(this.validatorsService.TeamLeaderValidator(this.user.teamLeaderId, this.user.userId, this.teamProjectIdList));
     this.teamLeaderId.setValidators(this.validatorsService.requiredValidator('team leader'));
-    this.departmentId.setAsyncValidators(this.validatorsService.departmentValidator(this.user.teamLeaderId, this.user.userId));
+    this.departmentId.setAsyncValidators(this.validatorsService.departmentValidator(this.user.departmentId, this.user.userId, this.teamProjectIdList));
+    this.departmentId.setValidators(this.validatorsService.requiredValidator('department'));
   }
   removeTeamLeaderAndDepartmentValidators() {
     this.teamLeaderId.setAsyncValidators(null);
     this.teamLeaderId.setValidators(null);
     this.departmentId.setAsyncValidators(null);
+    this.departmentId.setValidators(null);
   }
   //----------------GETTERS-------------------
 

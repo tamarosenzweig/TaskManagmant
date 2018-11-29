@@ -36,36 +36,17 @@ export class UserListComponent implements OnInit {
       this.getAllTeamLeaders();
       this.listKind = eListKind.TEAM_LEADERS;
     }
-    else {
-      if (this.activatedRoute.snapshot['_routerState'].url == '/taskManagement/teamLeader/teamWorkers/list') {
-        this.getAllTeamWorkers();
-        this.listKind=eListKind.TEAM_WORKERS;
-      }
 
       else {
         this.getAllUsers();
         this.listKind=eListKind.ALL_WORKERS;
       }
-    }
   }
   
   getAllTeamLeaders() {
     this.userService.getAllTeamLeaders().subscribe(
       (users: User[]) => {
         this.users = users;
-      },
-      err => {
-        console.log(err);
-      }
-    );
-  }
-
-  getAllTeamWorkers() {
-    let teamLeaderId:number=(<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
-
-    this.userService.getAllTeamUsers(teamLeaderId).subscribe(
-      (users: User[]) => {
-        this.users = users.filter(user=>user.teamLeaderId==teamLeaderId);
       },
       err => {
         console.log(err);

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import AsEnumerable from 'linq-es2015';
 import { Global, PresenceHours, Project, Department, User } from '../../imports';
 
@@ -10,10 +10,12 @@ export class PresenceHoursService {
     //----------------PROPERTIRS-------------------
 
     basicURL: string = Global.BASE_ENDPOINT + `/presenceHours`;
-
+    UpdatePresenceSubject:Subject<void>;
     //----------------CONSTRUCTOR------------------
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { 
+        this.UpdatePresenceSubject=new Subject<void>();
+    }
 
     //----------------METHODS-------------------
 

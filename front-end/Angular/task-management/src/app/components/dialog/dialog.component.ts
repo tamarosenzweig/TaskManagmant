@@ -22,7 +22,7 @@ export class DialogComponent{
       if(this.data.autoClosing)
       setTimeout(() => {
         this.close();
-      }, 3000);
+      }, 10000);
     }
 
   //----------------METHODS------------------

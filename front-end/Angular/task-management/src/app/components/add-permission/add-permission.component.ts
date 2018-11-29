@@ -40,7 +40,6 @@ export class AddPermissionComponent implements OnInit {
   }
 
   initProjectList() {
-    console.log(this.user);
     this.projectService.getAllProjects().subscribe(
       (projects: Project[]) => {
         let teamLeaderId:number=this.user.teamLeaderId==null?this.user.userId:this.user.teamLeaderId;
@@ -59,7 +58,7 @@ export class AddPermissionComponent implements OnInit {
     this.permissionService.addPemission(permission).subscribe(
       (permissionId: number) => {
         if (permissionId>0){
-          permission.permissonId=permissionId;
+          permission.permissionId=permissionId;
           permission.worker=this.user;
           permission.project=this.projects.find(project=>project.projectId==this.projectControl.value);
           this.permissionService.addPermissionSubject.next(permission);

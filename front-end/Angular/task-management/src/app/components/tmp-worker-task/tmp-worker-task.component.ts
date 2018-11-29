@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import {
   PresenceHoursService,
   WorkerHours, PresenceHours, User,
-  Global
+  Global, DialogComponent
 } from '../../imports';
 
 @Component({
@@ -10,8 +11,8 @@ import {
   templateUrl: './tmp-worker-task.component.html',
   styleUrls: ['./tmp-worker-task.component.css']
 })
-export class TmpWorkerTaskComponent {
-
+export class TmpWorkerTaskComponent implements OnInit {
+ 
   //----------------PROPERTIRS-------------------
 
   @Input()
@@ -23,27 +24,34 @@ export class TmpWorkerTaskComponent {
   @Output()
   isStartedEvent: EventEmitter<boolean>;
 
+  
   isStarted: boolean;
   btnMessage: string;
   btnIcon: string;
   presenceHours: PresenceHours;
 
   presenceSum: number;
+  presence:Date;
   stopHandle;
-  complete:boolean;
+  complete: boolean;
+
   //----------------CONSTRUCTOR------------------
 
-  constructor(private presenceHoursService: PresenceHoursService) {
+  constructor(private dialog: MatDialog,
+    private presenceHoursService: PresenceHoursService) {
     this.isStarted = false;
     this.btnMessage = 'start your task';
     this.isStartedEvent = new EventEmitter<boolean>();
     this.btnIcon = 'fa fa-play';
-    this.complete=false;
+    this.complete = false;
   }
 
   //----------------METHODS-------------------
 
-   btnTaskClick() {
+  ngOnInit() {
+   this.updatePresenceSum();
+  }
+  btnTaskClick() {
     if (this.isStarted == false) {
       this.startTask();
     }
@@ -71,7 +79,7 @@ export class TmpWorkerTaskComponent {
     this.presenceHours.endHour = new Date();
     this.presenceHoursService.editPresenceHours(this.presenceHours).subscribe(
       () => {
-
+        this.updatePresenceSum();
       },
       err => {
         console.log(err);
@@ -84,12 +92,11 @@ export class TmpWorkerTaskComponent {
     this.btnIcon = 'fa fa-pause';
     this.addPresenceHours();
     //check when to stop automatically
-    this.presenceSum = await this.presenceHoursService.getPresenceHoursSum(this.workerHour.projectId,this.workerHour.workerId).toPromise();
-    let timeOut:number=(this.workerHour.numHours-this.presenceSum)*60*60*1000
+    let timeOut: number = (this.workerHour.numHours - this.presenceSum) * 60 * 60 * 1000
     this.stopHandle = setTimeout(() => {
       this.btnTaskClick();
-      this.complete=true;
-      alert("Your task is complete, you can turn to another task.if you need more time to this task pleas contact your team-leader")
+      this.complete = true;
+      this.showDialog()
     }, timeOut);
   }
   stopTask() {
@@ -98,5 +105,29 @@ export class TmpWorkerTaskComponent {
     this.btnIcon = 'fa fa-play';
     this.editPresenceHours();
     clearTimeout(this.stopHandle);
+    this.presenceHoursService.UpdatePresenceSubject.next();
   }
+
+  showDialog() {
+    this.dialog.open(DialogComponent, {
+      width: '50%',
+      data: {
+        title: 'Your task is complete',
+        msg: 'You can turn to another task.if you need more time to this task pleas contact your team-leader',
+        autoClosing: true
+      }
+    });
+  }
+  updatePresenceSum(){
+    this.presenceHoursService.getPresenceHoursSum(this.workerHour.projectId, this.workerHour.workerId).subscribe(
+      (presenceSum: number) => {
+        this.presenceSum = presenceSum;
+        this.presence=new Date();
+        this.presence.setHours(0,0,this.presenceSum*60*60,0);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+   }
 }

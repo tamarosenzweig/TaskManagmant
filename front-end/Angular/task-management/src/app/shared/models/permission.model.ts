@@ -2,7 +2,7 @@ import { User,Project } from '../../imports';
 
 export class Permission {
     constructor(
-        public permissonId:number,
+        public permissionId:number,
         public workerId:number,
         public projectId:number,
         public isActive:boolean,

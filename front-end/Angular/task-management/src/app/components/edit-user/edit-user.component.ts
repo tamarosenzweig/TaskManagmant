@@ -60,6 +60,8 @@ export class EditUserComponent implements OnInit {
     this.user.email = user.email;
     this.user.departmentId = user.departmentId;
     this.user.teamLeaderId = user.teamLeaderId;
+    user.department=null;
+    user.teamLeader=null;
   }
 
   uploadImage(data: { user: User, imageFile: string }) {

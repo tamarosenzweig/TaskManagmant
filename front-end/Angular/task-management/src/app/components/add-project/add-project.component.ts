@@ -55,7 +55,7 @@ export class AddProjectComponent implements OnInit {
 
   initFormGroup() {
     this.projectFormGroup = this.formBuilder.group({
-      projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z]+$/), this.validatorsService.uniqueProjectValidator('ProjectName')],
+      projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('ProjectName')],
       customerId: ['', this.validatorsService.stringValidatorArr('customer')],
       teamLeaderId: ['', this.validatorsService.stringValidatorArr('team leader')],
       totalHours: this.getDepartmentControls(),
@@ -101,9 +101,10 @@ export class AddProjectComponent implements OnInit {
   }
 
   getDepartmentControls(): FormGroup {
-    let formGroup: FormGroup = new FormGroup({});
+    let formGroup: FormGroup = new FormGroup({},this.validatorsService.sumValidator('total hours',1));
     this.departments.forEach(department => {
       let formControl: FormControl = new FormControl(null, this.validatorsService.numberValidatorArr(department.departmentName, 0));
+      formControl.updateValueAndValidity();
       formGroup.addControl(department.departmentName, formControl);
     });
     return formGroup;

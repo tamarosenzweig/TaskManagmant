@@ -6,7 +6,6 @@ export class WorkerHours {
         public projectId: number,
         public workerId: number,
         public numHours: number,
-        public isActive:boolean,
         public project?: Project,
         public worker?: User
     ) { }

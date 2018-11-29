@@ -32,10 +32,13 @@ export class WorkerHoursService {
         return this.http.get(url);
     }
 
-      //GET
-      hasUncomletedHours(workerId: number): Observable<any> {
-        let url: string = `${this.basicURL}/hasUncomletedHours?workerId=${workerId}`;
-        return this.http.get(url);
+      //POST
+      hasUncomletedHours(workerId: number,projectIdList:number[]): Observable<any> {
+        let url: string = `${this.basicURL}/hasUncomletedHours`;
+        let formData:FormData=new FormData()
+        formData.append('workerId',workerId.toString());
+        formData.append('projectIdList',JSON.stringify(projectIdList));
+        return this.http.post(url,formData);
     }
  
     //PUT

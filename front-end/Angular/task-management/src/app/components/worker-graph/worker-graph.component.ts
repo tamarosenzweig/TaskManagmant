@@ -14,7 +14,13 @@ export class WorkerGraphComponent implements OnInit {
 
   //----------------CONSTRUCTOR------------------
 
-  constructor(private presenceHoursService: PresenceHoursService) { }
+  constructor(private presenceHoursService: PresenceHoursService) {
+    this.presenceHoursService.UpdatePresenceSubject.subscribe(
+      ()=>{
+        this.getPresenceStatusPerProjects();
+      }
+    )
+   }
 
   //----------------METHODS-------------------
 

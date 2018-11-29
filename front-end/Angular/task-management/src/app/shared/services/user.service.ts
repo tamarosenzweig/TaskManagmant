@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import * as sha256 from 'async-sha256';
-import { MenuService, User, eStatus,Email, Global } from '../../imports';
+import { MenuService, User, eStatus, Email, Global } from '../../imports';
 
 @Injectable()
 export class UserService {
@@ -32,7 +32,7 @@ export class UserService {
 
     //GET
     getAllUsers(): Observable<any> {
-        let managerId:number=(<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+        let managerId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
         let url: string = `${this.basicURL}/getAllUsers?managerId=${managerId}`;
         return this.http.get(url);
     }
@@ -50,7 +50,7 @@ export class UserService {
 
     //GET
     getAllTeamLeaders(): Observable<any> {
-        let managerId:number=(<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+        let managerId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
         let url: string = `${this.basicURL}/getAllTeamLeaders?managerId=${managerId}`;
         return this.http.get(url);
     }
@@ -58,6 +58,11 @@ export class UserService {
     //GET
     getUserById(userId: number): Observable<any> {
         let url: string = `${this.basicURL}/getUserById?userId=${userId}`;
+        return this.http.get(url);
+    }
+    //GET
+    hasWorkes(teamLeaderId: number): Observable<any> {
+        let url: string = `${this.basicURL}/hasWorkes?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
@@ -76,8 +81,8 @@ export class UserService {
     //POST
     deleteUser(user: User): Observable<any> {
         //move user profile image to archives if exist
-        if(user.profileImageName)
-        this.removeUploadedImage(user.profileImageName,true);
+        if (user.profileImageName)
+            this.removeUploadedImage(user.profileImageName, true);
         let url: string = `${this.basicURL}/deleteUser?userId=${user.userId}`;
         return this.http.post(url, null);
     }
@@ -91,16 +96,16 @@ export class UserService {
     }
 
     //POST
-    removeUploadedImage(profileImageName: string,moveToArchives:boolean): Observable<any> {
+    removeUploadedImage(profileImageName: string, moveToArchives: boolean): Observable<any> {
         let url: string = this.basicURL + `/removeUploadedImage`;
         let formData: FormData = new FormData();
         formData.append('profileImageName', profileImageName);
-        formData.append('moveToArchives',String(moveToArchives));
+        formData.append('moveToArchives', String(moveToArchives));
         return this.http.post(url, formData);
     }
 
     //POST
-    sendEmail(email:Email): Observable<any> {
+    sendEmail(email: Email): Observable<any> {
         let url: string = this.basicURL + `/sendEmail`;
         let formData: FormData = new FormData();
         formData.append('email', JSON.stringify(email));

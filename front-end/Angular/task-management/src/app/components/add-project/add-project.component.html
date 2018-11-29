@@ -14,52 +14,52 @@
           <div class="row">
             <div class="col-md-6">
               <!-- projectName -->
-              <app-input [formControl]="projectName" [placeholder]="'Project name'" ngDefaultControl></app-input>
+              <app-input [formControl]="projectName" placeholder="Project name" ngDefaultControl></app-input>
 
               <!-- customerId -->
-              <app-select [list]="customers" [key]="'customerId'" [value]="'customerName'" [formControl]="customerId" [placeholder]="'Customer'"
-                ngDefaultControl></app-select>
+              <app-select [list]="customers" key="customerId" value="customerName" [formControl]="customerId" placeholder="Customer" ngDefaultControl></app-select>
 
               <!-- teamLeaderId -->
-              <app-select [list]="teamLeaders" [key]="'userId'" [value]="'userName'" [formControl]="teamLeaderId" [placeholder]="'Team leader'"
-                (onChangeEvent)="onTeamLeaderChange()" ngDefaultControl></app-select>
+              <app-select [list]="teamLeaders" key="userId" value="userName" [formControl]="teamLeaderId" placeholder="Team leader" (onChangeEvent)="onTeamLeaderChange()"
+                ngDefaultControl></app-select>
 
-              <!-- permissions -->
-              <app-select-workers *ngIf="extraWorkers" [workers]="extraWorkers" [title]="'Add permission to extra workers:'" (selectedWorkerEvent)="getSelectedWorkers($event)"></app-select-workers>
+              <!-- startDate -->
+              <app-date-picker [date]="startDate" placeholder="Start date"></app-date-picker>
+
+              <!-- endDate -->
+              <app-date-picker [date]="endDate" placeholder="End date"></app-date-picker>
+
             </div>
             <div class="col-md-6">
-                <!-- departmentsHours -->
-                <label class="group">Enter hours to every department: </label>
-                <div *ngIf="departments" formGroupName="totalHours">
-                  <app-input *ngFor="let department of departments" [formControl]="totalHours.controls[department.departmentName]" [type]="'number'"
-                    [placeholder]="department.departmentName" [min]="0" ngDefaultControl ></app-input>
-                </div>
-    
-                <!-- totalHours -->
-                <label class="group">Total hours: {{getTotalHours()}}</label>
+
+              <!-- departmentsHours -->
+              <label class="group">Enter hours to every department: </label>
+              <div *ngIf="departments" formGroupName="totalHours">
+                <app-input *ngFor="let department of departments" [formControl]="totalHours.controls[department.departmentName]" type="number"
+                  [placeholder]="department.departmentName" [min]="0" ngDefaultControl></app-input>
               </div>
+
+              <!-- totalHours -->
+              <div class="group">
+                <label>Total hours: {{getTotalHours()}}</label>
+                <div *ngIf="totalHours.errors&&totalHours.touched">
+                  <p *ngFor="let err of objectHolder.values(totalHours.errors)" class="myAlert">{{err}}</p>
+                </div>
+              </div>
+
+            </div>
+
           </div>
-
-
-
-
-      
-
-
-          <div class="row">
-            <!-- startDate -->
-            <app-date-picker [date]="startDate" [placeholder]="'Start date'" class="col-md-6"></app-date-picker>
-
-            <!-- endDate -->
-            <app-date-picker [date]="endDate" [placeholder]="'End date'" class="col-md-6"></app-date-picker>
-          </div>
+          
+          <hr/>
+          <!-- permissions -->
+          <app-select-workers *ngIf="extraWorkers" [workers]="extraWorkers" [title]="'Add permission to extra workers:'" (selectedWorkerEvent)="getSelectedWorkers($event)"></app-select-workers>
 
           <hr class="colorgraph">
 
-          <div class="col-xs-6 col-md-6">
-            <button type="submit" class="button col-md-offset-2 col-md-8" [disabled]="projectFormGroup.invalid">Save</button>
-          </div>
-
+          <button mat-raised-button color="primary" class="col-md-12" [disabled]="projectFormGroup.invalid">
+            Save
+          </button>
         </form>
       </mat-card-content>
     </div>

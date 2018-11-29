@@ -1,7 +1,7 @@
 import { Component, } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { UserService, User, DialogComponent,Global } from '../../imports';
+import { UserService, User, DialogComponent, Global } from '../../imports';
 
 @Component({
   selector: 'app-add-user',
@@ -23,8 +23,7 @@ export class AddUserComponent {
     public dialog: MatDialog,
     private router: Router
   ) {
-    let managerId:number=(<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
-    this.user = new User(0, '', '', '', '', null, 0, 0,0);
+    this.user = new User(0, '', '', '', '', null, 0, 0, 0);
     this.caption = 'Add User';
   }
 
@@ -41,12 +40,13 @@ export class AddUserComponent {
           this.addUser();
         });
     }
-    this.addUser();
+    else
+      this.addUser();
   }
 
   async addUser() {
     this.user.password = this.user.confirmPassword = await this.userService.hashValue(this.user.password);
-    this.user.managerId= (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+    this.user.managerId = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
     this.userService.addUser(this.user).subscribe(
       (created: boolean) => {
         if (created) {

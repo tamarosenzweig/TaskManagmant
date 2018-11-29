@@ -3,6 +3,8 @@ import {
   ProjectService, PresenceHoursService, ExcelService,
   Project, ProjectFilter, Global
 } from '../../imports';
+import { DepartmentHours } from '../../shared/models/department-hours.model';
+import asEnumerable from '../../../../node_modules/linq-es2015';
 
 @Component({
   selector: 'app-report',
@@ -39,6 +41,11 @@ export class ReportComponent implements OnInit {
   initProjectsReport() {
     this.projectService.getProjectsReports().subscribe(
       (projects: Project[]) => {
+        projects.forEach(project=>
+          project.departmentsHours.forEach(departmentHours=>
+            departmentHours.department.workers=departmentHours.department.workers.filter(worker=>worker.workerHours[0].numHours>0)
+          )
+        );
         this.projectService.initDates(projects)
         this.projectsReport = projects;
 

@@ -20,44 +20,11 @@
 
             <p *ngIf="!isExistUser" class="myAlert">Email or password is not correct</p>
             <hr class="colorgraph">
-
-            <div class="col-xs-6 col-md-6">
-              <input type="submit" value="Login" class="btn btn-primary btn-block btn-lg" [disabled]="loginFormGroup.invalid||isExistUser==false">
-            </div>
-            <!-- <div class="group submit">
-        <button type="submit" mat-flat-button color="primary" class="col-md-12" [disabled]="loginFormGroup.invalid||isExistUser==false">Login</button>
-      </div> -->
-
+            <button mat-raised-button color="primary" class="col-md-12" [disabled]="loginFormGroup.invalid||isExistUser==false">
+                Login
+            </button>
           </form>
         </mat-card-content>
       </div>
     </div>
-  
 </mat-card>
-
-
-
-
-<!-- <div class="container">
-
-  <div class="row">
-    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-      <form>
-        <h2>Please Sign Up
-          <small>It's free and always will be.</small>
-        </h2>
-        <hr class="colorgraph">
-        <hr class="colorgraph">
-        <div class="row">
-          <div class="col-xs-6 col-md-6">
-            <input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7">
-          </div>
-          <div class="col-xs-6 col-md-6">
-            <a href="#" class="btn btn-success btn-block btn-lg">Sign In</a>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-</div> -->
