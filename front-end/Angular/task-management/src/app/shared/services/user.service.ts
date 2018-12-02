@@ -145,4 +145,24 @@ export class UserService {
         return hashVal;
     }
 
+    //POST
+    changePassword(email: string): Observable<any> {
+        let url: string = `${this.basicURL}/deleteUser?email=${email}`;
+        return this.http.post(url, null);
+    }
+
+    //POST
+    confirmToken(email: string, token: string): Observable<any> {
+        let url: string = `${this.basicURL}/confirmToken`;
+        let data = { email, token };
+        return this.http.post(url, data);
+    }
+
+    //PUT
+    editPassword(user: User): Observable<any> {
+        let url: string = `${this.basicURL}/editPassword`;
+        return this.http.put(url, user);
+    }
+
+
 }

@@ -51,6 +51,9 @@ export { SelectComponent } from './components/select/select.component';
 export { TextareaComponent } from './components/textarea/textarea.component';
 export { CheckBoxComponent } from './components/check-box/check-box.component';
 export { LoginComponent } from './components/login/login.component';
+export { ForgotPasswordDialogComponent } from './components/forgot-password-dialog/forgot-password-dialog.component';
+export { NewPasswordDialogComponent } from './components/new-password-dialog/new-password-dialog.component';
+export { VerificationCodeDialogComponent } from './components/verification-code-dialog/verification-code-dialog.component';
 
 //----------------MANAGER SCREENS-------------------
 

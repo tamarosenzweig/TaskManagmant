@@ -50,6 +50,9 @@ import {
   TextareaComponent,
   CheckBoxComponent,
   LoginComponent,
+  ForgotPasswordDialogComponent,
+    NewPasswordDialogComponent,
+  VerificationCodeDialogComponent,
   //Manger Screens
   ManagerComponent,
   UserManagementComponent,
@@ -103,6 +106,7 @@ import {
 }
   from './imports';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -115,6 +119,9 @@ import {
     TextareaComponent,
     CheckBoxComponent,
     LoginComponent,
+    ForgotPasswordDialogComponent,
+    NewPasswordDialogComponent,
+    VerificationCodeDialogComponent,
     ManagerComponent,
     UserManagementComponent,
     UserListComponent,
@@ -156,7 +163,10 @@ import {
     DatePickerComponent,
     DialogComponent,
     TreeTableComponent,
-    ProjectFilterPipe
+    ProjectFilterPipe,
+    ForgotPasswordDialogComponent,
+    NewPasswordDialogComponent,
+    VerificationCodeDialogComponent
   ],
   imports: [
     BrowserModule,
