@@ -50,9 +50,7 @@ import {
   TextareaComponent,
   CheckBoxComponent,
   LoginComponent,
-  ForgotPasswordDialogComponent,
-    NewPasswordDialogComponent,
-  VerificationCodeDialogComponent,
+  ForgotPasswordComponent,
   //Manger Screens
   ManagerComponent,
   UserManagementComponent,
@@ -119,9 +117,7 @@ import {
     TextareaComponent,
     CheckBoxComponent,
     LoginComponent,
-    ForgotPasswordDialogComponent,
-    NewPasswordDialogComponent,
-    VerificationCodeDialogComponent,
+    ForgotPasswordComponent,
     ManagerComponent,
     UserManagementComponent,
     UserListComponent,
@@ -164,9 +160,6 @@ import {
     DialogComponent,
     TreeTableComponent,
     ProjectFilterPipe,
-    ForgotPasswordDialogComponent,
-    NewPasswordDialogComponent,
-    VerificationCodeDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -207,7 +200,9 @@ import {
 
   ],
   entryComponents: [
-    DialogComponent, SendEmailComponent, UpdateHoursDialogComponent
+    DialogComponent,
+    SendEmailComponent,
+    UpdateHoursDialogComponent,
   ],
   bootstrap: [AppComponent]
 })

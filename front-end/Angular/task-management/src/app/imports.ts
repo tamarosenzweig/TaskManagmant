@@ -9,6 +9,7 @@ export { PresenceHours } from './shared/models/presense-hours.model';
 export { Project } from './shared/models/project.model';
 export { User } from './shared/models/user.model';
 export { WorkerHours } from './shared/models/worker-hours.model';
+export { ChangePassword } from './shared/models/change-password.model';
 
 //models/help
 export { eListKind} from './shared/models/help/e-list-kind.model';
@@ -51,9 +52,7 @@ export { SelectComponent } from './components/select/select.component';
 export { TextareaComponent } from './components/textarea/textarea.component';
 export { CheckBoxComponent } from './components/check-box/check-box.component';
 export { LoginComponent } from './components/login/login.component';
-export { ForgotPasswordDialogComponent } from './components/forgot-password-dialog/forgot-password-dialog.component';
-export { NewPasswordDialogComponent } from './components/new-password-dialog/new-password-dialog.component';
-export { VerificationCodeDialogComponent } from './components/verification-code-dialog/verification-code-dialog.component';
+export { ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
 
 //----------------MANAGER SCREENS-------------------
 

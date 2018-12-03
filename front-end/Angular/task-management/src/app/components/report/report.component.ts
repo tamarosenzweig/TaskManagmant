@@ -4,7 +4,7 @@ import {
   Project, ProjectFilter, Global
 } from '../../imports';
 import { DepartmentHours } from '../../shared/models/department-hours.model';
-import asEnumerable from '../../../../node_modules/linq-es2015';
+import asEnumerable from 'linq-es2015';
 
 @Component({
   selector: 'app-report',

@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import * as sha256 from 'async-sha256';
 import { MenuService, User, eStatus, Email, Global } from '../../imports';
+import { ChangePassword } from '../models/change-password.model';
 
 @Injectable()
 export class UserService {
@@ -144,23 +145,26 @@ export class UserService {
         let hashVal = await sha256(val);
         return hashVal;
     }
-
+    //GET
+    getUserByEmail(email: string): Observable<any> {
+        let url: string = `${this.basicURL}/getUserByEmail?email=${email}`;
+        return this.http.get(url);
+    }
     //POST
-    changePassword(email: string): Observable<any> {
-        let url: string = `${this.basicURL}/deleteUser?email=${email}`;
+    forgotPassword(email: string): Observable<any> {
+        let url: string = `${this.basicURL}/forgotPassword?email=${email}`;
         return this.http.post(url, null);
     }
 
     //POST
-    confirmToken(email: string, token: string): Observable<any> {
+    confirmToken(changePassword:ChangePassword): Observable<any> {
         let url: string = `${this.basicURL}/confirmToken`;
-        let data = { email, token };
-        return this.http.post(url, data);
+        return this.http.post(url, changePassword);
     }
 
-    //PUT
-    editPassword(user: User): Observable<any> {
-        let url: string = `${this.basicURL}/editPassword`;
+    //POST
+    changePassword(user: User): Observable<any> {
+        let url: string = `${this.basicURL}/changePassword`;
         return this.http.put(url, user);
     }
 

@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UserService, ValidatorsService, User, eStatus, Global } from '../../imports';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import {
+  UserService, ValidatorsService,
+  User, eStatus,
+  Global
+} from '../../imports';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./../../../form-style.css','./login.component.css']
+  styleUrls: ['./../../../form-style.css', './login.component.css']
 })
 export class LoginComponent {
 
@@ -13,7 +17,7 @@ export class LoginComponent {
 
   loginFormGroup: FormGroup;
   isExistUser: boolean;
-  hashPassword:string;
+  hashPassword: string;
 
   //allow access 'Object' type via interpolation
   objectHolder: typeof Object = Object;
@@ -22,9 +26,9 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private dialog: MatDialog,
     private userService: UserService,
     private validatorsService: ValidatorsService,
-    private router: Router
   ) {
     this.isExistUser = true;
     this.initFormGroup();
@@ -34,13 +38,13 @@ export class LoginComponent {
 
   initFormGroup() {
     this.loginFormGroup = this.formBuilder.group({
-      email: ['', this.validatorsService.stringValidatorArr('email', 15, 30)],
+      email: ['', this.validatorsService.stringValidatorArr('email', 15, 30, /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)],
       password: ['', this.validatorsService.stringValidatorArr('password', 5, 10, /^[A-Za-z0-9]+$/)]
     });
   }
 
   async onSubmit() {
-    this.hashPassword=await this.userService.hashValue(this.password.value);
+    this.hashPassword = await this.userService.hashValue(this.password.value);
     this.login();
   }
 
@@ -78,7 +82,7 @@ export class LoginComponent {
     this.isExistUser = true;
 
   }
-  
+
   //----------------GETTERS-------------------
 
   //getters of the form group controls
