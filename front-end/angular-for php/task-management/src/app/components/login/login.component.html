@@ -1,0 +1,31 @@
+<mat-card class="container">
+    <div class="row">
+      <div>
+        <div class="thumbur">
+          <i class="fa fa-lock"></i>
+        </div>
+        <h2>Please Sign In
+            <small>to our company</small>
+        </h2>
+        <hr class="colorgraph">
+        <mat-card-content>
+          <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+
+            <!-- email -->
+            <app-input [formControl]="email" [placeholder]="'Email'" (keyUpEvent)="removeValidationMassage()" ngDefaultControl></app-input>
+
+            <!-- password -->
+            <app-input [formControl]="password" [placeholder]="'Password'" [type]="'password'" (keyUpEvent)="removeValidationMassage()"
+              ngDefaultControl></app-input>
+
+            <p *ngIf="!isExistUser" class="myAlert">Email or password is not correct</p>
+            <hr class="colorgraph">
+            <button mat-raised-button color="primary" class="col-md-12" [disabled]="loginFormGroup.invalid||isExistUser==false">
+                Login
+            </button>
+          </form>
+          <app-forgot-password></app-forgot-password>
+        </mat-card-content>
+      </div>
+    </div>
+</mat-card>
