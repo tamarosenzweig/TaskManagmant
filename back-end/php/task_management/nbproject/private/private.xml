@@ -3,15 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/task_management/api/controllers/permission_controller.php</file>
-            <file>file:/C:/xampp/htdocs/task_management/api/controllers/user_controller.php</file>
-            <file>file:/C:/xampp/htdocs/task_management/bll/department_hours_service.php</file>
-            <file>file:/C:/xampp/htdocs/task_management/api/controllers/worker_hours_controller.php</file>
-            <file>file:/C:/xampp/htdocs/task_management/bll/permission_service.php</file>
-            <file>file:/C:/xampp/htdocs/task_management/bll/presence_hours_service.php</file>
+            <file>file:/C:/xampp/htdocs/task_management/bll/user_service.php</file>
+            <file>file:/C:/xampp/htdocs/task_management/bll/project_service.php</file>
+            <file>file:/C:/xampp/htdocs/task_management/api/controllers/project_controller.php</file>
+            <file>file:/C:/xampp/htdocs/task_management/index.php</file>
+            <file>file:/C:/xampp/htdocs/task_management/routes_loader.php</file>
+            <file>file:/C:/xampp/htdocs/task_management/dal/db_info.php</file>
             <file>file:/C:/xampp/htdocs/task_management/dal/db_access.php</file>
             <file>file:/C:/xampp/htdocs/task_management/bll/base_service.php</file>
-            <file>file:/C:/xampp/htdocs/task_management/bll/worker_hours_service.php</file>
         </group>
     </open-files>
 </project-private>

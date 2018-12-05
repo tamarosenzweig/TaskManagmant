@@ -96,7 +96,7 @@ class base_service {
     }
 
     function format_date(DateTime $date, $format = 'yyyy-MM-dd') {
-        return $date->format($format);
+        return "'{$date->format($format)}'";
     }
 
     //htaccess

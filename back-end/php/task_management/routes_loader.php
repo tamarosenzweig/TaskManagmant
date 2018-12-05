@@ -19,9 +19,9 @@ class routes_loader {
         $this->presence_hours_controller = new presence_hours_controller();
 
         $this->methods = array(
+            'customer' => $this->get_customers_methods(),
             'user' => $this->get_users_methods(),
             'project' => $this->get_projects_methods(),
-            'customer' => $this->get_customers_methods(),
             'department' => $this->get_departments_methods(),
             'workerHours' => $this->get_worker_hours_methods(),
             'presenceHours' => $this->get_presence_hours_methods()
@@ -36,6 +36,14 @@ class routes_loader {
             var_dump(http_response_code(404));
             die("unknown url");
         }
+    }
+
+    function get_customers_methods() {
+        return array(
+            'getAllCustomers' => function ($params) {
+                return $this->customer_controller->get_all_customers();
+            }
+        );
     }
 
     function get_users_methods() {
@@ -61,26 +69,27 @@ class routes_loader {
 
     function get_projects_methods() {
         return array(
+            'addProject' => function ($params) {
+                return $this->project_controller->add_project($params);
+            },
             'getAllProjects' => function ($params) {
 
                 return $this->project_controller->get_all_projects();
             },
-            'getProjectById' => function ($params) {
-                return $this->project_controller->get_project_by_id($params['projectId']);
-            },
             'getProjectsByTeamLeaderId' => function ($params) {
                 return $this->project_controller->get_project_by_team_leader_id($params['teamLeaderId']);
             },
-            'getProjectsReports' => function () {
+            'getProjectsReports' => function ($params) {
                 return $this->project_controller->get_projects_reports();
-            }
-        );
-    }
-
-    function get_customers_methods() {
-        return array(
-            'getAllCustomers' => function ($params) {
-                return $this->customer_controller->get_all_customers();
+            },
+            'getProjectById' => function ($params) {
+                return $this->project_controller->get_project_by_id($params['projectId']);
+            },
+            'checkUniqueValidation' => function ($params) {
+                return $this->project_controller->check_unique_validation($params);
+            },
+            'hasProjects' => function ($params) {
+                return $this->project_controller->has_projects($params['team_leader_id']);
             }
         );
     }

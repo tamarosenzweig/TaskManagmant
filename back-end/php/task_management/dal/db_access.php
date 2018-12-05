@@ -3,8 +3,9 @@
 class db_access {
 
     static function run_non_query($query) {
-         global $connection;
-         
+        global $connection;
+        $connection->query($query);
+        return $connection->affected_rows;
     }
 
     static function run_reader($query, $init_model) {

@@ -91,5 +91,7 @@ class user_service extends base_service {
         }
         return $edited;
     }
-
+    function get_department_users_has_project($department_id,$worker_id){
+        
+    }
 }
