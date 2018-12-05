@@ -26,4 +26,3 @@ require './api/controllers/presence_hours_controller.php';
 require './api/controllers/project_controller.php';
 require './api/controllers/user_controller.php';
 require './api/controllers/worker_hours_controller.php';
-

@@ -24,8 +24,29 @@ class base_service {
         return $new_user;
     }
 
-    function init_project($model) {
-        echo 'init project';
+    function init_project($project) {
+        $new_project = array();
+        $new_project['projectId'] = $project['project_id'];
+        $new_project['projectId'] = $project['project_id'];
+        $new_project['projectId'] = $project['project_id'];
+        $new_project['projectName'] = $project['project_name'];
+        $new_project['managerId'] = $project['manager_id'];
+        $new_project['customerId'] = $project['customer_id'];
+        $new_project['teamLeaderId'] = $project['team_leader_id'];
+        $new_project['totalHours'] = $project['total_hours'];
+        $new_project['startDate'] = $project['start_date'];
+        $new_project['endDate'] = $project['end_date'];
+        $new_project['isComplete'] = $project['is_complete'];
+        if (array_key_exists('customer_name', $project)) {
+            $new_project['customer'] = array();
+            $new_project['customer']['customerName'] = $project['customer_name'];
+        }
+        if (array_key_exists('user_name', $project) && array_key_exists('email', $project)) {
+            $new_project['teamLeader'] = array();
+            $new_project['teamLeader']['userName'] = $project['user_name'];
+            $new_project['teamLeader']['email'] = $project['email'];
+        }
+        return $new_project;
     }
 
     function init_customer($customer) {
@@ -95,9 +116,9 @@ class base_service {
         return $new_presence_hours;
     }
 
-    function format_date(DateTime $date, $format = 'yyyy-MM-dd') {
-        return "'{$date->format($format)}'";
+    function format_date($date, $format = 'Y-m-d') {
+        $format_date = date($format, strtotime($date));
+        return "'$format_date'";
     }
 
-    //htaccess
 }

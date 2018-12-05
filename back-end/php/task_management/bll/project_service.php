@@ -3,15 +3,11 @@
 class project_service extends base_service {
 
     function add_project($new_project) {
-        $new_project['startDate'] = new DateTime($new_project['startDate']);
-        $new_project['endDate'] = new DateTime($new_project['endDate']);
-
         $query = "START TRANSACTION;";
         $query .= "INSERT INTO task_management.project(project_name,manager_id,customer_id,team_leader_id,total_hours,start_date,end_date) " .
                 "VALUES('{$new_project['projectName']}',{$new_project['managerId']},{$new_project['customerId']}," .
                 "{$new_project['teamLeaderId']},{$new_project['totalHours']}," .
-                // "{$this->format_date($new_project['startDate'])},{$this->format_date($new_project['endDate'])});";
-                "'2018-10-10','2018-10-10');";
+                 "{$this->format_date($new_project['startDate'])},{$this->format_date($new_project['endDate'])});";
 //take id of the inserted project
         $query .= "SELECT @@IDENTITY INTO @project_id;";
 //add the divided hours for each department
@@ -33,12 +29,12 @@ class project_service extends base_service {
         $team_workers = $user_service->get_all_team_users($new_project['teamLeaderId']);
         foreach ($team_workers as $worker) {
             $query .= "INSERT INTO task_management.worker_hours(project_id,worker_id,is_complete) " .
-                    "VALUES (@project_id,{$worker['userId']},1);";
+                    "VALUES (@project_id,{$worker['userId']},100);";
         }
         $query .= "COMMIT;";
-        //return $query;
+        // return $query;
         $affected_rows = db_access::run_non_query($query);
-        return $affected_rows >= 4;
+        return $affected_rows;
     }
 
     function edit_project($project) {
@@ -50,7 +46,7 @@ class project_service extends base_service {
     }
 
     function get_all_projects() {
-        $query = $this->get_projects_query();
+        $query = $this->get_all_projects_query();
         return $this->get_projects($query);
     }
 
@@ -63,7 +59,7 @@ class project_service extends base_service {
 
     function get_project_by_team_leader_id($team_leader_id) {
         $query = "{$this->get_projects_query()} WHERE p.team_leader_id=$team_leader_id;";
-        return $this->get_projects($query);
+        return $this->get_projects_with_details($query);
     }
 
     function get_projects_in_working_by_team_leader_id($team_leader_id) {
@@ -82,7 +78,7 @@ class project_service extends base_service {
 
     function get_projects_reports() {
         $query = "{$this->get_projects_query()} ORDER BY project_name;";
-        $project_list = $this->get_projects($query);
+        $project_list = $this->get_projects_with_details($query);
         return $project_list;
     }
 
@@ -138,9 +134,7 @@ class project_service extends base_service {
 
     function get_projects_with_details($query) {
         $projects = db_access:: run_reader($query, function ($model) {
-                    $project = $this->init_project($model);
-                    $this->add_details_to_project($project);
-                    return $project;
+                    return $this->add_details_to_project($this->init_project($model));
                 });
         return $projects;
     }
@@ -151,13 +145,14 @@ class project_service extends base_service {
         $user_service = new user_service();
         $worker_hours_service = new worker_hours_service();
         $presence_hours_service = new presence_hours_service();
-        foreach ($project['departmentsHours'] as $department_hours) {
-            $department_hours['department']['workers'] = $user_service->get_department_users_has_project($department_hours['departmentId'], $project['projectId']);
-            foreach ($department_hours['department']['workers'] as $worker) {
-                $worker['workerHours'] = $worker_hours_service->get_worker_hours_per_project($worker['userId'], $project['projectId']);
-                $worker['presenceHours'] = $presence_hours_service->get_presence_hours($worker['userId'], $project['projectId']);
+        for ($i = 0; $i < count($project['departmentsHours']); $i++) {
+            $project['departmentsHours'][$i]['department']['workers'] = $user_service->get_department_users_has_project($project['departmentsHours'][$i]['departmentId'], $project['projectId']);
+            for ($j = 0; $j < count($project['departmentsHours'][$i]['department']['workers']); $j++) {
+                $project['departmentsHours'][$i]['department']['workers'][$j]['workerHours'] = $worker_hours_service->get_worker_hours_per_project($project['departmentsHours'][$i]['department']['workers'][$j]['userId'], $project['projectId']);
+                $project['departmentsHours'][$i]['department']['workers'][$j]['presenceHours'] = $presence_hours_service->get_presence_hours($project['departmentsHours'][$i]['department']['workers'][$j]['userId'], $project['projectId']);
             }
         }
+        return $project;
     }
 
 }

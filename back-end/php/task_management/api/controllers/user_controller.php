@@ -57,5 +57,9 @@ class user_controller {
     function send_email($email, $user) {
          return $this->user_service->send_email($email, $user);
     }
+    function  get_department_users_has_project($department_id,$worker_id)
+    {
+        return $this->user_service->get_department_users_has_project($department_id, $worker_id);
+    }
 
 }

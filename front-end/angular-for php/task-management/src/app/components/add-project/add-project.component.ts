@@ -182,7 +182,8 @@ export class AddProjectComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['taskManagement/manager/userManagement']);
+      //this.projectFormGroup.reset();
+     // this.router.navigate(['taskManagement/manager/userManagement']);
     });
   }
 

@@ -91,7 +91,12 @@ class user_service extends base_service {
         }
         return $edited;
     }
-    function get_department_users_has_project($department_id,$worker_id){
-        
+
+    function get_department_users_has_project($department_id, $project_id) {
+        $query = "{$this->get_users_query()} " .
+                "AND u.department_id=$department_id " .
+                "AND u.user_id in (SELECT worker_id FROM task_management.worker_hours WHERE project_id=$project_id);";
+        return $this->get_users($query);
     }
+
 }

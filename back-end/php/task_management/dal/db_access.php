@@ -1,5 +1,8 @@
 <?php
 
+//$statementObj->close();
+//$connection->close();
+
 class db_access {
 
     static function run_non_query($query) {
@@ -29,5 +32,22 @@ class db_access {
         $resultObj = $connection->query($query);
         return $resultObj;
     }
+
+//    static function run_transaction() {
+//        $database = new mysqli("sever", "user", "key", "database");
+//        $database->autocommit(FALSE);
+//        $error = 0;
+//
+////asumming we want to delete a users infomation from two table
+//        $database->query("delete from `pay` where `user`=1 ") ? NULL : $error = 1;
+//        $database->query("delete from `users` where `id`=1 ") ? NULL : $error = 1;
+//
+//        if ($error = 0) {
+//            $database->commit();
+//        } else {
+//            $database->rollback();
+//        }
+//        $database->close();
+//    }
 
 }

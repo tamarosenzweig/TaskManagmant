@@ -63,6 +63,9 @@ class routes_loader {
             },
             'getUserById' => function ($params) {
                 return $this->user_controller->get_user_by_id($params['userId']);
+            },
+            'get_department_users_has_project'=> function ($params){
+            return $this->user_controller->get_department_users_has_project(1,2);
             }
         );
     }

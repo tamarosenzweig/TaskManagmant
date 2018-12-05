@@ -65,6 +65,7 @@ class worker_hours_service extends base_service {
         return $edited;
     }
 
+
     function add_worker_hours_to_team_projects($user) {
         if (isset($user['teamLeaderId'])) {
             $project_service = new project_service();
