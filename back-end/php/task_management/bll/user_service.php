@@ -39,7 +39,7 @@ class user_service extends base_service {
         $users = $this->get_users($query);
         $permission_service = new permission_service();
         for ($i = 0; $i < count($users); $i++) {
-            $users[i]['permissions'] = $permission_service->get_user_permissions($users[i]['userId']);
+            $users[$i]['permissions'] = $permission_service->get_user_permissions($users[$i]['userId']);
         }
         return $users;
     }
@@ -65,39 +65,57 @@ class user_service extends base_service {
     function add_user($user) {
         $query = "INSERT INTO task_management.user" .
                 "(user_name, email, password, profile_image_name, department_id, team_leader_id,manager_id) " .
-                "VALUES({$user['UserName']}, {$user['Email']}, {$user['password']}, " .
-                "{$user['ProfileImageName']}, " .
-                "{$user['DepartmentId']}, " .
-                "{$user['TeamLeaderId']}, " .
-                "{$user['ManagerId']});" .
-                "SELECT @@IDENTITY;";
-        $user_id = db_access::run_scalar(query);
+                "VALUES('{$user['userName']}', '{$user['email']}', '{$user['password']}', " .
+                "{$this->get_string_value_or_null($user, 'profileImageName')}," .
+                "{$this->get_string_value_or_null($user, 'departmentId')}," .
+                "{$this->get_string_value_or_null($user, 'teamLeaderId')}," .
+                "{$this->get_string_value_or_null($user, 'managerId')});";
+
+        $user_id = db_access::run_non_query($query);
         $created = false;
         if (isset($user_id)) {
             $created = true;
-            $user['UserId'] = $user_id;
+            $user['userId'] = $user_id;
             //add worker hours to worker for projects in his team
-            worker_hours_service::add_worker_hours_to_team_projects($user);
-        } else {
-            $created = false;
+            $this->worker_hours_service->add_worker_hours_to_team_projects($user);
         }
-        return created;
+        return $created;
     }
 
     function edit_user($user) {
-        $query = "UPDATE task_management.user SET user_name={$user['UserName']},email={$user['Email']},profile_image_name={$user['ProfileImageName']}," .
-                "department_id={$user['DepartmentId']},team_leader_id={$user['TeamLeaderId']} "
-                . "where user_id={$user['UserId']};";
-        $edited = db_access::run_non_query(query) == 1;
-        if (isset($edited)) {
-            //manage worker hours to team-projects if the worker moves team
-            $old_user = $this->get_user_by_id($user['UserId']);
-            if ($old_user['TeamLeaderId'] != $user['TeamLeaderId'] && $user['TeamLeaderId'] != null) {
-                permission_service::delete_unnecessary_permissions($user);
-                worker_hours_service::add_worker_hours_to_team_projects($user);
-            }
-        }
+
+        $query = "UPDATE task_management.user SET user_name='{$user['userName']}',email='{$user['email']}'," .
+                "profile_image_name={$this->get_string_value_or_null($user, 'profileImageName')}," .
+                "department_id={$this->get_string_value_or_null($user, 'departmentId')}," .
+                "team_leader_id={$this->get_string_value_or_null($user, 'teamLeaderId')}" .
+                "where user_id={$user['userId']};";
+
+
+        $connection = db_access::run_non_query($query);
+        $edited = $connection->affected_rows > 0;
+//        if($edited)
+//        if (isset($edited)) {
+        //manage worker hours to team-projects if the worker moves team
+//            $old_user = $this->get_user_by_id($user['userId']);
+//            if ($old_user['teamLeaderId'] != $user['teamLeaderId'] && $user['teamLeaderId'] != null) {
+//                $this->permission_service->delete_unnecessary_permissions($user);
+//                $this->worker_hours_service->add_worker_hours_to_team_projects($user);
+//            }
+//        }
         return $edited;
+    }
+
+    function delete_user($user_id) {
+        $query = "UPDATE task_management.user SET is_active=0 where user_id=$user_id AND is_active=1;";
+        $connection = db_access::run_non_query($query);
+        $deleted = $connection->affected_rows > 0;
+//        if ($deleted) {
+//            $permissions = $this->permission_service->get_user_permissions($user_id);
+//            foreach ($permissions as $permission) {
+//                $this->permission_service->delete_permission($permission['permission_id']);
+//            }
+//        }
+        return $deleted;
     }
 
     function get_department_users_has_project($department_id, $project_id) {

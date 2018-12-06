@@ -38,7 +38,7 @@ export class WorkerHoursService {
         let formData:FormData=new FormData()
         formData.append('workerId',workerId.toString());
         formData.append('projectIdList',JSON.stringify(projectIdList));
-        return this.http.post(url,JSON.stringify(formData));
+        return this.http.post(url,formData);
     }
  
     //PUT

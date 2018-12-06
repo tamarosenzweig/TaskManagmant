@@ -69,6 +69,7 @@ class project_service extends base_service {
         return $project_list;
     }
 
+    
     function get_project_by_id($project_id) {
         $query = "{$this->get_projects_query()} WHERE project_id=$project_id;";
         return $this->get_projects_with_details($query)[0];

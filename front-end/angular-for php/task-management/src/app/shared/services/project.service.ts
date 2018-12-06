@@ -23,7 +23,7 @@ export class ProjectService {
     //POST
     addProject(project: Project): Observable<any> {
         let url: string = `${this.basicURL}/addProject`;
-        return this.http.post(url,JSON.stringify(project));
+        return this.http.post(url,project);
     }
 
     //GET
@@ -57,7 +57,7 @@ export class ProjectService {
     //POST
     checkUniqueValidation(project: Project): Observable<any> {
         let url: string = `${this.basicURL}/checkUniqueValidation`;
-        return this.http.post(url,JSON.stringify(project));
+        return this.http.post(url,project);
     }
 
     initDates(projects: Project[]) {

@@ -3,33 +3,46 @@
 
 require './includes.php';
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Credentials", "true");
-header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-header('Content-type: application/json');//application/x-www-form-urlencoded
+//------------------------------------------ init headers -----------------------------------------
+
+header('Access-Control-Allow-Origin: *');
+header('Content-type: application/json');
+header('Access-Control-Allow-Headers: Origin, X-Requested-With,Content-Type, Accept');
 
 $routes_loader = new routes_loader();
+
+//------------------------- init controller-name and method-name from url -------------------------
 
 $link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $path = parse_url($link, PHP_URL_PATH);
 $exploded_path = explode('/', $path);
 $controller_name = $exploded_path[count($exploded_path) - 2];
 $method_name = $exploded_path[count($exploded_path) - 1];
+
+//------------------------------------------ init params ------------------------------------------
+
 $type = $_SERVER['REQUEST_METHOD'];
 $params;
 if ($type == 'GET') {
     $params = $_GET;
-} else {
+}
+//if type is different from get like:post/put...
+else {
+    //get post object
     $json = file_get_contents('php://input');
-    $post_data = json_decode($json, true);
-    $params = isset($post_data) ? array_merge($post_data, $_GET) : $_GET;
-}
-if($method_name=='hasUncomletedHours'){
-    echo json_encode('hello');
-}
-echo $routes_loader->invoke($controller_name, $method_name, $params);
+    $post_object = json_decode($json, true);
 
+    //merge post object and url data(url data exist in $_GET)
+    $params = isset($post_object) ? array_merge($post_object, $_GET) : $_GET;
+
+    //merge form data to params(form data exist in $_POST)
+    $params = array_merge($params, $_POST);
+}
+
+//------------------------------------------ invoke method ------------------------------------------
+
+
+echo $routes_loader->invoke($controller_name, $method_name, $params);
 
 die();
 

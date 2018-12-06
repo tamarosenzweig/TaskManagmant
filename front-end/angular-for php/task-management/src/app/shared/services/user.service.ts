@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, HttpModule } from '@angular/http'
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import * as sha256 from 'async-sha256';
-import { MenuService, User, eStatus, Email, Global } from '../../imports';
-import { ChangePassword } from '../models/change-password.model';
-import { HttpClient } from '@angular/common/http';
+import { MenuService, Login,User, eStatus, Email, ChangePassword,Global } from '../../imports';
 
 @Injectable()
 export class UserService {
@@ -30,8 +28,8 @@ export class UserService {
     //POST
     login(email: string, password: string): Observable<any> {
         let url: string = `${this.basicPhpURL}/login`;
-        let data = { email: email, password: password };
-        return this.http.post(url,JSON.stringify(data));
+        let data =new Login(email, password);
+        return this.http.post(url,data);
     }
 
     //GET

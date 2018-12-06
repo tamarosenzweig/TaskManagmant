@@ -17,11 +17,12 @@ class worker_hours_service extends base_service {
             foreach ($project_id_list as $project_id) {
                 $query .= "$project_id,";
             }
-            $query = $query . substr(0, count_chars($query) - 1);
+            $query = substr($query, 0, - 1);
             $query .= ");";
         } else {
             $query .= ";";
         }
+        // return $query;
         $count = db_access::run_scalar($query);
         return $count > 0;
     }
@@ -44,7 +45,7 @@ class worker_hours_service extends base_service {
     function add_worker_hours($worker_hours) {
         $query = "INSERT INTO task_management.worker_hours(project_id,worker_id,num_hours,is_complete) " .
                 "VALUES ({$worker_hours['projectId']},{$worker_hours['workerId']},{$worker_hours['numHours']},1);";
-        $created = db_access::run_non_query($query)!=null;
+        $created = db_access::run_non_query($query) != null;
         return $created;
     }
 
@@ -65,18 +66,16 @@ class worker_hours_service extends base_service {
         return $edited;
     }
 
-
     function add_worker_hours_to_team_projects($user) {
         if (isset($user['teamLeaderId'])) {
-            $project_service = new project_service();
-            $projects = $project_service->get_projects_in_working_by_team_leader_id($user['teamLeaderId']);
-            $worker_hours_service = new worker_hours_service();
+            $projects = $this->project_service->get_projects_in_working_by_team_leader_id($user['teamLeaderId']);
             foreach ($projects as $project) {
-                $worker_hours = $worker_hours_service->get_worker_hours_per_project($user['userId'], $project['projectId'])[0];
-                if (!isset($worker_hours)) {
+                $workers_hours = $this->worker_hours_service->get_worker_hours_per_project($user['userId'], $project['projectId']);
+                if (count($workers_hours) == 0) {
                     $worker_hours = array();
                     $worker_hours['projectId'] = $project['projectId'];
                     $worker_hours['workerId'] = $user['userId'];
+                    $worker_hours['numHours'] = 0;
                     $this->add_worker_hours($worker_hours);
                 }
             }

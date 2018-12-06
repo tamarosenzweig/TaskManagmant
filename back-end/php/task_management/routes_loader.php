@@ -66,8 +66,14 @@ class routes_loader {
             'getUserById' => function ($params) {
                 return $this->user_controller->get_user_by_id($params['userId']);
             },
-            'get_department_users_has_project' => function ($params) {
-                return $this->user_controller->get_department_users_has_project(1, 2);
+            'addUser' => function ($params) {
+                return $this->user_controller->add_user($params);
+            },
+            'editUser' => function ($params) {
+                return $this->user_controller->edit_user($params);
+            },
+            'deleteUser' => function ($params) {
+                return $this->user_controller->delete_user($params['userId']);
             }
         );
     }
@@ -114,7 +120,7 @@ class routes_loader {
                 return $this->worker_hours_controller->getAllWorkerHours($params['workerId']);
             },
             'hasUncomletedHours' => function ($params) {
-                return $this->worker_hours_controller->has_uncomleted_hours($params['workerId'], $params['projectIdList']);
+                return $this->worker_hours_controller->has_uncomleted_hours($params['workerId'], json_decode($params['projectIdList']));
             }
         );
     }
