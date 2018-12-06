@@ -67,14 +67,14 @@ export class UserService {
 
     //POST
     addUser(user: User): Observable<any> {
-        let url: string = `${this.basicURL}/addUser`;
-        return this.http.post(url, user);
+        let url: string = `${this.basicPhpURL}/addUser`;
+        return this.http.post(url,JSON.stringify(user));
     }
 
     //PUT
     editUser(user: User): Observable<any> {
-        let url: string = `${this.basicURL}/editUser`;
-        return this.http.put(url, user);
+        let url: string = `${this.basicPhpURL}/editUser`;
+        return this.http.post(url, JSON.stringify(user));
     }
 
     //POST
@@ -82,7 +82,7 @@ export class UserService {
         //move user profile image to archives if exist
         if (user.profileImageName)
             this.removeUploadedImage(user.profileImageName, true);
-        let url: string = `${this.basicURL}/deleteUser?userId=${user.userId}`;
+        let url: string = `${this.basicPhpURL}/deleteUser?userId=${user.userId}`;
         return this.http.post(url, null);
     }
 

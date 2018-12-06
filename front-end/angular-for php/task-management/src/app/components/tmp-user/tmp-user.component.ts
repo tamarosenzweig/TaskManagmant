@@ -73,48 +73,50 @@ export class TmpUserComponent implements OnInit {
 
   async confirmedDelete() {
     //if this user is team-worker and he has incomlete hours we can't delete him
-    if (this.user.teamLeaderId != null) {
-      let projects: Project[] = await this.projectService.getProjectsByTeamLeaderId(this.user.teamLeaderId).toPromise();
-      let teamProjectIdList: number[] = projects.map(project => project.projectId);
-      this.workerHoursService.hasUncomletedHours(this.user.userId, teamProjectIdList)
-        .subscribe(
-          (hasUncomletedHours: boolean) => {
-            if (hasUncomletedHours) {
-              this.showDialog('Immposible to delete a worker who has incomplete hours',true);
-            }
-            else {
-              this.deleteUser();
-            }
-          },
-          err => {
-            console.log(err);
-          }
-        );
-    }
-    //if  this user is a team-leader and he has workers or projects we can't delete him
-    else {
-      let hasWorkes: boolean = await this.userService.hasWorkes(this.user.userId).toPromise();
-      if (hasWorkes) {
-        let msg: string = 'Impossible to delete team-leader who has workers';
-        this.showDialog(msg,true);
-        return;
-      }
-      else {
-        let hasProjects: boolean = await this.projectService.hasProjects(this.user.userId).toPromise();
-        if (hasProjects) {
-          let msg: string = 'Impossible to delete team-leader who has projects';
-          this.showDialog(msg,true);
-          return;
-        }
-      }
-      this.deleteUser();
-    }
+    // if (this.user.teamLeaderId != null) {
+    //   let projects: Project[] = await this.projectService.getProjectsByTeamLeaderId(this.user.teamLeaderId).toPromise();
+    //   let teamProjectIdList: number[] = projects.map(project => project.projectId);
+    //   this.workerHoursService.hasUncomletedHours(this.user.userId, teamProjectIdList)
+    //     .subscribe(
+    //       (hasUncomletedHours: boolean) => {
+    //         if (hasUncomletedHours) {
+    //           this.showDialog('Immposible to delete a worker who has incomplete hours',true);
+    //         }
+    //         else {
+    //           this.deleteUser();
+    //         }
+    //       },
+    //       err => {
+    //         console.log(err);
+    //       }
+    //     );
+    // }
+    // //if  this user is a team-leader and he has workers or projects we can't delete him
+    // else {
+    //   let hasWorkes: boolean = await this.userService.hasWorkes(this.user.userId).toPromise();
+    //   if (hasWorkes) {
+    //     let msg: string = 'Impossible to delete team-leader who has workers';
+    //     this.showDialog(msg,true);
+    //     return;
+    //   }
+    //   else {
+    //     let hasProjects: boolean = await this.projectService.hasProjects(this.user.userId).toPromise();
+    //     if (hasProjects) {
+    //       let msg: string = 'Impossible to delete team-leader who has projects';
+    //       this.showDialog(msg,true);
+    //       return;
+    //     }
+    //   }
+    //   this.deleteUser();
+    // }
+    this.deleteUser();
   }
 
   deleteUser() {
     this.userService.deleteUser(this.user).subscribe(
       (deleted: boolean) => {
         if (deleted) {
+          console.log(deleted);
           this.userService.updateUserListSubject.next();
         }
       },
