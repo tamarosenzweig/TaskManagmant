@@ -5,10 +5,22 @@
 
 class db_access {
 
+    static function get_my_sql_type($query) {
+        $str = trim($query);
+        return strtoupper(substr($str, 0, strpos($str, ' ')));
+    }
+
     static function run_non_query($query) {
         global $connection;
-        return $connection->query($query);
-//      return $connection->affected_rows;
+        $connection->query($query);
+
+        if (self::get_my_sql_type($query) == 'INSERT') {
+            if ($connection->affected_rows > 0) {
+                return $connection->insert_id;
+            }
+            return null;
+        }
+        return $connection->affected_rows;
     }
 
     static function run_reader($query, $init_model) {
@@ -30,7 +42,7 @@ class db_access {
     static function run_scalar($query) {
         global $connection;
         $resultObj = $connection->query($query);
-        return $resultObj;
+        return array_values(get_object_vars($resultObj->fetch_object()))[0];
     }
 
     static function run_transaction($queries) {

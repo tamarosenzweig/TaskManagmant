@@ -31,9 +31,8 @@ class project_service extends base_service {
             $queries[] = "INSERT INTO task_management.worker_hours(project_id,worker_id,is_complete) " .
                     "VALUES (@project_id,{$worker['userId']},1);";
         }
-        // return $query;
-        $affected_rows = db_access::run_transaction($queries);
-        return $affected_rows;
+        $created = db_access::run_transaction($queries);
+        return $created;
     }
 
     function edit_project($project) {
@@ -72,7 +71,7 @@ class project_service extends base_service {
 
     function get_project_by_id($project_id) {
         $query = "{$this->get_projects_query()} WHERE project_id=$project_id;";
-        return $this->get_projects($query);
+        return $this->get_projects_with_details($query)[0];
     }
 
     function get_projects_reports() {
@@ -95,12 +94,18 @@ class project_service extends base_service {
     }
 
     function check_unique_validation($project) {
-        $query = "SELECT COUNT(*) FROM task_management.project WHERE project_name={$project['projecrName']}";
-        return db_access::run_scalar($query) == 0;
+        $query = "SELECT COUNT(*) as value FROM task_management.project WHERE project_name='{$project['projectName']}'";
+        if (db_access::run_scalar($query) == 0) {
+            return null;
+        } else {
+            $error_massage = array();
+            $error_massage['val'] = 'project name must be unique';
+            return $error_massage;
+        }
     }
 
     function has_projects($team_leader_id) {
-        $query = "SELECT COUNT(*) FROM task_management.project " .
+        $query = "SELECT COUNT(*) as value FROM task_management.project " .
                 "WHERE team_leader_id=$team_leader_id;";
         $count = db_access::run_scalar($query);
         return $count > 0;

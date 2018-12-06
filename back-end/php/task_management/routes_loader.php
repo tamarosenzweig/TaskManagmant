@@ -9,6 +9,7 @@ class routes_loader {
     var $department_controller;
     var $worker_hours_controller;
     var $presence_hours_controller;
+    var $permission_controller;
 
     public function __construct() {
         $this->user_controller = new user_controller();
@@ -17,14 +18,15 @@ class routes_loader {
         $this->department_controller = new department_controller();
         $this->worker_hours_controller = new worker_hours_controllere();
         $this->presence_hours_controller = new presence_hours_controller();
-
+        $this->permission_controller = new permission_controller();
         $this->methods = array(
             'customer' => $this->get_customers_methods(),
             'user' => $this->get_users_methods(),
             'project' => $this->get_projects_methods(),
             'department' => $this->get_departments_methods(),
             'workerHours' => $this->get_worker_hours_methods(),
-            'presenceHours' => $this->get_presence_hours_methods()
+            'presenceHours' => $this->get_presence_hours_methods(),
+            'permission' => $this->get_permission_methods()
         );
     }
 
@@ -64,8 +66,8 @@ class routes_loader {
             'getUserById' => function ($params) {
                 return $this->user_controller->get_user_by_id($params['userId']);
             },
-            'get_department_users_has_project'=> function ($params){
-            return $this->user_controller->get_department_users_has_project(1,2);
+            'get_department_users_has_project' => function ($params) {
+                return $this->user_controller->get_department_users_has_project(1, 2);
             }
         );
     }
@@ -92,7 +94,7 @@ class routes_loader {
                 return $this->project_controller->check_unique_validation($params);
             },
             'hasProjects' => function ($params) {
-                return $this->project_controller->has_projects($params['team_leader_id']);
+                return $this->project_controller->has_projects($params['teamLeaderId']);
             }
         );
     }
@@ -110,6 +112,9 @@ class routes_loader {
         return array(
             'getAllWorkerHours' => function ($params) {
                 return $this->worker_hours_controller->getAllWorkerHours($params['workerId']);
+            },
+            'hasUncomletedHours' => function ($params) {
+                return $this->worker_hours_controller->has_uncomleted_hours($params['workerId'], $params['projectIdList']);
             }
         );
     }
@@ -118,7 +123,19 @@ class routes_loader {
         return array(
             'GetPresenceStatusPerWorkers' => function ($params) {
 
-                return $this->$presence_hours_controller->get_presence_status_per_workers($params['teamLeaderId']);
+                return $this->presence_hours_controller->get_presence_status_per_workers($params['teamLeaderId']);
+            }
+        );
+    }
+
+    function get_permission_methods() {
+        return array(
+            'addPemission' => function ($params) {
+
+                return $this->permission_controller->add_pemission($params);
+            },
+            'deletePemission' => function($params) {
+                return $this->permission_controller->delete_pemission($params['permissionId']);
             }
         );
     }

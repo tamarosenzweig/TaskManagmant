@@ -17,11 +17,11 @@ class user_service extends base_service {
 
             $query = "SELECT * FROM task_management.user WHERE email='$email' and password='$password'";
 
-            $user = db_access:: run_reader($query, function ($model) {
+            $users = db_access:: run_reader($query, function ($model) {
 
                         return $this->init_user($model);
-                    })[0];
-            return $user;
+                    });
+            return count($users) == 1 ? $users[0] : null;
         } else {
             return "error";
         }
@@ -36,7 +36,12 @@ class user_service extends base_service {
 
     function get_all_users($manager_id) {
         $query = $this->get_users_query() . " AND u.manager_id=$manager_id;";
-        return $this->get_users($query);
+        $users = $this->get_users($query);
+        $permission_service = new permission_service();
+        for ($i = 0; $i < count($users); $i++) {
+            $users[i]['permissions'] = $permission_service->get_user_permissions($users[i]['userId']);
+        }
+        return $users;
     }
 
     function get_all_team_users($team_leader_id) {
@@ -51,7 +56,10 @@ class user_service extends base_service {
 
     function get_user_by_id($user_id) {
         $query = $this->get_users_query() . " AND u.user_id=$user_id;";
-        return $this->get_users($query)[0];
+        $user = $this->get_users($query)[0];
+        $permission_service = new permission_service();
+        $user['permissions'] = $permission_service->get_user_permissions($user['userId']);
+        return $user;
     }
 
     function add_user($user) {

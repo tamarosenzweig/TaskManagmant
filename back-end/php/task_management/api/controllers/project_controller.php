@@ -29,8 +29,8 @@ class project_controller {
     }
 
     function check_unique_validation($project) {
-        //return $this->project_service->check_unique_validation($project);
-        return null;
+        return $this->project_service->check_unique_validation($project);
+       // return null;
     }
 
     function has_projects($team_leader_id) {

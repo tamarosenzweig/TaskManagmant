@@ -7,7 +7,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Credentials", "true");
 header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
 header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-header('Content-type: application/json');
+header('Content-type: application/json');//application/x-www-form-urlencoded
 
 $routes_loader = new routes_loader();
 
@@ -22,10 +22,14 @@ if ($type == 'GET') {
     $params = $_GET;
 } else {
     $json = file_get_contents('php://input');
-    $params = json_decode($json, true);
+    $post_data = json_decode($json, true);
+    $params = isset($post_data) ? array_merge($post_data, $_GET) : $_GET;
 }
-
+if($method_name=='hasUncomletedHours'){
+    echo json_encode('hello');
+}
 echo $routes_loader->invoke($controller_name, $method_name, $params);
+
 
 die();
 
