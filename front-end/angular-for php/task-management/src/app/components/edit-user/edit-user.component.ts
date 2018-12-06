@@ -80,7 +80,8 @@ export class EditUserComponent implements OnInit {
 
   editUser(user: User) {
     this.userService.editUser(user).subscribe(
-      (edited: boolean) => {
+      (edited) => {
+        console.log(edited);
         if (edited) {
           this.showDialog();
         }
