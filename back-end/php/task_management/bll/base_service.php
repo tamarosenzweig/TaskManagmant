@@ -121,4 +121,8 @@ class base_service {
         return "'$format_date'";
     }
 
+    function get_value_or_null($array, $key) {
+        return array_key_exists($key, $array) && isset($array[$key]) ? "'{$array[$key]}'" : 'null';
+    }
+
 }

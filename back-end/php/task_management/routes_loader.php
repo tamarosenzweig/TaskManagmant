@@ -74,6 +74,13 @@ class routes_loader {
             },
             'deleteUser' => function ($params) {
                 return $this->user_controller->delete_user($params['userId']);
+            },
+            'checkUniqueValidations' => function ($params) {
+                return $this->user_controller->check_unique_validations($params);
+            },
+            'uploadImageProfile' => function ($params) {
+                $file = array_values($params['files'])[0];
+                return $this->user_controller->upload_image_profile($file);
             }
         );
     }

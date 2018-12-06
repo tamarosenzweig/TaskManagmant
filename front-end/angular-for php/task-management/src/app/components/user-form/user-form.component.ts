@@ -23,9 +23,6 @@ export class UserFormComponent implements OnInit, AfterViewInit {
   //allow access from html page to 'Object' type
   objectHolder: typeof Object = Object;
 
-  isExistEmail: boolean;
-  isExistPassword: boolean;
-
   imageFile: any;
   imageUrl: string;
 
@@ -54,8 +51,6 @@ export class UserFormComponent implements OnInit, AfterViewInit {
     private projectService: ProjectService,
     private validatorsService: ValidatorsService
   ) {
-    this.isExistEmail = false;
-    this.isExistPassword = false;
     this.imageUrl = null;
     this.types = ['text', 'text', 'password', 'password'];
     this.placeholders = ['Use name', 'Email', 'Password', 'Confirm password'];
@@ -97,6 +92,7 @@ export class UserFormComponent implements OnInit, AfterViewInit {
     }
     else {
       this.confirmPassword.setValidators(this.validatorsService.confirmPasswordValidator(this.userFormGroup));
+      this.password.setValidators(this.validatorsService.confirmPasswordValidator(this.userFormGroup));
       this.end = 4;
     }
     this.isTeamLeader.valueChanges.subscribe(
@@ -151,8 +147,6 @@ export class UserFormComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    this.isExistEmail = false;
-    this.isExistPassword = false;
     let user: User = this.userFormGroup.value;
     let imageFile: string = this.imageFile;
     let data = { user, imageFile };
@@ -166,13 +160,6 @@ export class UserFormComponent implements OnInit, AfterViewInit {
    */
   getImage(value: any) {
     this.imageFile = value;
-  }
-
-  keyUp(controlName: string) {
-    if (controlName == 'email')
-      this.isExistEmail = false;
-    else if (controlName == 'password')
-      this.isExistPassword = false;
   }
 
   setTeamLeaderAndDepartmentValidators() {

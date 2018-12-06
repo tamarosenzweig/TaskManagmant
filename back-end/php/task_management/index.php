@@ -37,10 +37,10 @@ else {
 
     //merge form data to params(form data exist in $_POST)
     $params = array_merge($params, $_POST);
+    $params['files'] = $_FILES;
 }
 
 //------------------------------------------ invoke method ------------------------------------------
-
 
 echo $routes_loader->invoke($controller_name, $method_name, $params);
 

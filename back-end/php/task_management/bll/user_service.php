@@ -66,10 +66,10 @@ class user_service extends base_service {
         $query = "INSERT INTO task_management.user" .
                 "(user_name, email, password, profile_image_name, department_id, team_leader_id,manager_id) " .
                 "VALUES('{$user['userName']}', '{$user['email']}', '{$user['password']}', " .
-                "{$this->get_string_value_or_null($user, 'profileImageName')}," .
-                "{$this->get_string_value_or_null($user, 'departmentId')}," .
-                "{$this->get_string_value_or_null($user, 'teamLeaderId')}," .
-                "{$this->get_string_value_or_null($user, 'managerId')});";
+                "{$this->get_value_or_null($user, 'profileImageName')}," .
+                "{$this->get_value_or_null($user, 'departmentId')}," .
+                "{$this->get_value_or_null($user, 'teamLeaderId')}," .
+                "{$this->get_value_or_null($user, 'managerId')});";
 
         $user_id = db_access::run_non_query($query);
         $created = false;
@@ -85,9 +85,9 @@ class user_service extends base_service {
     function edit_user($user) {
 
         $query = "UPDATE task_management.user SET user_name='{$user['userName']}',email='{$user['email']}'," .
-                "profile_image_name={$this->get_string_value_or_null($user, 'profileImageName')}," .
-                "department_id={$this->get_string_value_or_null($user, 'departmentId')}," .
-                "team_leader_id={$this->get_string_value_or_null($user, 'teamLeaderId')}" .
+                "profile_image_name={$this->get_value_or_null($user, 'profileImageName')}," .
+                "department_id={$this->get_value_or_null($user, 'departmentId')}," .
+                "team_leader_id={$this->get_value_or_null($user, 'teamLeaderId')}" .
                 "where user_id={$user['userId']};";
 
 
@@ -123,6 +123,39 @@ class user_service extends base_service {
                 "AND u.department_id=$department_id " .
                 "AND u.user_id in (SELECT worker_id FROM task_management.worker_hours WHERE project_id=$project_id);";
         return $this->get_users($query);
+    }
+
+    function check_unique_validations($user) {
+        $key;
+        if (isset($user['email'])) {
+            $key = 'email';
+        } else {
+            if (isset($user['password'])) {
+                $key = 'password';
+            }
+        }
+        if (isset($key)) {
+            $query = "SELECT COUNT(*) AS count FROM task_management.user " .
+                    "WHERE $key='{$user[$key]}'";
+            $count = db_access::run_scalar($query);
+            if ($count > 0) {
+                $error_message = array();
+                $error_message['val'] = "$key must be unique";
+                return $error_message;
+            }
+            return null;
+        }
+        return null;
+    }
+
+    function upload_image_profile($file) {
+        $new_file_name = bin2hex(openssl_random_pseudo_bytes(16)) . '.jpg';
+
+        $destination_path = getcwd() . DIRECTORY_SEPARATOR . 'uploads/';
+        $target_path = $destination_path . basename($new_file_name);
+
+        @move_uploaded_file($file['tmp_name'], $target_path);
+        return $new_file_name;
     }
 
 }

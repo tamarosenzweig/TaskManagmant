@@ -86,7 +86,7 @@ export class UserService {
 
     //POST
     uploadImageProfile(image: any): Observable<any> {
-        let url: string = `${this.basicURL}/uploadImageProfile`;
+        let url: string = `${this.basicPhpURL}/uploadImageProfile`;
         let formData: FormData = new FormData();
         formData.append('file', image, image.name);
         return this.http.post(url, formData);
@@ -112,7 +112,7 @@ export class UserService {
 
     //POST
     checkUniqueValidations(user: User): Observable<any> {
-        let url: string = `${this.basicURL}/checkUniqueValidations`;
+        let url: string = `${this.basicPhpURL}/checkUniqueValidations`;
         return this.http.post(url, user);
     }
 

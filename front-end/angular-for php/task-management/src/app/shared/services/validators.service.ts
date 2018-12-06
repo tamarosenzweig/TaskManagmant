@@ -36,7 +36,7 @@ export class ValidatorsService {
     confirmPasswordValidator(fromGroup: FormGroup): Array<ValidatorFn> {
         return [
             f => !f.value ? { 'val': '\'confirmPassword\'  is required' } : null,
-            f => f.value && fromGroup.get('password').value != f.value ? { 'val': '\'confirmPassword\' doesn\'t not match to \'password\'' } : null
+            f => f.value && fromGroup.get('password').value != f.value ? { 'val': '\'password\' and \'confirmPassword\' do not match' } : null
         ];
     }
 

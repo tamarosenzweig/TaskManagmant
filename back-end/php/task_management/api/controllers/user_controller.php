@@ -58,4 +58,12 @@ class user_controller {
         return $this->user_service->send_email($email, $user);
     }
 
+    function check_unique_validations($user) {
+        return $this->user_service->check_unique_validations($user);
+    }
+
+    function upload_image_profile($file) {
+        return $this->user_service->upload_image_profile($file);
+    }
+
 }
