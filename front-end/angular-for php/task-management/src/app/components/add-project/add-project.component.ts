@@ -54,6 +54,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   initFormGroup() {
+    //to  do unique validaton
     this.projectFormGroup = this.formBuilder.group({
       projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/)],
       customerId: ['', this.validatorsService.stringValidatorArr('customer')],
