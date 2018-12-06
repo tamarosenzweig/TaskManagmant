@@ -10,7 +10,7 @@ export class WorkerHoursService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/workerHours`;
+    basicURL: string = Global.PHP_HOST + `/workerHours`;
     changeWorkerHoursSubject: Subject<WorkerHours>;
     deleteWorkerHoursSubject: Subject<WorkerHours>;
     addWorkerHoursSubject: Subject<WorkerHours>;
@@ -38,7 +38,7 @@ export class WorkerHoursService {
         let formData:FormData=new FormData()
         formData.append('workerId',workerId.toString());
         formData.append('projectIdList',JSON.stringify(projectIdList));
-        return this.http.post(url,formData);
+        return this.http.post(url,JSON.stringify(formData));
     }
  
     //PUT

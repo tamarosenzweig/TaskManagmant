@@ -8,7 +8,7 @@ export class ProjectService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/project`;
+    basicURL: string = Global.PHP_HOST + `/project`;
 
     filterSubject: Subject<ProjectFilter>;
 
@@ -22,8 +22,8 @@ export class ProjectService {
 
     //POST
     addProject(project: Project): Observable<any> {
-        let url: string = `${this.basicURL}/AddProject`;
-        return this.http.post(url, project);
+        let url: string = `${this.basicURL}/addProject`;
+        return this.http.post(url,JSON.stringify(project));
     }
 
     //GET
@@ -57,7 +57,7 @@ export class ProjectService {
     //POST
     checkUniqueValidation(project: Project): Observable<any> {
         let url: string = `${this.basicURL}/checkUniqueValidation`;
-        return this.http.post(url, project);
+        return this.http.post(url,JSON.stringify(project));
     }
 
     initDates(projects: Project[]) {

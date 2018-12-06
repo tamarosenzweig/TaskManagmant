@@ -1,5 +1,5 @@
 <?php
-
+//'Y-m-d h:i:s'
 class presence_hours_service extends base_service {
 
     function get_presence_hours($worker_id, $project_id) {

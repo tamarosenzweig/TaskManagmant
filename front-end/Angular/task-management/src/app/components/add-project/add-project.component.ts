@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { asEnumerable } from 'linq-es2015';
 import { MatDialog } from '@angular/material';
 import {
@@ -13,7 +12,7 @@ import {
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
-  styleUrls: ['./../../../form-style.css','./add-project.component.css']
+  styleUrls: ['./../../../form-style.css', './add-project.component.css']
 })
 export class AddProjectComponent implements OnInit {
 
@@ -35,7 +34,6 @@ export class AddProjectComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     public dialog: MatDialog,
     private projectService: ProjectService,
     private customerService: CustomerService,
@@ -55,7 +53,7 @@ export class AddProjectComponent implements OnInit {
 
   initFormGroup() {
     this.projectFormGroup = this.formBuilder.group({
-      projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('ProjectName')],
+      projectName: ['', this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('projectName')],
       customerId: ['', this.validatorsService.stringValidatorArr('customer')],
       teamLeaderId: ['', this.validatorsService.stringValidatorArr('team leader')],
       totalHours: this.getDepartmentControls(),
@@ -101,7 +99,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   getDepartmentControls(): FormGroup {
-    let formGroup: FormGroup = new FormGroup({},this.validatorsService.sumValidator('total hours',1));
+    let formGroup: FormGroup = new FormGroup({}, this.validatorsService.sumValidator('total hours', 1));
     this.departments.forEach(department => {
       let formControl: FormControl = new FormControl(null, this.validatorsService.numberValidatorArr(department.departmentName, 0));
       formControl.updateValueAndValidity();
@@ -182,7 +180,7 @@ export class AddProjectComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['taskManagement/manager/userManagement']);
+      this.project = null;
     });
   }
 

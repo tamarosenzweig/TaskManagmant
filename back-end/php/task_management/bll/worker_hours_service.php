@@ -44,7 +44,7 @@ class worker_hours_service extends base_service {
     function add_worker_hours($worker_hours) {
         $query = "INSERT INTO task_management.worker_hours(project_id,worker_id,num_hours,is_complete) " .
                 "VALUES ({$worker_hours['projectId']},{$worker_hours['workerId']},{$worker_hours['numHours']},1);";
-        $created = db_access::run_non_query($query) == 1;
+        $created = db_access::run_non_query($query)!=null;
         return $created;
     }
 
@@ -64,6 +64,7 @@ class worker_hours_service extends base_service {
         $edited = db_access::run_non_query($query) == 1;
         return $edited;
     }
+
 
     function add_worker_hours_to_team_projects($user) {
         if (isset($user['teamLeaderId'])) {

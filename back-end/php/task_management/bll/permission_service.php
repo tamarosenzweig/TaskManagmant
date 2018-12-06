@@ -20,15 +20,15 @@ class permission_service extends base_service {
 
     function add_pemission($permission) {
         $query = "INSERT INTO task_management.permission(worker_id,project_id) " .
-                "VALUES({$permission['workerId']},{$permission['projectId']});" .
-                "SELECT @@IDENTITY;";
-        $permission_id = db_access::run_scalar($query);
+                "VALUES({$permission['workerId']},{$permission['projectId']});";
+        $permission_id = db_access::run_non_query($query);
         $worker_hours_service = new worker_hours_service();
-        $worker_hours = $worker_hours_service->get_worker_hours_per_project($permission['workerId'], $permission['projectId'])[0];
-        if (!isset($worker_hours)) {
+        $workers_hours = $worker_hours_service->get_worker_hours_per_project($permission['workerId'], $permission['projectId']);
+        if (count($workers_hours) == 0) {
             $worker_hours = array();
             $worker_hours['projectId'] = $permission['projectId'];
             $worker_hours['workerId'] = $permission['workerId'];
+            $worker_hours['numHours'] = 0;
             $worker_hours_service->add_worker_hours($worker_hours);
         }
         return $permission_id;

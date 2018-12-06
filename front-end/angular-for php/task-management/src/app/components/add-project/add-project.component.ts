@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { asEnumerable } from 'linq-es2015';
 import { MatDialog } from '@angular/material';
 import {
@@ -35,7 +34,6 @@ export class AddProjectComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     public dialog: MatDialog,
     private projectService: ProjectService,
     private customerService: CustomerService,
@@ -54,8 +52,9 @@ export class AddProjectComponent implements OnInit {
   }
 
   initFormGroup() {
+    //to  do unique validaton
     this.projectFormGroup = this.formBuilder.group({
-      projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('ProjectName')],
+      projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('projectName')],
       customerId: ['', this.validatorsService.stringValidatorArr('customer')],
       teamLeaderId: ['', this.validatorsService.stringValidatorArr('team leader')],
       totalHours: this.getDepartmentControls(),
@@ -182,7 +181,7 @@ export class AddProjectComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['taskManagement/manager/userManagement']);
+      this.project=null;
     });
   }
 

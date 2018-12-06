@@ -12,7 +12,7 @@ export class ProjectFilterPipe implements PipeTransform {
     if (!conditions)
       return projects;
     return projects.filter(project =>
-      (!conditions.monthId || project.startDate.getMonth() < conditions.monthId && project.endDate.getMonth() >= conditions.monthId) &&
+      (!conditions.monthId || project.startDate.getMonth() <= conditions.monthId && project.endDate.getMonth() >= conditions.monthId) &&
       (!conditions.workerId || project.departmentsHours.some(departmentHours => departmentHours.department.workers.some(worker => worker.userId == conditions.workerId))) &&
       (!conditions.teamLeaderId || project.teamLeaderId == conditions.teamLeaderId) &&
       (!conditions.projectId || project.projectId == conditions.projectId))
