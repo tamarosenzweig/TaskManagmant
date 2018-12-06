@@ -3,37 +3,36 @@
 class project_service extends base_service {
 
     function add_project($new_project) {
-        $query = "START TRANSACTION;";
-        $query .= "INSERT INTO task_management.project(project_name,manager_id,customer_id,team_leader_id,total_hours,start_date,end_date) " .
+        $queries = array();
+        $queries [] = "INSERT INTO task_management.project(project_name,manager_id,customer_id,team_leader_id,total_hours,start_date,end_date) " .
                 "VALUES('{$new_project['projectName']}',{$new_project['managerId']},{$new_project['customerId']}," .
                 "{$new_project['teamLeaderId']},{$new_project['totalHours']}," .
-                 "{$this->format_date($new_project['startDate'])},{$this->format_date($new_project['endDate'])});";
-//take id of the inserted project
-        $query .= "SELECT @@IDENTITY INTO @project_id;";
-//add the divided hours for each department
+                "{$this->format_date($new_project['startDate'])},{$this->format_date($new_project['endDate'])});";
+        //take id of the inserted project
+        $queries[] = "SELECT @@IDENTITY INTO @project_id;";
+        //add the divided hours for each department
         foreach ($new_project['departmentsHours'] as $department_hours) {
-            $query .= "INSERT INTO task_management.department_hours(project_id,department_id,num_hours) " .
+            $queries[] = "INSERT INTO task_management.department_hours(project_id,department_id,num_hours) " .
                     "VALUES(@project_id,{$department_hours['departmentId']},{$department_hours['numHours']});";
         }
-//add permission and worker-hours with default value-0 to extra workers if exists
+        //add permission and worker-hours with default value-0 to extra workers if exists
         if (isset($new_project['permissions'])) {
             foreach ($new_project['permissions'] as $permission) {
-                $query .= "INSERT INTO task_management.permission(worker_id,project_id) " .
+                $queries[] = "INSERT INTO task_management.permission(worker_id,project_id) " .
                         "VALUES({$permission['workerId']},@project_id);";
-                $query .= "INSERT INTO task_management.worker_hours(project_id,worker_id,is_complete) " .
+                $queries[] = "INSERT INTO task_management.worker_hours(project_id,worker_id,is_complete) " .
                         "VALUES (@project_id,{$permission['workerId']},1);";
             }
         }
-//add worker-hours with default value-0 to all team workers 
+        //add worker-hours with default value-0 to all team workers 
         $user_service = new user_service();
         $team_workers = $user_service->get_all_team_users($new_project['teamLeaderId']);
         foreach ($team_workers as $worker) {
-            $query .= "INSERT INTO task_management.worker_hours(project_id,worker_id,is_complete) " .
-                    "VALUES (@project_id,{$worker['userId']},100);";
+            $queries[] = "INSERT INTO task_management.worker_hours(project_id,worker_id,is_complete) " .
+                    "VALUES (@project_id,{$worker['userId']},1);";
         }
-        $query .= "COMMIT;";
         // return $query;
-        $affected_rows = db_access::run_non_query($query);
+        $affected_rows = db_access::run_transaction($queries);
         return $affected_rows;
     }
 
