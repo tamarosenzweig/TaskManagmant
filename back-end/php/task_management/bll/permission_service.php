@@ -43,7 +43,7 @@ class permission_service extends base_service {
     function delete_unnecessary_permissions($user) {
         $worker_permissions = $this->get_worker_permission_to_team_projects($user);
         foreach ($worker_permissions as $permission) {
-            $this->delete_pemission($permission['permissionId']);
+            $this->delete_permission($permission['permissionId']);
         }
     }
 

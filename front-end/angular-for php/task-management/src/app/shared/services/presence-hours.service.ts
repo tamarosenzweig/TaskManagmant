@@ -9,7 +9,7 @@ export class PresenceHoursService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/presenceHours`;
+    basicURL: string = Global.PHP_HOST + `/presenceHours`;
     UpdatePresenceSubject:Subject<void>;
     //----------------CONSTRUCTOR------------------
 
@@ -33,13 +33,13 @@ export class PresenceHoursService {
 
     //GET
     getPresenceStatusPerWorkers(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicURL}/getPresenceStatusPerWorkers?teamLeaderId=${teamLeaderId}`;
+        let url: string = `${Global.PHP_HOST}/presenceHours/getPresenceStatusPerWorkers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
     //GET
     getPresenceStatusPerProjects(workerId: number): Observable<any> {
-        let url: string = `${this.basicURL}/getPresenceStatusPerProjects?workerId=${workerId}`;
+        let url: string = `${Global.PHP_HOST}/presenceHours/getPresenceStatusPerProjects?workerId=${workerId}`;
         return this.http.get(url);
     }
     //GET
