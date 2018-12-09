@@ -77,7 +77,8 @@ class user_service extends base_service {
             $created = true;
             $user['userId'] = $user_id;
             //add worker hours to worker for projects in his team
-            $this->worker_hours_service->add_worker_hours_to_team_projects($user);
+            $worker_hours_service=new worker_hours_service();
+            $worker_hours_service->add_worker_hours_to_team_projects($user);
         }
         return $created;
     }
@@ -135,10 +136,11 @@ class user_service extends base_service {
             }
         }
         if (isset($key)) {
-            $query = "SELECT COUNT(*) AS count FROM task_management.user " .
+            $query = "SELECT * FROM task_management.user " .
                     "WHERE $key='{$user[$key]}'";
-            $count = db_access::run_scalar($query);
-            if ($count > 0) {
+            $users= $this->get_users($query);
+            //If there is a user in the database with such a value and this is a different user
+            if (count($users) > 0&&$users[0]['userId']!=$user['userId']) {
                 $error_message = array();
                 $error_message['val'] = "$key must be unique";
                 return $error_message;
@@ -149,11 +151,16 @@ class user_service extends base_service {
     }
 
     function upload_image_profile($file) {
-        $new_file_name = bin2hex(openssl_random_pseudo_bytes(16)) . '.jpg';
+        $allowed = array('png', 'jpg', 'jpeg');
+        $filename = $file['name'];
+        $file_extension = pathinfo($filename, PATHINFO_EXTENSION);
+        if (!in_array($file_extension, $allowed)) {
+            echo 'error';
+        }
+        $new_file_name = bin2hex(openssl_random_pseudo_bytes(16)) . '.' . $file_extension;
 
-        $destination_path = getcwd() . DIRECTORY_SEPARATOR . 'uploads/';
+        $destination_path = getcwd() . DIRECTORY_SEPARATOR . 'images/users-profiles/';
         $target_path = $destination_path . basename($new_file_name);
-
         @move_uploaded_file($file['tmp_name'], $target_path);
         return $new_file_name;
     }

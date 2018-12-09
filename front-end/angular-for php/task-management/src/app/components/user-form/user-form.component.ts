@@ -61,7 +61,7 @@ export class UserFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.user.profileImageName != null)
-      this.imageUrl = `${Global.UPLOADS}/UsersProfiles/${this.user.profileImageName}`;
+      this.imageUrl = `${Global.UERS_PROFILES}/${this.user.profileImageName}`;
     this.getAllDepartments();
     this.getAllTeamLeaders();
   }

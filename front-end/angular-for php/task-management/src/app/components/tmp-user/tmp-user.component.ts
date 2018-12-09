@@ -41,7 +41,7 @@ export class TmpUserComponent implements OnInit {
 
   ngOnInit(): void {
     //init imageUrl
-    this.imageUrl = `${Global.UPLOADS}/UsersProfiles/`;
+    this.imageUrl = `${Global.UERS_PROFILES}/`;
     if (this.user.profileImageName)
       this.imageUrl += this.user.profileImageName;
     else
