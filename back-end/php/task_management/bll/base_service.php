@@ -97,10 +97,14 @@ class base_service {
         $new_permission['workerId'] = $permission['worker_id'];
         $new_permission['projectId'] = $permission['project_id'];
         $new_permission['isActive'] = $permission['is_active'];
-        $new_permission['worker'] = array();
-        $new_permission['worker']['userName'] = $permission['user_name'];
-        $new_permission['project'] = array();
-        $new_permission['project']['projectName'] = $permission['project_name'];
+        if (array_key_exists('user_name', $permission)) {
+            $new_permission['worker'] = array();
+            $new_permission['worker']['userName'] = $permission['user_name'];
+        }
+        if (array_key_exists('project_name', $permission)) {
+            $new_permission['project'] = array();
+            $new_permission['project']['projectName'] = $permission['project_name'];
+        }
         return $new_permission;
     }
 
@@ -116,8 +120,13 @@ class base_service {
         return $new_presence_hours;
     }
 
-    function format_date($date, $format = 'Y-m-d') {
-        $format_date = date($format, strtotime($date));
+    function format_date($date=null, $format = 'Y-m-d') {
+        $format_date;
+        if (isset($date)) {
+            $format_date = date($format, strtotime($date));
+        } else {
+            $format_date = date($format);
+        }
         return "'$format_date'";
     }
 
@@ -125,4 +134,17 @@ class base_service {
         return array_key_exists($key, $array) && isset($array[$key]) ? "'{$array[$key]}'" : 'null';
     }
 
+     function send_email_from_base_service($email) {
+
+        $to_address = $email['to_address'];
+        $subject = $email['subject'];
+        $message = $email['body'];
+        $headers = 'From: taskManagementCompany@gmail.com' . "\r\n" .
+                'Reply-To: taskManagementCompany@gmail.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+
+        mail($to_address, $subject, $message, $headers);
+        return true;
+//    die(json_encode("true"));
+    }
 }

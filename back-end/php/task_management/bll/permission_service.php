@@ -34,7 +34,7 @@ class permission_service extends base_service {
         return $permission_id;
     }
 
-    function delete_pemission($permission_id) {
+    function delete_permission($permission_id) {
         $query = "UPDATE task_management.permission SET is_active=0 WHERE permission_id=$permission_id AND is_active=1;";
         $deleted = db_access::run_non_query($query) == 1;
         return $deleted;

@@ -77,7 +77,7 @@ class user_service extends base_service {
             $created = true;
             $user['userId'] = $user_id;
             //add worker hours to worker for projects in his team
-            $worker_hours_service=new worker_hours_service();
+            $worker_hours_service = new worker_hours_service();
             $worker_hours_service->add_worker_hours_to_team_projects($user);
         }
         return $created;
@@ -85,37 +85,38 @@ class user_service extends base_service {
 
     function edit_user($user) {
 
+        $old_user = $this->get_user_by_id($user['userId']);
+
         $query = "UPDATE task_management.user SET user_name='{$user['userName']}',email='{$user['email']}'," .
                 "profile_image_name={$this->get_value_or_null($user, 'profileImageName')}," .
                 "department_id={$this->get_value_or_null($user, 'departmentId')}," .
-                "team_leader_id={$this->get_value_or_null($user, 'teamLeaderId')}" .
+                "team_leader_id={$this->get_value_or_null($user, 'teamLeaderId')} " .
                 "where user_id={$user['userId']};";
-
-
-        $connection = db_access::run_non_query($query);
-        $edited = $connection->affected_rows > 0;
-//        if($edited)
-//        if (isset($edited)) {
-        //manage worker hours to team-projects if the worker moves team
-//            $old_user = $this->get_user_by_id($user['userId']);
-//            if ($old_user['teamLeaderId'] != $user['teamLeaderId'] && $user['teamLeaderId'] != null) {
-//                $this->permission_service->delete_unnecessary_permissions($user);
-//                $this->worker_hours_service->add_worker_hours_to_team_projects($user);
-//            }
-//        }
+        $affected_rows = db_access::run_non_query($query);
+        $edited = $affected_rows > 0;
+        if ($edited) {
+            // manage worker hours to team-projects if the worker moves team
+            if ($old_user['teamLeaderId'] != $user['teamLeaderId'] && isset($user['teamLeaderId'])) {
+                $permission_service = new permission_service();
+                $permission_service->delete_unnecessary_permissions($user);
+                $worker_hours_service = new worker_hours_service();
+                $worker_hours_service->add_worker_hours_to_team_projects($user);
+            }
+        }
         return $edited;
     }
 
     function delete_user($user_id) {
         $query = "UPDATE task_management.user SET is_active=0 where user_id=$user_id AND is_active=1;";
-        $connection = db_access::run_non_query($query);
-        $deleted = $connection->affected_rows > 0;
-//        if ($deleted) {
-//            $permissions = $this->permission_service->get_user_permissions($user_id);
-//            foreach ($permissions as $permission) {
-//                $this->permission_service->delete_permission($permission['permission_id']);
-//            }
-//        }
+        $affected_rows = db_access::run_non_query($query);
+        $deleted = $affected_rows > 0;
+        if ($deleted) {
+            $permission_service = new permission_service();
+            $permissions = $permission_service->get_user_permissions($user_id);
+            foreach ($permissions as $permission) {
+                $permission_service->delete_permission($permission['permissionId']);
+            }
+        }
         return $deleted;
     }
 
@@ -137,10 +138,10 @@ class user_service extends base_service {
         }
         if (isset($key)) {
             $query = "SELECT * FROM task_management.user " .
-                    "WHERE $key='{$user[$key]}'";
-            $users= $this->get_users($query);
+                    "WHERE $key='{$user[$key]}' AND is_active=1";
+            $users = $this->get_users($query);
             //If there is a user in the database with such a value and this is a different user
-            if (count($users) > 0&&$users[0]['userId']!=$user['userId']) {
+            if (count($users) > 0 && $users[0]['userId'] != $user['userId']) {
                 $error_message = array();
                 $error_message['val'] = "$key must be unique";
                 return $error_message;
@@ -163,6 +164,108 @@ class user_service extends base_service {
         $target_path = $destination_path . basename($new_file_name);
         @move_uploaded_file($file['tmp_name'], $target_path);
         return $new_file_name;
+    }
+
+    function remove_uploaded_image($profile_image_name, $move_to_archives) {
+        $source_file = getcwd() . DIRECTORY_SEPARATOR . 'images/users-profiles/' . $profile_image_name;
+        if (json_decode($move_to_archives) == true) {
+            $destination_file = getcwd() . DIRECTORY_SEPARATOR . 'images/archives/users-profiles/' . $profile_image_name;
+            rename($source_file, $destination_file);
+        } else {
+            unlink($source_file);
+        }
+        return true;
+    }
+
+    function has_workes($team_leader_id) {
+        $query = "SELECT COUNT(*) as count FROM task_management.user WHERE team_leader_id=$team_leader_id;";
+        $count = db_access::run_scalar($query);
+        return $count > 0;
+    }
+
+    function get_user_by_email($email) {
+        $query = "SELECT * FROM task_management.user WHERE email ='$email';";
+        $users = $this->get_users($query);
+        if (count($users) > 0) {
+            return $users[0];
+        }
+        return null;
+    }
+
+    function forgot_password($email) {
+        $user = $this->get_user_by_email($email);
+        if (!isset($user)) {
+            return false;
+        }
+        $my_token = $this->generate_randon_no();
+        $created = $this->add_change_password($user['userId'], $my_token);
+        if ($created) {
+            $email = array();
+            $email['to_address'] = $user['email'];
+            $email['subject'] = "A verification code has been sent to you";
+            ;
+            $email['body'] = "Please enter the following verification code:$my_token" .
+                    " The code is only valid for an hour.";
+
+            $this->send_email($email);
+            return true;
+        }
+        return false;
+    }
+
+    function generate_randon_no() {
+        $number = '';
+        for ($i = 0; $i < 4; $i++) {
+            $number .= mt_rand(0, 9);
+        }
+        return $number;
+    }
+
+    function add_change_password($user_id, $token) {
+        $query = "INSERT INTO task_management.change_password(user_id, token, sending_date) " .
+                "VALUES($user_id, $token, {$this->format_date(null, 'Y-m-d H:i:s')});";
+        $result = db_access::run_non_query($query);
+        return isset($result);
+    }
+
+    function confirm_token($change_password) {
+        $query = "SELECT COUNT(*) as count FROM task_management.change_password " .
+                "WHERE user_id = {$change_password['userId']} AND token = '{$change_password['token']}' AND attemp_num<3;";
+        $count = db_access::run_scalar($query);
+        if ($count > 0) {
+            return true;
+        }
+        $query = "UPDATE task_management.change_password SET attemp_num=attemp_num+1 WHERE user_id={$change_password['userId']};";
+        db_access::run_non_query($query);
+        return false;
+    }
+
+    function change_password($user) {
+        $query = "UPDATE task_management.user SET password='{$user['password']}' where user_id={$user['userId']};";
+        $affected_rows = db_access::run_non_query($query);
+        $edited = $affected_rows == 1;
+        return $edited;
+    }
+
+    function send_email($email, $user) {
+//            try
+//            {
+//                $manager =$this->get_
+//                        GetUserById((int)user.ManagerId);
+//                email.ToAddress.Add(manager.Email);
+//                email.Body += $"\nFrom {user.UserName}";
+//                return BaseService.SendEmail(email);
+//            }
+//            catch (Exception ex)
+//            {
+//                throw ex;
+//            }
+//        }
+
+        $manager = $this->get_user_by_id($user['managerId']);
+        $email['to_address'] = $manager['email'];
+        $email['body'] = '\n from' . $user['userName'];
+        return $this->send_email_from_base_service($email);
     }
 
 }

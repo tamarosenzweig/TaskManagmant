@@ -9,7 +9,7 @@ class worker_hours_service extends base_service {
     }
 
     function has_uncomleted_hours($worker_id, $project_id_list) {
-        $query = "SELECT COUNT(*) FROM task_management.worker_hours " .
+        $query = "SELECT COUNT(*) as count FROM task_management.worker_hours " .
                 "WHERE worker_id =$worker_id AND is_complete=0";
         if (isset($project_id_list)) {
             $query .= " AND project_id IN(";
@@ -22,7 +22,6 @@ class worker_hours_service extends base_service {
         } else {
             $query .= ";";
         }
-        // return $query;
         $count = db_access::run_scalar($query);
         return $count > 0;
     }
@@ -68,9 +67,11 @@ class worker_hours_service extends base_service {
 
     function add_worker_hours_to_team_projects($user) {
         if (isset($user['teamLeaderId'])) {
-            $projects = $this->project_service->get_projects_in_working_by_team_leader_id($user['teamLeaderId']);
+            $project_service = new project_service();
+            $projects = $project_service->get_projects_in_working_by_team_leader_id($user['teamLeaderId']);
             foreach ($projects as $project) {
-                $workers_hours = $this->worker_hours_service->get_worker_hours_per_project($user['userId'], $project['projectId']);
+                $worker_hours_service = new worker_hours_service();
+                $workers_hours = $worker_hours_service->get_worker_hours_per_project($user['userId'], $project['projectId']);
                 if (count($workers_hours) == 0) {
                     $worker_hours = array();
                     $worker_hours['projectId'] = $project['projectId'];

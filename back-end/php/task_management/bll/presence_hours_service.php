@@ -1,5 +1,5 @@
 <?php
-//'Y-m-d h:i:s'
+
 class presence_hours_service extends base_service {
 
     function get_presence_hours($worker_id, $project_id) {
@@ -11,7 +11,6 @@ class presence_hours_service extends base_service {
                 });
         return $presence_hours_list;
     }
-
     function get_presence_hours_sum($project_id, $worker_id) {
         $query = "SELECT IFNULL(SUM(TIMESTAMPDIFF(SECOND, start_hour, end_hour)/3600),0) AS sum " .
                 "FROM task_management.presence_hours " .
@@ -23,18 +22,19 @@ class presence_hours_service extends base_service {
     function add_presence_hours($new_presence_hours) {
 //check if date and time is exactly
         $query = "INSERT INTO task_management.presence_hours(worker_id,project_id,start_hour) " .
-                "VALUES({$new_presence_hours['workerId']}, {$new_presence_hours['projectId']}, " .
-                "{$this->format_date($new_presence_hours['startHour'], 'yyyy-MM-dd HH:mm:ss')});" .
-                "SELECT @@IDENTITY;";
-        $presence_hours_id = db_access::run_scalar($query);
+                "VALUES('{$new_presence_hours['workerId']}', '{$new_presence_hours['projectId']}', " .
+                "{$this->format_date($new_presence_hours['startHour'], 'Y-m-d H:i:s')});";
+
+        $presence_hours_id = db_access::run_non_query($query);
         return isset($presence_hours_id) ? $presence_hours_id : -1;
     }
 
     function edit_presence_hours($presence_hours) {
         //check if date and time is exactly
         $query = "UPDATE task_management.presence_hours " .
-                "SET end_hour={$this->format_date($new_presence_hours['endHour'], 'yyyy-MM-dd HH:mm:ss')} " .
+                "SET end_hour={$this->format_date($presence_hours['endHour'], 'Y-m-d H:i:s')} " .
                 "WHERE presence_hours_id={$presence_hours['presenceHoursId']};";
+
         $created = db_access::run_non_query($query) == 1;
         if ($created) {
             $worker_hours_service = new worker_hours_service();
@@ -54,8 +54,8 @@ class presence_hours_service extends base_service {
             $new_presence_status['userName'] = $presence_status['user_name'];
         }
         $new_presence_status['projectName'] = $presence_status['project_name'];
-        $new_presence_status['projectHours'] = $presence_status['project_hours'];
-        $new_presence_status['presenceHours'] = $presence_status['presenceHours'];
+        $new_presence_status['projectHours'] = $presence_status['num_hours'];
+        $new_presence_status['presenceHours'] = $presence_status['presence'];
         return $new_presence_status;
     }
 

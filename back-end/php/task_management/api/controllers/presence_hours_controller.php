@@ -28,4 +28,8 @@ class presence_hours_controller {
         return $this->presence_hours_service->get_presence_hours_sum($project_id, $worker_id);
     }
 
+    function get_presence_hours($project_id, $worker_id) {
+        return $this->presence_hours_service->get_presence_hours( $worker_id,$project_id);
+    }
+
 }

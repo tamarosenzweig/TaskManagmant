@@ -93,7 +93,7 @@ export class TmpUserComponent implements OnInit {
     }
     //if  this user is a team-leader and he has workers or projects we can't delete him
     else {
-      let hasWorkes: boolean = await this.userService.hasWorkes(this.user.userId).toPromise();
+      let hasWorkes: boolean = await this.userService.HasWorkers(this.user.userId).toPromise();
       if (hasWorkes) {
         let msg: string = 'Impossible to delete team-leader who has workers';
         this.showDialog(msg,true);
