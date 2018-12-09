@@ -9,12 +9,13 @@ export class PresenceHoursService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/presenceHours`;
-    UpdatePresenceSubject:Subject<void>;
+
+    basicURL: string = Global.PHP_HOST + `/presenceHours`;
+    UpdatePresenceSubject: Subject<void>;
     //----------------CONSTRUCTOR------------------
 
-    constructor(private http: HttpClient) { 
-        this.UpdatePresenceSubject=new Subject<void>();
+    constructor(private http: HttpClient) {
+        this.UpdatePresenceSubject = new Subject<void>();
     }
 
     //----------------METHODS-------------------
@@ -25,10 +26,10 @@ export class PresenceHoursService {
         return this.http.post(url, presenceHours);
     }
 
-    //PUT
+    //POST
     editPresenceHours(presenceHours: PresenceHours): Observable<any> {
         let url: string = `${this.basicURL}/editPresenceHours`;
-        return this.http.put(url, presenceHours);
+        return this.http.post(url, presenceHours);
     }
 
     //GET
@@ -40,10 +41,12 @@ export class PresenceHoursService {
     //GET
     getPresenceStatusPerProjects(workerId: number): Observable<any> {
         let url: string = `${this.basicURL}/getPresenceStatusPerProjects?workerId=${workerId}`;
-        return this.http.get(url);
+        let res = this.http.get(url);
+        return res;
     }
+
     //GET
-    getPresenceHoursSum(projectId: number,workerId: number): Observable<any> {
+    getPresenceHoursSum(projectId: number, workerId: number): Observable<any> {
         let url: string = `${this.basicURL}/getPresenceHoursSum?projectId=${projectId}&workerId=${workerId}`;
         return this.http.get(url);
     }

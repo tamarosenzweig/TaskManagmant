@@ -51,6 +51,7 @@ export class TmpWorkerTaskComponent implements OnInit {
   ngOnInit() {
    this.updatePresenceSum();
   }
+
   btnTaskClick() {
     if (this.isStarted == false) {
       this.startTask();
@@ -66,7 +67,8 @@ export class TmpWorkerTaskComponent implements OnInit {
     let startDate = new Date();
     this.presenceHours = new PresenceHours(0, userId, this.workerHour.projectId, startDate, null);
     this.presenceHoursService.addPresenceHours(this.presenceHours).subscribe(
-      (presenceHoursId: number) => {
+      (presenceHoursId) => {
+        console.log(presenceHoursId);
         this.presenceHours.presenceHoursId = presenceHoursId;
       },
       err => {
@@ -78,7 +80,8 @@ export class TmpWorkerTaskComponent implements OnInit {
   editPresenceHours() {
     this.presenceHours.endHour = new Date();
     this.presenceHoursService.editPresenceHours(this.presenceHours).subscribe(
-      () => {
+      (res) => {
+        console.log(res);
         this.updatePresenceSum();
       },
       err => {
@@ -86,6 +89,7 @@ export class TmpWorkerTaskComponent implements OnInit {
       }
     );
   }
+
   async startTask() {
     this.isStarted = true;
     this.btnMessage = 'stop your task';
@@ -99,6 +103,7 @@ export class TmpWorkerTaskComponent implements OnInit {
       this.showDialog()
     }, timeOut);
   }
+
   stopTask() {
     this.isStarted = false;
     this.btnMessage = 'start your task';
@@ -118,9 +123,11 @@ export class TmpWorkerTaskComponent implements OnInit {
       }
     });
   }
+
   updatePresenceSum(){
     this.presenceHoursService.getPresenceHoursSum(this.workerHour.projectId, this.workerHour.workerId).subscribe(
       (presenceSum: number) => {
+        console.log(presenceSum);
         this.presenceSum = presenceSum;
         this.presence=new Date();
         this.presence.setHours(0,0,this.presenceSum*60*60,0);
