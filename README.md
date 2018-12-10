@@ -62,7 +62,7 @@ To install the app in your computer you have to:
 Task Managmant uses a number of extension:
 
 *in php platform we use:*
-    
+
 * [xampp] - Installers and Downloads for Apache Friends!
 
 *in web api platform we use:*
@@ -72,12 +72,14 @@ Task Managmant uses a number of extension:
 *in angular platform we use:*
     
   * [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
-        * [Angular MATERIAL](https://material.angular.io/) Material Design components for Angular
-        * [Sweet Alert](https://sweetalert2.github.io/) A BEAUTIFUL, RESPONSIVE, CUSTOMIZABLE, ACCESSIBLE (WAI-ARIA) REPLACEMENT FOR JAVASCRIPT'S POPUP BOXES   
+        
+    * [Angular MATERIAL](https://material.angular.io/) Material Design components for Angular
+        
+    * [Sweet Alert](https://sweetalert2.github.io/) beatuiul java script pop up   
 
 *in win form platform we use:* 
-        * [Telerik](https://docs.telerik.com/devtools/winforms/introduction) Performance you demand, UI you can't believe
 
+* [Telerik](https://docs.telerik.com/devtools/winforms/introduction) Performance you demand, UI you can't believe
 
 ## System diagram:
 ![picture](step1.png)
