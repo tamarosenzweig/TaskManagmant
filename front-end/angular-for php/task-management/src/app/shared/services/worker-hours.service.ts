@@ -10,7 +10,7 @@ export class WorkerHoursService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.PHP_HOST + `/workerHours`;
+    basicURL: string = Global.HOST + `/workerHours`;
     changeWorkerHoursSubject: Subject<WorkerHours>;
     deleteWorkerHoursSubject: Subject<WorkerHours>;
     addWorkerHoursSubject: Subject<WorkerHours>;

@@ -9,7 +9,7 @@ export class DepartmentService {
     
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.PHP_HOST + `/department`;
+    basicURL: string = Global.HOST + `/department`;
 
     //----------------CONSTRUCTOR------------------
 

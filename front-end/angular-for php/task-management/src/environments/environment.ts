@@ -4,9 +4,7 @@
 
 export const environment = {
   production: false,
-  host:'http://localhost:4722',
-  phpHost:'http://localhost:8080/task_management'
-  // host:'http://localhost:50418'
+  host:'http://localhost:8080/task_management'
 };
 
 /*

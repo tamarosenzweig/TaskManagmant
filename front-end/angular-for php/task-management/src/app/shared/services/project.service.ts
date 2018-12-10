@@ -8,7 +8,7 @@ export class ProjectService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.PHP_HOST + `/project`;
+    basicURL: string = Global.HOST + `/project`;
 
     filterSubject: Subject<ProjectFilter>;
 
