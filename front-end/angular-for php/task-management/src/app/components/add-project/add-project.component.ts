@@ -164,11 +164,15 @@ export class AddProjectComponent implements OnInit {
     this.projectService.addProject(this.project).subscribe(
       (created: boolean) => {
         if (created) {
-          // this.showDialog();
           swal({
             type: 'success',
             title: `${this.project.projectName} added succsesully`,
           })
+        }
+        else{
+          swal.showValidationMessage(
+            `Sorry,${this.project.projectName} failed`
+          );
         }
       },
       err =>
@@ -176,19 +180,6 @@ export class AddProjectComponent implements OnInit {
     );
   }
 
-  showDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '35%',
-      data: {
-        title: '',
-        msg: `${this.project.projectName} added succsesully`,
-        autoClosing: true
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.project=null;
-    });
-  }
 
   //----------------GETTERS-------------------
 

@@ -103,7 +103,7 @@ export class UserService {
     //POST
     //todo
     sendEmail(email: Email): Observable<any> {
-        let url: string = this.basicPhpURL + `/sendEmail`;
+        let url: string = this.basicURL + `/sendEmail`;
         let formData: FormData = new FormData();
         formData.append('email', JSON.stringify(email));
         formData.append('user', localStorage.getItem(Global.USER));

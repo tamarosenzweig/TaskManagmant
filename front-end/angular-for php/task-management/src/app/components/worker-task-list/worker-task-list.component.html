@@ -6,5 +6,6 @@
 
     </mat-list-item>
     <mat-divider></mat-divider>
-  <app-tmp-worker-task *ngFor="let workerHour of workerHours" [workerHour]="workerHour" [disabled]="isStartedTaskExist" (isStartedEvent)="disableButtons($event)"></app-tmp-worker-task>
+  <app-tmp-worker-task *ngFor="let workerHour of workerHours" [workerHour]="workerHour" [disabled]="isStartedTaskExist" 
+  (isStartedEvent)="disableButtons($event)"></app-tmp-worker-task>
 </mat-list>
