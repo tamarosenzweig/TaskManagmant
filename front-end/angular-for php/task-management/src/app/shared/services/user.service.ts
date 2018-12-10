@@ -93,7 +93,7 @@ export class UserService {
 
     //POST
     removeUploadedImage(profileImageName: string, moveToArchives: boolean): Observable<any> {
-        let url: string = this.basicURL + `/removeUploadedImage`;
+        let url: string = `${this.basicURL}/removeUploadedImage`;
         let formData: FormData = new FormData();
         formData.append('profileImageName', profileImageName);
         formData.append('moveToArchives', String(moveToArchives));
@@ -103,7 +103,7 @@ export class UserService {
     //POST
     //todo
     sendEmail(email: Email): Observable<any> {
-        let url: string = this.basicURL + `/sendEmail`;
+        let url: string =`${this.basicURL}/sendEmail`;
         let formData: FormData = new FormData();
         formData.append('email', JSON.stringify(email));
         formData.append('user', localStorage.getItem(Global.USER));

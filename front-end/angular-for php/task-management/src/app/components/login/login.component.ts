@@ -38,7 +38,7 @@ export class LoginComponent {
 
   initFormGroup() {
     this.loginFormGroup = this.formBuilder.group({
-      email: ['', this.validatorsService.stringValidatorArr('email', 15, 30, /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)],
+      email: ['', this.validatorsService.stringValidatorArr('email', 15, 30, /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)],
       password: ['', this.validatorsService.stringValidatorArr('password', 5, 10, /^[A-Za-z0-9]+$/)]
     });
   }

@@ -27,7 +27,8 @@ export class HomeComponent {
       }
     });
     dialogRef.afterClosed().subscribe((email: Email) => {
-      this.sendEmail(email);
+      if (email)
+        this.sendEmail(email);
     });
   }
 

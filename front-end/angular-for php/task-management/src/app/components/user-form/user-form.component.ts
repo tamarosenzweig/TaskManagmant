@@ -69,7 +69,7 @@ export class UserFormComponent implements OnInit, AfterViewInit {
   async initFormGroup() {
     this.userFormGroup = this.formBuilder.group({
       userName: [this.user.userName, this.validatorsService.stringValidatorArr('user name', 2, 15, /^[A-Za-z0-9]+$/)],
-      email: [this.user.email, this.validatorsService.stringValidatorArr('email', 15, 30, /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/), [this.validatorsService.uniqueUserValidator(this.user, 'email')]],
+      email: [this.user.email, this.validatorsService.stringValidatorArr('email', 15, 30, /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/), [this.validatorsService.uniqueUserValidator(this.user, 'email')]],
       password: [this.user.password, this.validatorsService.stringValidatorArr('password', 5, 10), [this.validatorsService.uniqueUserValidator(this.user, 'password')]],
       confirmPassword: [this.user.confirmPassword, this.validatorsService.stringValidatorArr('confirm password', 5, 10)],
       departmentId: [this.user.departmentId],

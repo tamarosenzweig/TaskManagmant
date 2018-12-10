@@ -11,7 +11,7 @@ import { ChangePassword } from '../../shared/models/change-password.model';
 })
 export class ForgotPasswordComponent {
 
-  user:User;
+  user: User;
 
   count: number;
   constructor(private userService: UserService) {
@@ -32,7 +32,7 @@ export class ForgotPasswordComponent {
         inputPlaceholder: 'enter your email',
         showLoaderOnConfirm: true,
         preConfirm: async (value: string) => {
-         this.user = await this.userService.getUserByEmail(value).toPromise();
+          this.user = await this.userService.getUserByEmail(value).toPromise();
           if (this.user == null) {
             swal.showValidationMessage(
               'email not found'
@@ -50,7 +50,7 @@ export class ForgotPasswordComponent {
       },
       //verify acount dialog
       {
-        text: 'Verify your account',
+        text: 'Verify your account, you got a verification code to your email',
         input: 'number',
         inputPlaceholder: 'verification code you got to your email',
         showLoaderOnConfirm: true,
@@ -62,7 +62,7 @@ export class ForgotPasswordComponent {
             return;
           }
           this.count++;
-          let changePassword:ChangePassword=new ChangePassword(this.user.userId,value,null,this.count);
+          let changePassword: ChangePassword = new ChangePassword(this.user.userId, value, null, this.count);
           let confirmed: boolean = await this.userService.confirmToken(changePassword).toPromise();
           if (!confirmed) {
             swal.showValidationMessage(
@@ -79,23 +79,24 @@ export class ForgotPasswordComponent {
           '<input id="confirmPassword" class="swal2-input" type="password" placeholder="confirm your new password">',
         preConfirm: async () => {
           let password: string = (document.getElementById('password') as HTMLInputElement).value;
-          let confirmPassword: string =(document.getElementById('confirmPassword') as HTMLInputElement).value;
-          if(password!=confirmPassword)
-          {
+          let confirmPassword: string = (document.getElementById('confirmPassword') as HTMLInputElement).value;
+          if (password != confirmPassword) {
             swal.showValidationMessage(
               'password and confirm password don\'t match'
             );
           }
-          else{
-            let hashPassword:string=await this.userService.hashValue(password);
-            this.user.password=this.user.confirmPassword=hashPassword;
-           let edited:boolean= await this.userService.changePassword(this.user).toPromise();
-           if(!edited){
-            swal.showValidationMessage(
-              'Sorry,changing password failed'
-            );
-            swal.close();
-           }
+          else {
+            let hashPassword: string = await this.userService.hashValue(password);
+            this.user.password = this.user.confirmPassword = hashPassword;
+            try {
+              await this.userService.changePassword(this.user).toPromise();
+              swal.close();
+            }
+            catch (err) {
+              swal.showValidationMessage(
+                err.error[0]
+              );
+            }
           }
         }
       },
