@@ -2,10 +2,11 @@
 
 ## Using this technologies:
 
-* Web api
-* WinForms
-* Angular
 * MySql
+* Web api
+* PHP
+* WinForm
+* Angular
 
 ## Authors
 
@@ -22,15 +23,40 @@ To install the app in your computer you have to:
   1. [Run the `mySql` code](https://github.com/tamarosenzweig/TaskManagmant/blob/master/mysql-queries.md)
       To see some data in the live demo, you should add data to your tabels or
       [Run the data- script code](https://github.com/tamarosenzweig/TaskManagmant/blob/master/mysql-script.md)
-     *don't forget to run the `XAMPP` before using this app.* 
+      
 
-  2. Run the `back-end` project. This is the server. Navigate to `http://localhost:4722/`. 
+  2. Run the `back-end` project.(the web api one)  This is the server. Navigate to `http://localhost:4722/`. 
      The app will automatically reload if you change any     of the source files. The details on the server you can see also in the `environments` file  in the angular app, or in the `app config` file   in the cs project (win form) in the `appSetting` attribute.
 
   3.  Run `ng serve` for a dev server, if you want to run the angular project. Navigate to `http://localhost:4200/`. 
       The app will automatically reload if you change any of the source files. Or just run the `cs` project.
 
+  4.  Run `ng serve` for a dev server, if you want to run the angular project. Navigate to `http://localhost:4200/`. 
+      The app will automatically reload if you change any of the source files. Or just run the `cs` project.
+      
+        *important note: in order to send email from the php server in your computer follow this instruction* 
+        
+        in php.ini file find [mail function] and change
+        ```sh
+        SMTP=smtp.gmail.com
+        smtp_port=587
+        sendmail_from = my-gmail-id@gmail.com
+        sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"
+        Now Open C:\xampp\sendmail\sendmail.ini. Replace all the existing code in sendmail.ini with following code
+        ```
 
+        ```sh
+        [sendmail]
+
+        smtp_server=smtp.gmail.com
+        smtp_port=587
+        error_logfile=error.log
+        debug_logfile=debug.log
+        auth_username=my-gmail-id@gmail.com
+        auth_password=my-gmail-password
+        force_sender=my-gmail-id@gmail.com
+        ``` 
+        
 ## System diagram:
 ![picture](step1.png)
 

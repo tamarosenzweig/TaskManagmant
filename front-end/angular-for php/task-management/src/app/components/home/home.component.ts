@@ -33,8 +33,8 @@ export class HomeComponent {
 
   sendEmail(email: Email) {
     this.userService.sendEmail(email).subscribe(
-      () => {
-        
+      (res) => {
+        console.log(res);
       },
       err => {
         console.log(err);
