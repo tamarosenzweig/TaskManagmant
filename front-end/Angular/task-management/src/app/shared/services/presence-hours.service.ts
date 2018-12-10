@@ -9,7 +9,7 @@ export class PresenceHoursService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/presenceHours`;
+    basicURL: string = Global.HOST + `/presenceHours`;
     UpdatePresenceSubject: Subject<void>;
     //----------------CONSTRUCTOR------------------
 

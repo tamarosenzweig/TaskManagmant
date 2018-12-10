@@ -42,7 +42,7 @@ export class WorkerHoursService {
     }
  
     //PUT
-    editWorkersHours(workerHours: WorkerHours): Observable<any> {
+    editWorkerHours(workerHours: WorkerHours): Observable<any> {
         let url: string = `${this.basicURL}/editWorkerHours`;
         return this.http.put(url, workerHours);
     }

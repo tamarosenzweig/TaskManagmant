@@ -38,9 +38,9 @@ export class UpdateHoursDialogComponent {
     let departmentHoursSum: number = AsEnumerable(this.data.departmentHours.department.workers).Sum(worker=>worker.workerHours[0].numHours);
       this.numHoursControl = new FormControl(this.data.worker.workerHours[0].numHours,
         [
-          validatorsService.requiredValidator('worke hours'),
-          validatorsService.workerHoursValidator(this.presenceHours),
-          validatorsService.workerHoursDepartmentValidator(workerHours, departmentHours, departmentHoursSum)
+          this.validatorsService.requiredValidator('worke hours'),
+          this.validatorsService.workerHoursValidator(this.presenceHours),
+          this.validatorsService.workerHoursDepartmentValidator(workerHours, departmentHours, departmentHoursSum)
         
         ]);
   }

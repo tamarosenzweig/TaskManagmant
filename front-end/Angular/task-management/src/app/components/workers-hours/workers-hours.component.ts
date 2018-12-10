@@ -60,8 +60,8 @@ export class WorkersHoursComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((numHours: number) => {
-      worker.workerHours[0].numHours=numHours;
-      this.workerHoursService.editWorkersHours(worker.workerHours[0]).subscribe(
+      worker.workerHours[0].numHours=+numHours;
+      this.workerHoursService.editWorkerHours(worker.workerHours[0]).subscribe(
         ()=>{},
         err=>{
           console.log(err);

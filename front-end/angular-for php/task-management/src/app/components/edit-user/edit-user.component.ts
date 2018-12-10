@@ -86,8 +86,10 @@ export class EditUserComponent implements OnInit {
         if (edited) {
           swal({
             type: 'success',
-            title: `${this.user.userName} added succsesully`,
-          })
+            title: `${this.user.userName} edited succsesully`,
+          }).then(() => {
+            this.router.navigate(['taskManagement/manager/userManagement']);
+          });
         }
       },
       err => console.log(err));

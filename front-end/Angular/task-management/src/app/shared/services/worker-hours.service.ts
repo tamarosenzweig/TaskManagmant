@@ -10,7 +10,7 @@ export class WorkerHoursService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/workerHours`;
+    basicURL: string = Global.HOST + `/workerHours`;
     changeWorkerHoursSubject: Subject<WorkerHours>;
     deleteWorkerHoursSubject: Subject<WorkerHours>;
     addWorkerHoursSubject: Subject<WorkerHours>;
@@ -42,7 +42,7 @@ export class WorkerHoursService {
     }
  
     //PUT
-    editWorkersHours(workerHours: WorkerHours): Observable<any> {
+    editWorkerHours(workerHours: WorkerHours): Observable<any> {
         let url: string = `${this.basicURL}/editWorkerHours`;
         return this.http.put(url, workerHours);
     }

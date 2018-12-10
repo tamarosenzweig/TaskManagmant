@@ -8,7 +8,7 @@ export class ProjectService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/project`;
+    basicURL: string = Global.HOST + `/project`;
 
     filterSubject: Subject<ProjectFilter>;
 

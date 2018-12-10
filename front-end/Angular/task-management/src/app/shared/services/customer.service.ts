@@ -10,7 +10,7 @@ export class CustomerService {
     
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/customer`;
+    basicURL: string = Global.HOST + `/customer`;
 
     //----------------CONSTRUCTOR------------------
 

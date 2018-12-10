@@ -94,7 +94,10 @@ export class ValidatorsService {
         return f => f.value && f.value < presenceHours ? { 'val': 'Worker hours can\'t be less than presence hours' } : null;
     }
     workerHoursDepartmentValidator(workerHours: number, departmentHours: number, departmentHoursSum: number): ValidatorFn {
-        return f => f.value && departmentHoursSum - workerHours + f.value > departmentHours ? { 'val': 'Hours defined for workers are greater than the hours defined for this department' } : null;
+        return f => 
+        f.value && departmentHoursSum - workerHours + (+f.value) > departmentHours ?
+         { 'val': 'Hours defined for workers are greater than the hours defined for this department' } 
+         : null;
     }
 
     TeamLeaderValidator(teamLeaderId: number, workerId: number,teamProjectIdList:number[]): AsyncValidatorFn {

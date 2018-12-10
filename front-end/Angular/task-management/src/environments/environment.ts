@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   host:'http://localhost:4722'
-  // host:'http://localhost:50418'
 };
 
 /*

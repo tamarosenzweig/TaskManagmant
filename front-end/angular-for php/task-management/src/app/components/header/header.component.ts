@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserService, MenuItem, Global } from '../../imports';
+import {  Global } from '../../imports';
 
 @Component({
   selector: 'app-header',
