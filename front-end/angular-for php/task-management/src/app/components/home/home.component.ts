@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { UserService, Email, SendEmailComponent } from '../../imports';
+import swal from 'sweetalert2';
 
 
 @Component({
@@ -19,22 +20,14 @@ export class HomeComponent {
 
   //----------------METHODS-------------------
 
-  showDialog() {
-    const dialogRef = this.dialog.open(SendEmailComponent, {
-      width: '50%',
-      data: {
-        title: 'Send Email',
-      }
-    });
-    dialogRef.afterClosed().subscribe((email: Email) => {
-      this.sendEmail(email);
-    });
-  }
-
-  sendEmail(email: Email) {
+   sendEmail(email: Email) {
     this.userService.sendEmail(email).subscribe(
       (res) => {
         console.log(res);
+        swal({
+          type: 'success',
+          text: `${email.subject} sended succesfully`,
+        })
       },
       err => {
         console.log(err);

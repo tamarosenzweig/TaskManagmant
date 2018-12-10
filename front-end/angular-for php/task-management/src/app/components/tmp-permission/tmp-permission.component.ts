@@ -5,6 +5,7 @@ import {
   Permission,
   DialogComponent
 } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tmp-permission',
@@ -31,7 +32,14 @@ export class TmpPermissionComponent {
   async deletePermission() {
     let hasUncomletedHours: boolean = await this.workerHoursService.hasUncomletedHours(this.permission.workerId, [this.permission.projectId]).toPromise();
     if (hasUncomletedHours)
-      this.showDialog();
+     {
+     let msg:string= 'It is not possible to remove a worker\'s permission to a project if hours were defined for him to this project';
+      swal({
+        type: 'error',
+        title: 'Oops...',
+        text: msg,
+      }) 
+     } 
     else
       this.permissionService.deletePemission(this.permission.permissionId).subscribe(
         (deleted: boolean) => {
@@ -44,14 +52,5 @@ export class TmpPermissionComponent {
       );
   }
 
-  showDialog() {
-    this.dialog.open(DialogComponent, {
-      width: '50%',
-      data: {
-        title: 'Send Email',
-        msg: 'It is not possible to remove a worker\'s permission to a project if hours were defined for him to this project',
-        autoClosing: true
-      }
-    });
-  }
+
 }

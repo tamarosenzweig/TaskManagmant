@@ -6,6 +6,7 @@ import {
   User, eListKind,
   Global, DialogComponent, Project
 } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tmp-user',
@@ -52,24 +53,23 @@ export class TmpUserComponent implements OnInit {
     this.router.navigate(['taskManagement/manager/userManagement/editUser', this.user.userId]);
   }
   delete() {
-    this.showDialog('Are you sure you want to delete this worker?',false);
-  }
-  showDialog(msg: string,autoClosing:boolean) {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '35%',
-      data: {
-        title: 'Delete Worker',
-        msg,
-        autoClosing
-      }
-    });
 
-    dialogRef.afterClosed().subscribe((isConfirmed: boolean) => {
-      console.log(isConfirmed)
-      if (isConfirmed)
+    swal({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
         this.confirmedDelete();
-    });
+      }
+    })
+
   }
+
 
   async confirmedDelete() {
     //if this user is team-worker and he has incomlete hours we can't delete him
@@ -80,7 +80,12 @@ export class TmpUserComponent implements OnInit {
         .subscribe(
           (hasUncomletedHours: boolean) => {
             if (hasUncomletedHours) {
-              this.showDialog('Immposible to delete a worker who has incomplete hours',true);
+              let msg:string='Immposible to delete a worker who has incomplete hours';
+              swal({
+                type: 'error',
+                title: 'Oops...',
+                text: msg,
+              })
             }
             else {
               this.deleteUser();
@@ -96,14 +101,22 @@ export class TmpUserComponent implements OnInit {
       let hasWorkes: boolean = await this.userService.HasWorkers(this.user.userId).toPromise();
       if (hasWorkes) {
         let msg: string = 'Impossible to delete team-leader who has workers';
-        this.showDialog(msg,true);
+        swal({
+          type: 'error',
+          title: 'Oops...',
+          text: msg,
+        });
         return;
       }
       else {
         let hasProjects: boolean = await this.projectService.hasProjects(this.user.userId).toPromise();
         if (hasProjects) {
           let msg: string = 'Impossible to delete team-leader who has projects';
-          this.showDialog(msg,true);
+          swal({
+            type: 'error',
+            title: 'Oops...',
+            text: msg,
+          });
           return;
         }
       }
@@ -116,6 +129,11 @@ export class TmpUserComponent implements OnInit {
       (deleted: boolean) => {
         if (deleted) {
           this.userService.updateUserListSubject.next();
+          swal(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
         }
       },
       err => {

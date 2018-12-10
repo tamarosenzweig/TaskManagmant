@@ -2,6 +2,7 @@ import { Component, } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { UserService, User, DialogComponent, Global } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-user',
@@ -50,23 +51,16 @@ export class AddUserComponent {
     this.userService.addUser(this.user).subscribe(
       (created: boolean) => {
         if (created) {
-          this.showDialog();
+          swal({
+            type: 'success',
+            text: `${this.user.userName} added succsesully`,
+          }).then(res => {
+            this.router.navigate(['taskManagement/manager/userManagement']);
+          })
         }
       },
       err => console.log(err));
   }
 
-  showDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '35%',
-      data: {
-        title: '',
-        msg: `${this.user.userName} added succsesully`,
-        autoClosing: true
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['taskManagement/manager/userManagement']);
-    });
-  }
+  
 }
