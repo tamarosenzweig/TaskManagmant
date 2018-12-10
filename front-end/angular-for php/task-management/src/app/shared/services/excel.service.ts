@@ -4,9 +4,6 @@ import * as XLSX from 'xlsx';
 @Injectable()
 export class ExcelService {
 
-  constructor() {
-  }
-
   static toExportFileName(excelFileName: string): string {
     return `${excelFileName}_export_${new Date().getTime()}.xlsx`;
   }

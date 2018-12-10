@@ -10,7 +10,7 @@ export class CustomerService {
     
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.PHP_HOST + `/customer`;
+    basicURL: string = Global.HOST + `/customer`;
 
     //----------------CONSTRUCTOR------------------
 

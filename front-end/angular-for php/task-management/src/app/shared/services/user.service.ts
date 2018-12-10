@@ -10,7 +10,7 @@ export class UserService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.PHP_HOST + `/user`;
+    basicURL: string = Global.HOST + `/user`;
 
     updateUserListSubject: Subject<void>;
     resetPermissionSubject: Subject<void>;

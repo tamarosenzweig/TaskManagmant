@@ -8,7 +8,7 @@ export class PermissionService {
     
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.PHP_HOST + `/permission`;
+    basicURL: string = Global.HOST + `/permission`;
     deletePermissionSubject:Subject<Permission>;
     addPermissionSubject:Subject<Permission>;
     

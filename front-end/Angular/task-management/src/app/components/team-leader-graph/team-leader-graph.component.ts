@@ -39,7 +39,7 @@ export class TeamLeaderGraphComponent implements OnInit {
     this.presenceHoursService.getPresenceStatusPerWorkers(teamLeaderId)
       .subscribe(
         (data: { userName: string, projectName: string, projectHours: number, presenceHours: number }[]) => {
-          this.hoursStatus = data;
+          this.hoursStatus =  data;
           this.initGraphData(null);
           
           //init project list
