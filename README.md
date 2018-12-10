@@ -34,7 +34,7 @@ To install the app in your computer you have to:
   4.  Run `ng serve` for a dev server, if you want to run the angular project. Navigate to `http://localhost:4200/`. 
       The app will automatically reload if you change any of the source files. Or just run the `cs` project.
       
-        *important note: in order to send email from the php server in your computer follow this instruction* 
+        *important note: in order to send email from the php server(just if you have xampp) in your computer follow this instruction:* 
         
         in php.ini file find [mail function] and change
         ```sh
@@ -56,7 +56,24 @@ To install the app in your computer you have to:
         auth_password=my-gmail-password
         force_sender=my-gmail-id@gmail.com
         ``` 
-        
+
+## Tech
+
+Task Managmant uses a number of extension:
+*in php platform we use:*
+    * [xampp] - Installers and Downloads for Apache Friends!
+*in web api platform we use:*
+    * from [Nuget] (https://www.nuget.org/packages/Microsoft.CSharp/) we use the Microsoft.AspNet.WebApi.Client
+*in angular platform we use:*
+    * [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+        * [Angular MATERIAL](https://material.angular.io/) Material Design components for Angular
+        * [Sweet Alert](https://sweetalert2.github.io/) A BEAUTIFUL, RESPONSIVE, CUSTOMIZABLE, ACCESSIBLE (WAI-ARIA) REPLACEMENT FOR JAVASCRIPT'S POPUP BOXES   
+*in win form platform we use:*
+        * [Telerik](https://docs.telerik.com/devtools/winforms/introduction) Performance you demand, UI you can't believe   
+
+And of course Dillinger itself is open source with a [public repository][dill]
+ on GitHub.
+
 ## System diagram:
 ![picture](step1.png)
 
