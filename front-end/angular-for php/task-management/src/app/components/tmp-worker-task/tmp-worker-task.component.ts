@@ -78,7 +78,8 @@ export class TmpWorkerTaskComponent implements OnInit {
   editPresenceHours() {
     this.presenceHours.endHour = new Date();
     this.presenceHoursService.editPresenceHours(this.presenceHours).subscribe(
-      () => {
+      (res) => {
+        console.log(res)
         this.updatePresenceSum();
       },
       err => {

@@ -39,9 +39,7 @@ export class PresenceHoursService {
 
     //GET
     getPresenceStatusPerProjects(workerId: number): Observable<any> {
-        let url: string = `http://localhost:8080/task_management/index.php/presenceHours/getPresenceStatusPerProjects?workerId=${workerId}`;
-
-        //let url: string = `${this.basicURL}/getPresenceStatusPerProjects?workerId=${workerId}`;
+        let url: string = `${this.basicURL}/getPresenceStatusPerProjects?workerId=${workerId}`;
         return this.http.get(url);
     }
     //GET
