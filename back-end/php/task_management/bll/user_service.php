@@ -207,7 +207,7 @@ class user_service extends base_service {
             $email['body'] = "Please enter the following verification code:$my_token" .
                     " The code is only valid for an hour.";
 
-            $this->send_email($email);
+            $this->send_email_from_base_service($email);
             return true;
         }
         return false;
@@ -241,6 +241,14 @@ class user_service extends base_service {
     }
 
     function change_password($user) {
+        $user['email'] = null;
+        $error_message = $this->check_unique_validations($user);
+        if (isset($error_message)) {
+            http_response_code(400);
+            $errors=array();
+            $errors[]=$error_message['val'];
+            die(json_encode($errors));
+        }
         $query = "UPDATE task_management.user SET password='{$user['password']}' where user_id={$user['userId']};";
         $affected_rows = db_access::run_non_query($query);
         $edited = $affected_rows == 1;
@@ -248,23 +256,10 @@ class user_service extends base_service {
     }
 
     function send_email($email, $user) {
-//            try
-//            {
-//                $manager =$this->get_
-//                        GetUserById((int)user.ManagerId);
-//                email.ToAddress.Add(manager.Email);
-//                email.Body += $"\nFrom {user.UserName}";
-//                return BaseService.SendEmail(email);
-//            }
-//            catch (Exception ex)
-//            {
-//                throw ex;
-//            }
-//        }
-
-        $manager = $this->get_user_by_id($user['managerId']);
+        $manager_id = $user['managerId'];
+        $manager = $this->get_user_by_id($manager_id);
         $email['to_address'] = $manager['email'];
-        $email['body'] = '\n from' . $user['userName'];
+        $email['body'] .= PHP_EOL . 'from' . $user['userName'];
         return $this->send_email_from_base_service($email);
     }
 

@@ -42,9 +42,7 @@ else {
 }
 
 //------------------------------------------ invoke method ------------------------------------------
-
-echo $routes_loader->invoke($controller_name, $method_name, $params);
-
+    echo $routes_loader->invoke($controller_name, $method_name, $params);
 die();
 
 

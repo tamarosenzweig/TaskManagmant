@@ -1,3 +1,4 @@
+
 <?php
 
 class presence_hours_service extends base_service {
@@ -11,6 +12,7 @@ class presence_hours_service extends base_service {
                 });
         return $presence_hours_list;
     }
+
     function get_presence_hours_sum($project_id, $worker_id) {
         $query = "SELECT IFNULL(SUM(TIMESTAMPDIFF(SECOND, start_hour, end_hour)/3600),0) AS sum " .
                 "FROM task_management.presence_hours " .
@@ -38,19 +40,16 @@ class presence_hours_service extends base_service {
         $created = db_access::run_non_query($query) == 1;
         if ($created) {
             $worker_hours_service = new worker_hours_service();
-            $worker_hours = $worker_hours_service->get_worker_hours_per_project($presence_hours['workerId'], $presence_hours['projectId'])[0];
-            $presence_hours_sum = $this->get_presence_hours_sum($presence_hours['projectId'], $presence_hours['workerId']);
-            if ($presence_hours_sum >= $worker_hours['numHours']) {
-                $worker_hours['isComplete'] = true;
-                $worker_hours_service->edit_worker_hours($worker_hours);
-            }
+
+            $worker_hours_service->edit_worker_hours($worker_hours);
+            //tocheck
         }
         return $created;
     }
 
     function init_presence_status($presence_status) {
         $new_presence_status = array();
-        if (array_key_exists('userName', $presence_status)) {
+        if (array_key_exists('user_name', $presence_status)) {
             $new_presence_status['userName'] = $presence_status['user_name'];
         }
         $new_presence_status['projectName'] = $presence_status['project_name'];
@@ -60,33 +59,27 @@ class presence_hours_service extends base_service {
     }
 
     function get_presence_status_per_workers($team_leader_id) {
-        $query = //create view that select presence status
-                "CREATE VIEW task_management.presence_status " .
+        //create view that select presence status
+        $query = "CREATE VIEW task_management.presence_status " .
                 "AS " .
-                "SELECT user_name,pro.project_name,w.num_hours, " .
-                "IFNULL(SUM(TIMESTAMPDIFF(SECOND, start_hour, end_hour) / 3600),0) AS presence " .
+                "SELECT user_name, pro.project_name,w.num_hours, IFNULL(SUM(TIMESTAMPDIFF(SECOND, start_hour, end_hour) / 3600), 0) AS presence " .
                 "FROM task_management.user u " .
-                "JOIN task_management.presence_hours pre " .
-                "ON u.user_id = pre.worker_id " .
-                "JOIN task_management.project pro " .
-                "ON pre.project_id = pro.project_id " .
-                "JOIN task_management.worker_hours w " .
-                "ON w.worker_id = u.user_id " .
-                "AND w.project_id = pre.project_id " .
-                "WHERE u.team_leader_id = $team_leader_id " .
-                "AND MONTH(start_hour) = MONTH(CURRENT_DATE()) " .
-                "GROUP BY user_name, pre.project_id; " .
-                //select sum of all projects presence status per worker and details of every project
-                "SELECT user_name,null,sum(num_hours),sum(presence) " .
+                "JOIN task_management.worker_hours w ON w.worker_id = u.user_id " .
+                "JOIN task_management.project pro ON w.project_id = pro.project_id " .
+                "LEFT JOIN task_management.presence_hours pre ON pre.project_id = pro.project_id AND pre.project_id = w.project_id AND pre.worker_id = u.user_id AND pre.worker_id = w.worker_id " .
+                "WHERE u.team_leader_id = $team_leader_id AND(MONTH(start_hour) is null or MONTH(start_hour) = MONTH(CURRENT_DATE())) GROUP BY user_name, pre.project_id;";
+        db_access::run_non_query($query);
+//select sum of all projects presence status per worker and details of every project
+        $query = "SELECT user_name,null AS project_name,sum(num_hours) AS num_hours, sum(presence)  AS presence " .
                 "FROM task_management.presence_status " .
                 "GROUP BY user_name " .
-                "UNION " .
-                "SELECT* FROM task_management.presence_status; " .
-                "DROP VIEW task_management.presence_status";
-
+                "UNION SELECT * FROM task_management.presence_status;";
         $presence_status_list = db_access:: run_reader($query, function ($model) {
                     return $this->init_presence_status($model);
                 });
+        $query = "DROP VIEW task_management.presence_status";
+        db_access::run_non_query($query);
+
         return $presence_status_list;
     }
 

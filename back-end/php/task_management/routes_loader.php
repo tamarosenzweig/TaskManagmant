@@ -33,7 +33,7 @@ class routes_loader {
     function invoke($controller_name, $method_name, $params) {
         if (array_key_exists($controller_name, $this->methods) && array_key_exists($method_name, $this->methods[$controller_name])) {
             $data = $this->methods[$controller_name][$method_name]($params);
-            echo json_encode($data);
+            echo json_encode($data,JSON_NUMERIC_CHECK);
         } else {
             var_dump(http_response_code(404));
             die("unknown url");
@@ -101,7 +101,7 @@ class routes_loader {
                 return $this->user_controller->change_password($params);
             },
             'sendEmail' => function ($params) {
-                return $this->user_controller->send_email(json_decode($params['email']), json_decode($params['user']));
+                return $this->user_controller->send_email(json_decode($params['email'],true), json_decode($params['user'],true));
             }
         );
     }

@@ -120,7 +120,7 @@ class base_service {
         return $new_presence_hours;
     }
 
-    function format_date($date=null, $format = 'Y-m-d') {
+    function format_date($date = null, $format = 'Y-m-d') {
         $format_date;
         if (isset($date)) {
             $format_date = date($format, strtotime($date));
@@ -134,7 +134,7 @@ class base_service {
         return array_key_exists($key, $array) && isset($array[$key]) ? "'{$array[$key]}'" : 'null';
     }
 
-     function send_email_from_base_service($email) {
+    function send_email_from_base_service($email) {
 
         $to_address = $email['to_address'];
         $subject = $email['subject'];
@@ -142,9 +142,8 @@ class base_service {
         $headers = 'From: taskManagementCompany@gmail.com' . "\r\n" .
                 'Reply-To: taskManagementCompany@gmail.com' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
-
         mail($to_address, $subject, $message, $headers);
         return true;
-//    die(json_encode("true"));
     }
+
 }

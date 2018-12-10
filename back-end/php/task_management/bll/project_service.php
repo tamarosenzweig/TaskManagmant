@@ -84,7 +84,8 @@ class project_service extends base_service {
         $project = $this->get_project_by_id($project_id);
         $worker_hours_service = new worker_hours_service();
         $worker_hours_list = $worker_hours_service->get_all_worker_hours_per_project($project_id);
-        $isComplete = array_search($worker_hours_list, function ($worker_hours) {
+  
+        $isComplete = array_filter($worker_hours_list, function ($worker_hours) {
                     return !$worker_hours['isComplete'];
                 }) == false;
         $project_num_hours = array_sum(array_column($worker_hours_list, 'numHours'));
