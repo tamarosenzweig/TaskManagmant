@@ -60,19 +60,21 @@ To install the app in your computer you have to:
 ## Tech
 
 Task Managmant uses a number of extension:
+
 *in php platform we use:*
     * [xampp] - Installers and Downloads for Apache Friends!
+
 *in web api platform we use:*
     * from [Nuget] (https://www.nuget.org/packages/Microsoft.CSharp/) we use the Microsoft.AspNet.WebApi.Client
+
 *in angular platform we use:*
     * [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
         * [Angular MATERIAL](https://material.angular.io/) Material Design components for Angular
         * [Sweet Alert](https://sweetalert2.github.io/) A BEAUTIFUL, RESPONSIVE, CUSTOMIZABLE, ACCESSIBLE (WAI-ARIA) REPLACEMENT FOR JAVASCRIPT'S POPUP BOXES   
+
 *in win form platform we use:*
         * [Telerik](https://docs.telerik.com/devtools/winforms/introduction) Performance you demand, UI you can't believe   
 
-And of course Dillinger itself is open source with a [public repository][dill]
- on GitHub.
 
 ## System diagram:
 ![picture](step1.png)
