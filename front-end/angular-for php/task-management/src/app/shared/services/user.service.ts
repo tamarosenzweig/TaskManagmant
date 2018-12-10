@@ -10,8 +10,7 @@ export class UserService {
 
     //----------------PROPERTIRS-------------------
 
-    basicURL: string = Global.BASE_ENDPOINT + `/user`;
-    basicPhpURL: string = Global.PHP_HOST + `/user`;
+    basicURL: string = Global.PHP_HOST + `/user`;
 
     updateUserListSubject: Subject<void>;
     resetPermissionSubject: Subject<void>;
@@ -27,7 +26,7 @@ export class UserService {
 
     //POST
     login(email: string, password: string): Observable<any> {
-        let url: string = `${this.basicPhpURL}/login`;
+        let url: string = `${this.basicURL}/login`;
         let data =new Login(email, password);
         return this.http.post(url,data);
     }
@@ -35,58 +34,58 @@ export class UserService {
     //GET
     getAllUsers(): Observable<any> {
         let managerId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
-        let url: string = `${this.basicPhpURL}/getAllUsers?managerId=${managerId}`;
+        let url: string = `${this.basicURL}/getAllUsers?managerId=${managerId}`;
         return this.http.get(url);
     }
 
     //GET
     getAllTeamUsers(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicPhpURL}/getAllTeamUsers?teamLeaderId=${teamLeaderId}`;
+        let url: string = `${this.basicURL}/getAllTeamUsers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
     //GET
     getAllTeamLeaders(): Observable<any> {
         let managerId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
-        let url: string = `${this.basicPhpURL}/getAllTeamLeaders?managerId=${managerId}`;
+        let url: string = `${this.basicURL}/getAllTeamLeaders?managerId=${managerId}`;
         return this.http.get(url);
     }
 
     //GET
     getUserById(userId: number): Observable<any> {
-        let url: string = `${this.basicPhpURL}/getUserById?userId=${userId}`;
+        let url: string = `${this.basicURL}/getUserById?userId=${userId}`;
         return this.http.get(url);
     }
     //GET
-    hasWorkes(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicPhpURL}/hasWorkes?teamLeaderId=${teamLeaderId}`;
+    hasWorkers(teamLeaderId: number): Observable<any> {
+        let url: string = `${this.basicURL}/hasWorkers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
     //POST
     addUser(user: User): Observable<any> {
-        let url: string = `${this.basicPhpURL}/addUser`;
+        let url: string = `${this.basicURL}/addUser`;
         return this.http.post(url,JSON.stringify(user));
     }
 
     //PUT
     editUser(user: User): Observable<any> {
-        let url: string = `${this.basicPhpURL}/editUser`;
-        return this.http.post(url, JSON.stringify(user));
+        let url: string = `${this.basicURL}/editUser`;
+        return this.http.put(url, JSON.stringify(user));
     }
 
     //POST
     deleteUser(user: User): Observable<any> {
         //move user profile image to archives if exist
         if (user.profileImageName)
-            this.removeUploadedImage(user.profileImageName, true);
-        let url: string = `${this.basicPhpURL}/deleteUser?userId=${user.userId}`;
+            this.removeUploadedImage(user.profileImageName, true).subscribe(()=>{});
+        let url: string = `${this.basicURL}/deleteUser?userId=${user.userId}`;
         return this.http.post(url, null);
     }
 
     //POST
     uploadImageProfile(image: any): Observable<any> {
-        let url: string = `${this.basicPhpURL}/uploadImageProfile`;
+        let url: string = `${this.basicURL}/uploadImageProfile`;
         let formData: FormData = new FormData();
         formData.append('file', image, image.name);
         return this.http.post(url, formData);
@@ -102,6 +101,7 @@ export class UserService {
     }
 
     //POST
+    //todo
     sendEmail(email: Email): Observable<any> {
         let url: string = this.basicPhpURL + `/sendEmail`;
         let formData: FormData = new FormData();
@@ -112,7 +112,7 @@ export class UserService {
 
     //POST
     checkUniqueValidations(user: User): Observable<any> {
-        let url: string = `${this.basicPhpURL}/checkUniqueValidations`;
+        let url: string = `${this.basicURL}/checkUniqueValidations`;
         return this.http.post(url, user);
     }
 
@@ -159,6 +159,7 @@ export class UserService {
     }
 
     //POST
+    //tdo
     changePassword(user: User): Observable<any> {
         let url: string = `${this.basicURL}/changePassword`;
         return this.http.put(url, user);

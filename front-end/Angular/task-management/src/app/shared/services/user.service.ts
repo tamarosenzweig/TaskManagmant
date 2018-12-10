@@ -61,8 +61,8 @@ export class UserService {
         return this.http.get(url);
     }
     //GET
-    hasWorkes(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicURL}/hasWorkes?teamLeaderId=${teamLeaderId}`;
+    HasWorkers(teamLeaderId: number): Observable<any> {
+        let url: string = `${this.basicURL}/HasWorkers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
@@ -82,7 +82,7 @@ export class UserService {
     deleteUser(user: User): Observable<any> {
         //move user profile image to archives if exist
         if (user.profileImageName)
-            this.removeUploadedImage(user.profileImageName, true);
+            this.removeUploadedImage(user.profileImageName, true).subscribe(()=>{});
         let url: string = `${this.basicURL}/deleteUser?userId=${user.userId}`;
         return this.http.post(url, null);
     }

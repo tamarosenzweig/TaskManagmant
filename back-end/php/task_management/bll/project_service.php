@@ -64,12 +64,11 @@ class project_service extends base_service {
 
         $query = "{$this->get_projects_query()} " .
                 "WHERE p.team_leader_id=$team_leader_id " .
-                "AND end_date>={$this->format_date(today)} AND is_complete=0;";
+                "AND end_date>={$this->format_date()} AND is_complete=0;";
         $project_list = $this->get_projects_with_details($query);
         return $project_list;
     }
 
-    
     function get_project_by_id($project_id) {
         $query = "{$this->get_projects_query()} WHERE project_id=$project_id;";
         return $this->get_projects_with_details($query)[0];
@@ -106,7 +105,7 @@ class project_service extends base_service {
     }
 
     function has_projects($team_leader_id) {
-        $query = "SELECT COUNT(*) as value FROM task_management.project " .
+        $query = "SELECT COUNT(*) as count FROM task_management.project " .
                 "WHERE team_leader_id=$team_leader_id;";
         $count = db_access::run_scalar($query);
         return $count > 0;

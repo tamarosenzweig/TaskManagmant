@@ -66,4 +66,21 @@ class user_controller {
         return $this->user_service->upload_image_profile($file);
     }
 
+    function remove_uploaded_image($profile_image_name, $move_to_archives) {
+        return $this->user_service->remove_uploaded_image($profile_image_name, $move_to_archives);
+    }
+
+    function get_user_by_email($email) {
+        return $this->user_service->get_user_by_email($email);
+    }
+
+    function forgot_password($email) {
+        return $this->user_service->forgot_password($email);
+    }
+    function confirm_token($change_password){
+        return $this->user_service->confirm_token($change_password);
+    }
+            function change_password($user){
+        return $this->user_service->change_password($user);
+    }
 }

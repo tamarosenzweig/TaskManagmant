@@ -41,7 +41,7 @@ export class EditUserComponent implements OnInit {
   onSubmit(data: { user: User, imageFile: string }) {
     this.initUser(data.user);
     //remove profile image in the server
-    if (this.user.profileImageName != null) {
+    if (data.imageFile&&this.user.profileImageName != null) {
       this.userService.removeUploadedImage(this.user.profileImageName,false)
         .subscribe(() => {
           this.user.profileImageName = null;

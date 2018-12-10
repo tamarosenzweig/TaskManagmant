@@ -9,9 +9,8 @@ export class PresenceHoursService {
 
     //----------------PROPERTIRS-------------------
 
-
     basicURL: string = Global.PHP_HOST + `/presenceHours`;
-    UpdatePresenceSubject: Subject<void>;
+    UpdatePresenceSubject:Subject<void>;
     //----------------CONSTRUCTOR------------------
 
     constructor(private http: HttpClient) {
@@ -34,15 +33,14 @@ export class PresenceHoursService {
 
     //GET
     getPresenceStatusPerWorkers(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicURL}/getPresenceStatusPerWorkers?teamLeaderId=${teamLeaderId}`;
+        let url: string = `${Global.PHP_HOST}/presenceHours/getPresenceStatusPerWorkers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
     //GET
     getPresenceStatusPerProjects(workerId: number): Observable<any> {
-        let url: string = `${this.basicURL}/getPresenceStatusPerProjects?workerId=${workerId}`;
-        let res = this.http.get(url);
-        return res;
+        let url: string = `${Global.PHP_HOST}/presenceHours/getPresenceStatusPerProjects?workerId=${workerId}`;
+        return this.http.get(url);
     }
 
     //GET

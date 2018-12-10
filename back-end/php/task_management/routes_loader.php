@@ -81,6 +81,27 @@ class routes_loader {
             'uploadImageProfile' => function ($params) {
                 $file = array_values($params['files'])[0];
                 return $this->user_controller->upload_image_profile($file);
+            },
+            'removeUploadedImage' => function ($params) {
+                return $this->user_controller->remove_uploaded_image($params['profileImageName'], $params['moveToArchives']);
+            },
+            'getUserByEmail' => function ($params) {
+                return $this->user_controller->get_user_by_email($params['email']);
+            },
+            'hasWorkers' => function ($params) {
+                return $this->user_controller->has_workes($params['teamLeaderId']);
+            },
+            'forgotPassword' => function ($params) {
+                return $this->user_controller->forgot_password($params['email']);
+            },
+            'confirmToken' => function ($params) {
+                return $this->user_controller->confirm_token($params);
+            },
+            'changePassword' => function ($params) {
+                return $this->user_controller->change_password($params);
+            },
+            'sendEmail' => function ($params) {
+                return $this->user_controller->send_email(json_decode($params['email']), json_decode($params['user']));
             }
         );
     }
@@ -124,7 +145,7 @@ class routes_loader {
     function get_worker_hours_methods() {
         return array(
             'getAllWorkerHours' => function ($params) {
-                return $this->worker_hours_controller->getAllWorkerHours($params['workerId']);
+                return $this->worker_hours_controller->get_all_worker_hours($params['workerId']);
             },
             'hasUncomletedHours' => function ($params) {
                 return $this->worker_hours_controller->has_uncomleted_hours($params['workerId'], json_decode($params['projectIdList']));
@@ -134,10 +155,30 @@ class routes_loader {
 
     function get_presence_hours_methods() {
         return array(
-            'GetPresenceStatusPerWorkers' => function ($params) {
+            'addPresenceHours' => function ($params) {
+
+                return $this->presence_hours_controller->add_presence_hours($params);
+            },
+            'editPresenceHours' => function ($params) {
+
+                return $this->presence_hours_controller->edit_presence_hours($params);
+            },
+            'getPresenceStatusPerProjects' => function ($params) {
+
+                return $this->presence_hours_controller->get_presence_status_per_projects($params['workerId']);
+            },
+            'getPresenceStatusPerWorkers' => function ($params) {
 
                 return $this->presence_hours_controller->get_presence_status_per_workers($params['teamLeaderId']);
-            }
+            },
+            'getPresenceHoursSum' => function ($params) {
+
+                return $this->presence_hours_controller->get_presence_hours_sum($params['projectId'], $params['workerId']);
+            },
+            'getPresenceHours' => function ($params) {
+
+                return $this->presence_hours_controller->get_presence_hours($params['projectId'], $params['workerId']);
+            },
         );
     }
 

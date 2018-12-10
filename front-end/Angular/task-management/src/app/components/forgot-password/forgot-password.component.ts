@@ -64,7 +64,7 @@ export class ForgotPasswordComponent {
           this.count++;
           let changePassword:ChangePassword=new ChangePassword(this.user.userId,value,null,this.count);
           let confirmed: boolean = await this.userService.confirmToken(changePassword).toPromise();
-          if (confirmed) {
+          if (!confirmed) {
             swal.showValidationMessage(
               'Sorry, token is missed!'
             );
