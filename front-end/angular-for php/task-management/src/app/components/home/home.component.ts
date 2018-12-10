@@ -33,8 +33,8 @@ export class HomeComponent {
 
   sendEmail(email: Email) {
     this.userService.sendEmail(email).subscribe(
-      (sended: boolean) => {
-        alert(sended);
+      (res) => {
+        console.log(res);
       },
       err => {
         console.log(err);

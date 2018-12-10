@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { UserService, User, Global, DialogComponent } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-team-management',
@@ -79,6 +80,7 @@ export class TeamManagementComponent implements OnInit {
         })
     });
     if (allEdited == true)
+   
       this.showDialog();
   }
 

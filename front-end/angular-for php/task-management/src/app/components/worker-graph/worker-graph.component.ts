@@ -33,6 +33,7 @@ export class WorkerGraphComponent implements OnInit {
 
     this.presenceHoursService.getPresenceStatusPerProjects(workerId).subscribe(
       (data:{projectName:string,projectHours:number,presenceHours:number}[]) => {
+        console.log(data);
         // init projectHours
         this.projectsHours = data.map(d => {
           return { label: d.projectName, y: d.projectHours };

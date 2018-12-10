@@ -13,8 +13,8 @@ export class PresenceHoursService {
     UpdatePresenceSubject:Subject<void>;
     //----------------CONSTRUCTOR------------------
 
-    constructor(private http: HttpClient) { 
-        this.UpdatePresenceSubject=new Subject<void>();
+    constructor(private http: HttpClient) {
+        this.UpdatePresenceSubject = new Subject<void>();
     }
 
     //----------------METHODS-------------------
@@ -25,10 +25,10 @@ export class PresenceHoursService {
         return this.http.post(url, presenceHours);
     }
 
-    //PUT
+    //POST
     editPresenceHours(presenceHours: PresenceHours): Observable<any> {
         let url: string = `${this.basicURL}/editPresenceHours`;
-        return this.http.put(url, presenceHours);
+        return this.http.post(url, presenceHours);
     }
 
     //GET
@@ -42,8 +42,9 @@ export class PresenceHoursService {
         let url: string = `${this.basicURL}/presenceHours/getPresenceStatusPerProjects?workerId=${workerId}`;
         return this.http.get(url);
     }
+
     //GET
-    getPresenceHoursSum(projectId: number,workerId: number): Observable<any> {
+    getPresenceHoursSum(projectId: number, workerId: number): Observable<any> {
         let url: string = `${this.basicURL}/getPresenceHoursSum?projectId=${projectId}&workerId=${workerId}`;
         return this.http.get(url);
     }

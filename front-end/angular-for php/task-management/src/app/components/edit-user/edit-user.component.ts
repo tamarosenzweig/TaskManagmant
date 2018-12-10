@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { UserService, User, DialogComponent } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-user',
@@ -41,7 +42,7 @@ export class EditUserComponent implements OnInit {
   onSubmit(data: { user: User, imageFile: string }) {
     this.initUser(data.user);
     //remove profile image in the server
-    if (data.imageFile&&this.user.profileImageName != null) {
+    if (this.user.profileImageName != null) {
       this.userService.removeUploadedImage(this.user.profileImageName,false)
         .subscribe(() => {
           this.user.profileImageName = null;
@@ -70,6 +71,7 @@ export class EditUserComponent implements OnInit {
       this.userService.uploadImageProfile(data.imageFile)
         .subscribe((newFilename: string) => {
           //placement image name to the user object
+          console.log(newFilename);
           this.user.profileImageName = newFilename;
           this.editUser(this.user);
         });
@@ -80,26 +82,16 @@ export class EditUserComponent implements OnInit {
 
   editUser(user: User) {
     this.userService.editUser(user).subscribe(
-      (edited) => {
-        console.log(edited);
+      (edited:boolean) => {
         if (edited) {
-          this.showDialog();
+          swal({
+            type: 'success',
+            title: `${this.user.userName} added succsesully`,
+          })
         }
       },
       err => console.log(err));
   }
 
-  showDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '35%',
-      data: {
-        title: '',
-        msg: `${this.user.userName} edited succsesully`,
-        autoClosing: true
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['taskManagement/manager/userManagement']);
-    });
-  }
+ 
 }
