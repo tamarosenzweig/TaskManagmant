@@ -20,7 +20,20 @@ export class HomeComponent {
 
   //----------------METHODS-------------------
 
-   sendEmail(email: Email) {
+  showDialog() {
+    const dialogRef = this.dialog.open(SendEmailComponent, {
+      width: '50%',
+      data: {
+        title: 'Send Email',
+      }
+    });
+    dialogRef.afterClosed().subscribe((email: Email) => {
+      if (email)
+        this.sendEmail(email);
+    });
+  }
+
+  sendEmail(email: Email) {
     this.userService.sendEmail(email).subscribe(
       (res) => {
         console.log(res);
