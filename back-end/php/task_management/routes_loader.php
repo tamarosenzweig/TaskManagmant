@@ -33,7 +33,7 @@ class routes_loader {
     function invoke($controller_name, $method_name, $params) {
         if (array_key_exists($controller_name, $this->methods) && array_key_exists($method_name, $this->methods[$controller_name])) {
             $data = $this->methods[$controller_name][$method_name]($params);
-            echo json_encode($data,JSON_NUMERIC_CHECK);
+            echo json_encode($data, JSON_NUMERIC_CHECK);
         } else {
             var_dump(http_response_code(404));
             die("unknown url");
@@ -101,7 +101,7 @@ class routes_loader {
                 return $this->user_controller->change_password($params);
             },
             'sendEmail' => function ($params) {
-                return $this->user_controller->send_email(json_decode($params['email'],true), json_decode($params['user'],true));
+                return $this->user_controller->send_email(json_decode($params['email'], true), json_decode($params['user'], true));
             }
         );
     }
@@ -149,6 +149,9 @@ class routes_loader {
             },
             'hasUncomletedHours' => function ($params) {
                 return $this->worker_hours_controller->has_uncomleted_hours($params['workerId'], json_decode($params['projectIdList']));
+            },
+            'editWorkerHours' => function ($params) {
+                $this->worker_hours_controller->edit_worker_hours($params);
             }
         );
     }
