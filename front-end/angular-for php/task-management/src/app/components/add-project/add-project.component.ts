@@ -8,6 +8,7 @@ import {
   Global,
   DialogComponent
 } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-project',
@@ -163,7 +164,11 @@ export class AddProjectComponent implements OnInit {
     this.projectService.addProject(this.project).subscribe(
       (created: boolean) => {
         if (created) {
-          this.showDialog();
+          // this.showDialog();
+          swal({
+            type: 'success',
+            title: `${this.project.projectName} added succsesully`,
+          })
         }
       },
       err =>

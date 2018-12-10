@@ -70,6 +70,7 @@ export class EditUserComponent implements OnInit {
       this.userService.uploadImageProfile(data.imageFile)
         .subscribe((newFilename: string) => {
           //placement image name to the user object
+          console.log(newFilename);
           this.user.profileImageName = newFilename;
           this.editUser(this.user);
         });
