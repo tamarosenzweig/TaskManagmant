@@ -42,9 +42,10 @@ To install the app in your computer you have to:
         smtp_port=587
         sendmail_from = my-gmail-id@gmail.com
         sendmail_path = "\"C:\xampp\sendmail\sendmail.exe\" -t"
-        Now Open C:\xampp\sendmail\sendmail.ini. Replace all the existing code in sendmail.ini with following code
+        
         ```
 
+        Now Open C:\xampp\sendmail\sendmail.ini. Replace all the existing code in sendmail.ini with following code
         ```sh
         [sendmail]
 
@@ -57,6 +58,8 @@ To install the app in your computer you have to:
         force_sender=my-gmail-id@gmail.com
         ``` 
 
+        PS: don't forgot to replace my-gmail-id and my-gmail-password in above code.
+        Also remember to restart the server using the XAMMP control panel so the changes take effect.
 ## Tech
 
 Task Managmant uses a number of extension:

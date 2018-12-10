@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { UserService, Email, SendEmailComponent } from '../../imports';
+import swal from 'sweetalert2';
 
 
 @Component({
@@ -36,6 +37,10 @@ export class HomeComponent {
     this.userService.sendEmail(email).subscribe(
       (res) => {
         console.log(res);
+        swal({
+          type: 'success',
+          text: `${email.subject} sended succesfully`,
+        })
       },
       err => {
         console.log(err);

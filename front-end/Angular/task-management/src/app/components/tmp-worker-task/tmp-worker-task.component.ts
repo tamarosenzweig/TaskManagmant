@@ -5,6 +5,7 @@ import {
   WorkerHours, PresenceHours, User,
   Global, DialogComponent
 } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tmp-worker-task',
@@ -96,7 +97,11 @@ export class TmpWorkerTaskComponent implements OnInit {
     this.stopHandle = setTimeout(() => {
       this.btnTaskClick();
       this.complete = true;
-      this.showDialog()
+      swal({
+        type: 'info',
+        title: 'Your task is complete',
+        text: 'You can turn to another task.if you need more time to this task pleas contact your team-leader',
+      })
     }, timeOut);
   }
   stopTask() {
@@ -108,16 +113,7 @@ export class TmpWorkerTaskComponent implements OnInit {
     this.presenceHoursService.UpdatePresenceSubject.next();
   }
 
-  showDialog() {
-    this.dialog.open(DialogComponent, {
-      width: '50%',
-      data: {
-        title: 'Your task is complete',
-        msg: 'You can turn to another task.if you need more time to this task pleas contact your team-leader',
-        autoClosing: true
-      }
-    });
-  }
+
   updatePresenceSum(){
     this.presenceHoursService.getPresenceHoursSum(this.workerHour.projectId, this.workerHour.workerId).subscribe(
       (presenceSum: number) => {

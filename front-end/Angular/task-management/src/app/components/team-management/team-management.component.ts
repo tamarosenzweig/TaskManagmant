@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { UserService, User, Global, DialogComponent } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-team-management',
@@ -79,20 +80,15 @@ export class TeamManagementComponent implements OnInit {
         })
     });
     if (allEdited == true)
-      this.showDialog();
+      {
+        swal({
+          type: 'success',
+          text: `saved succsesully`,
+        }).then(res => {
+          this.router.navigate(['taskManagement/manager/teamsManagement'])
+        })
+      }
   }
 
-  showDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '35%',
-      data: {
-        title: '',
-        msg: 'saved succsesully',
-        autoClosing: true
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['taskManagement/manager/teamsManagement'])
-    });
-  }
+
 }

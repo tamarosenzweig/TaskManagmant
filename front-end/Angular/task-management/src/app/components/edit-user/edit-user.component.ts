@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { UserService, User, DialogComponent } from '../../imports';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-user',
@@ -82,23 +83,16 @@ export class EditUserComponent implements OnInit {
     this.userService.editUser(user).subscribe(
       (edited: boolean) => {
         if (edited) {
-          this.showDialog();
+          swal({
+            type: 'success',
+            text: `${this.user.userName} edited succsesully`,
+          }).then(res => {
+            this.router.navigate(['taskManagement/manager/userManagement']);
+          })
         }
       },
       err => console.log(err));
   }
 
-  showDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '35%',
-      data: {
-        title: '',
-        msg: `${this.user.userName} edited succsesully`,
-        autoClosing: true
-      }
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.router.navigate(['taskManagement/manager/userManagement']);
-    });
-  }
+ 
 }
