@@ -1,86 +1,84 @@
 <?php
 
-class user_controller {
+class user_controller extends controller_singletone {
 
-    var $user_service;
+    //post
+    public function login($params) {
+        return $this->service->login($params);
+    }
 
-    function __construct() {
-        $this->user_service = new user_service();
+    //get
+    public function get_all_users($params) {
+        return $this->service->get_all_manager_users($params['managerId']);
+    }
+
+    //get
+    public function get_all_team_users($params) {
+        return $this->service->get_all_team_users($params['teamLeaderId']);
+    }
+
+    //get
+    public function get_all_team_leaders($params) {
+        return $this->service->get_all_team_leaders($params['managerId']);
+    }
+
+    //get
+    public function get_user_by_id($params) {
+        return $this->service->get_user_by_id($params['userId']);
+    }
+
+    public function get_user_by_email($params) {
+        return $this->service->get_user_by_email($params['email']);
     }
 
     //post
-    function login($login) {
-        return $this->user_service->login($login);
-    }
-
-    //get
-    function get_all_users($manager_id) {
-        return $this->user_service->get_all_users($manager_id);
-    }
-
-    //get
-    function get_all_team_users($team_leader_id) {
-        return $this->user_service->get_all_team_users($team_leader_id);
-    }
-
-    //get
-    function get_all_team_leaders($manager_id) {
-        return $this->user_service->get_all_team_leaders($manager_id);
-    }
-
-    //get
-    function get_user_by_id($user_id) {
-        return $this->user_service->get_user_by_id($user_id);
-    }
-
-    //post
-    function add_user($user) {
-        return $this->user_service->add_user($user);
+    public function add_user($params) {
+        return $this->service->add_user($params);
     }
 
     //put
-    function edit_user($user) {
-        return $this->user_service->edit_user($user);
+    public function edit_user($params) {
+        return $this->service->edit_user($params);
     }
 
     //put
-    function delete_user($user_id) {
-        return $this->user_service->delete_user($user_id);
+    public function delete_user($params) {
+        return $this->service->delete_user($params['userId']);
     }
 
-    //get
-    function has_workes($team_leader_id) {
-        return $this->user_service->has_workes($team_leader_id);
+    public function upload_image_profile($params) {
+        $file = array_values($params['files'])[0];
+        return $this->service->upload_image_profile($file);
+    }
+
+    public function remove_uploaded_image($params) {
+        return $this->service->remove_uploaded_image($params['profileImageName'], $params['moveToArchives']);
     }
 
     //post- form data
-    function send_email($email, $user) {
-        return $this->user_service->send_email($email, $user);
+    public function send_email($params) {
+        return $this->service->send_email(json_decode($params['email'], true), json_decode($params['user'], true));
     }
 
-    function check_unique_validations($user) {
-        return $this->user_service->check_unique_validations($user);
+    public function check_unique_validations($params) {
+        return $this->service->check_unique_validations($params);
     }
 
-    function upload_image_profile($file) {
-        return $this->user_service->upload_image_profile($file);
+    //get
+    public function has_workes($params) {
+        return $this->service->has_workes($params['teamLeaderId']);
     }
 
-    function remove_uploaded_image($profile_image_name, $move_to_archives) {
-        return $this->user_service->remove_uploaded_image($profile_image_name, $move_to_archives);
+    public function forgot_password($params) {
+        return $this->service->forgot_password($params['email']);
     }
 
-    function get_user_by_email($email) {
-        return $this->user_service->get_user_by_email($email);
+    public function confirm_token($params) {
+        return $this->service->confirm_token($params);
     }
 
-    function forgot_password($email) {
-        return $this->user_service->forgot_password($email);
+    public function change_password($params) {
+        return $this->service->change_password($params);
     }
-    function confirm_token($change_password){
-        return $this->user_service->confirm_token($change_password);
-    }
-            function change_password($user){
-        return $this->user_service->change_password($user);
-    }
+
 }

@@ -17,8 +17,8 @@ $routes_loader = new routes_loader();
 $link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $path = parse_url($link, PHP_URL_PATH);
 $exploded_path = explode('/', $path);
-$controller_name = $exploded_path[count($exploded_path) - 2];
-$method_name = $exploded_path[count($exploded_path) - 1];
+$controller = $exploded_path[count($exploded_path) - 2];
+$method = $exploded_path[count($exploded_path) - 1];
 
 //------------------------------------------ init params ------------------------------------------
 
@@ -42,8 +42,10 @@ else {
 }
 
 //------------------------------------------ invoke method ------------------------------------------
-    echo $routes_loader->invoke($controller_name, $method_name, $params);
-die();
+
+$routes_loader->invoke($controller, $method, $params);
+
+
 
 
 

@@ -1,35 +1,29 @@
 <?php
 
-class presence_hours_controller {
+class presence_hours_controller extends controller_singletone {
 
-    var $presence_hours_service;
-
-    function __construct() {
-        $this->presence_hours_service = new presence_hours_service();
+    public function add_presence_hours($params) {
+        return $this->service->add_presence_hours($params);
     }
 
-    function add_presence_hours($new_presence_hours) {
-        return $this->presence_hours_service->add_presence_hours($new_presence_hours);
+    public function edit_presence_hours($params) {
+        return $this->service->edit_presence_hours($params);
     }
 
-    function edit_presence_hours($presence_hours) {
-        return $this->presence_hours_service->edit_presence_hours($presence_hours);
+    public function get_presence_status_per_workers($params) {
+        return $this->service->get_presence_status_per_workers($params['teamLeaderId']);
     }
 
-    function get_presence_status_per_workers($team_leader_id) {
-        return $this->presence_hours_service->get_presence_status_per_workers($team_leader_id);
+    public function get_presence_status_per_projects($params) {
+        return $this->service->get_presence_status_per_projects($params['workerId']);
     }
 
-    function get_presence_status_per_projects($worker_id) {
-        return $this->presence_hours_service->get_presence_status_per_projects($worker_id);
+    public function get_presence_hours_sum($params) {
+        return $this->service->get_presence_hours_sum($params['projectId'], $params['workerId']);
     }
 
-    function get_presence_hours_sum($project_id, $worker_id) {
-        return $this->presence_hours_service->get_presence_hours_sum($project_id, $worker_id);
-    }
-
-    function get_presence_hours($project_id, $worker_id) {
-        return $this->presence_hours_service->get_presence_hours( $worker_id,$project_id);
+    public function get_presence_hours($params) {
+        return $this->service->get_presence_hours($params['projectId'], $params['workerId']);
     }
 
 }

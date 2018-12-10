@@ -33,13 +33,13 @@ export class PresenceHoursService {
 
     //GET
     getPresenceStatusPerWorkers(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicURL}/presenceHours/getPresenceStatusPerWorkers?teamLeaderId=${teamLeaderId}`;
+        let url: string = `${this.basicURL}/getPresenceStatusPerWorkers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
     //GET
     getPresenceStatusPerProjects(workerId: number): Observable<any> {
-        let url: string = `${this.basicURL}/presenceHours/getPresenceStatusPerProjects?workerId=${workerId}`;
+        let url: string = `${this.basicURL}/getPresenceStatusPerProjects?workerId=${workerId}`;
         return this.http.get(url);
     }
 

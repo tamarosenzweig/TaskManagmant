@@ -1,14 +1,9 @@
 <?php
 
+class department_controller extends controller_singletone {
 
-class department_controller {
-   
-     var $department_service;
+    public function get_all_departments($params) {
+        return $this->service->get_all_departments();
+    }
 
-    function __construct() {
-        $this->department_service = new department_service();
-    }
-    function get_all_departments() {
-        return $this->department_service->get_all_departments();
-    }
 }

@@ -3,6 +3,10 @@
 //routes
 require './routes_loader.php';
 
+//singleton
+require './singletone/singletone.php';
+require './singletone/controller_singletone.php';
+
 //dal
 require './dal/db_info.php';
 require './dal/db_access.php';
@@ -19,7 +23,7 @@ require './bll/user_service.php';
 require './bll/worker_hours_service.php';
 
 //api
-require './api/controllers/cusomer_controller.php';
+require './api/controllers/customer_controller.php';
 require './api/controllers/department_controller.php';
 require './api/controllers/permission_controller.php';
 require './api/controllers/presence_hours_controller.php';

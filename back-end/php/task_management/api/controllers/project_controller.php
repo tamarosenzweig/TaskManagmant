@@ -1,40 +1,32 @@
 <?php
 
-class project_controller {
+class project_controller extends controller_singletone {
 
-    var $project_service;
-
-    function __construct() {
-        $this->project_service = new project_service();
+    public function add_project($params) {
+        return $this->service->add_project($params);
     }
 
-    function add_project($new_project) {
-        return $this->project_service->add_project($new_project);
+    public function get_project_by_id($params) {
+        return $this->service->get_project_by_id($params['projectId']);
     }
 
-    function get_all_projects() {
-        return $this->project_service->get_all_projects();
+    public function get_all_projects($params) {
+        return $this->service->get_all_projects();
+    }
+    public function get_projects_by_team_leader_id($params) {
+        return $this->service->get_projects_by_team_leader_id($params['teamLeaderId']);
     }
 
-    function get_project_by_team_leader_id($team_leader_id) {
-        return $this->project_service->get_project_by_team_leader_id($team_leader_id);
+    public function get_projects_reports($params) {
+        return $this->service->get_projects_reports();
     }
 
-    function get_projects_reports() {
-        return $this->project_service->get_projects_reports();
+    public function has_projects($params) {
+        return $this->service->has_projects($params['teamLeaderId']);
     }
 
-    function get_project_by_id($project_id) {
-        return $this->project_service->get_project_by_id($project_id);
-    }
-
-    function check_unique_validation($project) {
-        return $this->project_service->check_unique_validation($project);
-       // return null;
-    }
-
-    function has_projects($team_leader_id) {
-        return $this->project_service->has_projects($team_leader_id);
+    public function check_unique_validation($params) {
+        return $this->service->check_unique_validation($params);
     }
 
 }

@@ -1,21 +1,17 @@
 <?php
 
-class worker_hours_controllere {
-    
-    var $worker_hours_service;
-    
-    public function __construct() {
-        $this->worker_hours_service=new worker_hours_service;
+class worker_hours_controller extends controller_singletone {
+
+    public function get_all_worker_hours($params) {
+        return $this->service->get_all_worker_hours($params['workerId']);
     }
-    
-    function get_all_worker_hours($worker_id){
-        return $this->worker_hours_service->get_all_worker_hours($worker_id);
+
+    public function edit_worker_hours($params) {
+        return $this->service->edit_worker_hours($params);
     }
-    function edit_worker_hours($worker_hours){
-        return $this->worker_hours_service->edit_worker_hours($worker_hours);
-    }
-    function has_uncomleted_hours($worker_id, $project_id_list){
-        return $this->worker_hours_service->has_uncomleted_hours($worker_id, $project_id_list);
+
+    public function has_uncomleted_hours($params) {
+        return $this->service->has_uncomleted_hours($params['workerId'], json_decode($params['projectIdList']));
     }
 
 }

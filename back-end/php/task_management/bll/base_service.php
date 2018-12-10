@@ -1,30 +1,88 @@
 <?php
 
-class base_service {
+class base_service extends singleton {
 
-    function init_user($user) {
-        $new_user = array();
-        $new_user['userId'] = $user['user_id'];
-        $new_user['userName'] = $user['user_name'];
-        $new_user['email'] = $user['email'];
-        $new_user['password'] = $user['password'];
-        $new_user['profileImageName'] = $user['profile_image_name'];
-        $new_user['departmentId'] = $user['department_id'];
-        $new_user['teamLeaderId'] = $user['team_leader_id'];
-        $new_user['managerId'] = $user['manager_id'];
-        $new_user['isActive'] = $user['is_active'];
-        if (array_key_exists('department_name', $user)) {
-            $new_user['department'] = array();
-            $new_user['department']['departmentName'] = $user['department_name'];
-        }
-        if (array_key_exists('team_leader_name', $user)) {
-            $new_user['teamLeader'] = array();
-            $new_user['teamLeader']['userName'] = $user['team_leader_name'];
-        }
-        return $new_user;
+    public function get_value_or_null($array, $key) {
+        return array_key_exists($key, $array) && isset($array[$key]) ? "'{$array[$key]}'" : 'null';
     }
 
-    function init_project($project) {
+    public function format_date($date = null, $format = 'Y-m-d') {
+        $format_date;
+        if (isset($date)) {
+            $format_date = date($format, strtotime($date));
+        } else {
+            $format_date = date($format);
+        }
+        return "'$format_date'";
+    }
+
+    public function basic_send_email($email) {
+
+        $to_address = $email['to_address'];
+        $subject = $email['subject'];
+        $message = $email['body'];
+        $headers = 'From: taskManagementCompany@gmail.com' . "\r\n" .
+                'Reply-To: taskManagementCompany@gmail.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+        mail($to_address, $subject, $message, $headers);
+        return true;
+    }
+
+    public function init_customer($customer) {
+        $new_customer = array();
+        $new_customer['customerId'] = $customer['customer_id'];
+        $new_customer['customerName'] = $customer['customer_name'];
+        return $new_customer;
+    }
+
+    public function init_department($department) {
+        $new_department = array();
+        $new_department['departmentId'] = $department['department_id'];
+        $new_department['departmentName'] = $department['department_name'];
+        return $new_department;
+    }
+
+    public function init_department_hours($department_hours) {
+        $new_department_hours = array();
+        $new_department_hours['departmentHoursId'] = $department_hours['department_hours_id'];
+        $new_department_hours['projectId'] = $department_hours['project_id'];
+        $new_department_hours['departmentId'] = $department_hours['department_id'];
+        $new_department_hours['numHours'] = $department_hours['num_hours'];
+        $new_department_hours['department'] = array();
+        $new_department_hours['department']['departmentName'] = $department_hours['department_name'];
+        return $new_department_hours;
+    }
+
+    public function init_permission($permission) {
+        $new_permission = array();
+        $new_permission['permissionId'] = $permission['permission_id'];
+        $new_permission['workerId'] = $permission['worker_id'];
+        $new_permission['projectId'] = $permission['project_id'];
+        $new_permission['isActive'] = $permission['is_active'];
+        if (array_key_exists('user_name', $permission)) {
+            $new_permission['worker'] = array();
+            $new_permission['worker']['userName'] = $permission['user_name'];
+        }
+        if (array_key_exists('project_name', $permission)) {
+            $new_permission['project'] = array();
+            $new_permission['project']['projectName'] = $permission['project_name'];
+        }
+        return $new_permission;
+    }
+
+    public function init_presence_hours($presence_hours) {
+        $new_presence_hours = array();
+        $new_presence_hours['presenceHoursId'] = $presence_hours['presence_hours_id'];
+        $new_presence_hours['workerId'] = $presence_hours['worker_id'];
+        $new_presence_hours['projectId'] = $presence_hours['project_id'];
+        $new_presence_hours['startHour'] = $presence_hours['start_hour'];
+        $new_presence_hours['endHour'] = $presence_hours['end_hour'];
+        $new_presence_hours['worker'] = array();
+        $new_presence_hours['worker'] ['userName'] = $presence_hours['user_name'];
+        return $new_presence_hours;
+    }
+
+    public function init_project($project) {
         $new_project = array();
         $new_project['projectId'] = $project['project_id'];
         $new_project['projectId'] = $project['project_id'];
@@ -49,21 +107,29 @@ class base_service {
         return $new_project;
     }
 
-    function init_customer($customer) {
-        $new_customer = array();
-        $new_customer['customerId'] = $customer['customer_id'];
-        $new_customer['customerName'] = $customer['customer_name'];
-        return $new_customer;
+    public function init_user($user) {
+        $new_user = array();
+        $new_user['userId'] = $user['user_id'];
+        $new_user['userName'] = $user['user_name'];
+        $new_user['email'] = $user['email'];
+        $new_user['password'] = $user['password'];
+        $new_user['profileImageName'] = $user['profile_image_name'];
+        $new_user['departmentId'] = $user['department_id'];
+        $new_user['teamLeaderId'] = $user['team_leader_id'];
+        $new_user['managerId'] = $user['manager_id'];
+        $new_user['isActive'] = $user['is_active'];
+        if (array_key_exists('department_name', $user)) {
+            $new_user['department'] = array();
+            $new_user['department']['departmentName'] = $user['department_name'];
+        }
+        if (array_key_exists('team_leader_name', $user)) {
+            $new_user['teamLeader'] = array();
+            $new_user['teamLeader']['userName'] = $user['team_leader_name'];
+        }
+        return $new_user;
     }
 
-    function init_department($department) {
-        $new_department = array();
-        $new_department['departmentId'] = $department['department_id'];
-        $new_department['departmentName'] = $department['department_name'];
-        return $new_department;
-    }
-
-    function init_worker_hours($worker_hours) {
+    public function init_worker_hours($worker_hours) {
         $new_worker_hours = array();
         $new_worker_hours['workerHoursId'] = $worker_hours['worker_hours_id'];
         $new_worker_hours['projectId'] = $worker_hours['project_id'];
@@ -78,72 +144,6 @@ class base_service {
         $new_worker_hours['worker']['department'] = array();
         $new_worker_hours['worker']['department']['departmentName'] = $worker_hours['department_name'];
         return $new_worker_hours;
-    }
-
-    function init_department_hours($department_hours) {
-        $new_department_hours = array();
-        $new_department_hours['departmentHoursId'] = $department_hours['department_hours_id'];
-        $new_department_hours['projectId'] = $department_hours['project_id'];
-        $new_department_hours['departmentId'] = $department_hours['department_id'];
-        $new_department_hours['numHours'] = $department_hours['num_hours'];
-        $new_department_hours['department'] = array();
-        $new_department_hours['department']['departmentName'] = $department_hours['department_name'];
-        return $new_department_hours;
-    }
-
-    function init_permission($permission) {
-        $new_permission = array();
-        $new_permission['permissionId'] = $permission['permission_id'];
-        $new_permission['workerId'] = $permission['worker_id'];
-        $new_permission['projectId'] = $permission['project_id'];
-        $new_permission['isActive'] = $permission['is_active'];
-        if (array_key_exists('user_name', $permission)) {
-            $new_permission['worker'] = array();
-            $new_permission['worker']['userName'] = $permission['user_name'];
-        }
-        if (array_key_exists('project_name', $permission)) {
-            $new_permission['project'] = array();
-            $new_permission['project']['projectName'] = $permission['project_name'];
-        }
-        return $new_permission;
-    }
-
-    function init_presence_hours($presence_hours) {
-        $new_presence_hours = array();
-        $new_presence_hours['presenceHoursId'] = $presence_hours['presence_hours_id'];
-        $new_presence_hours['workerId'] = $presence_hours['worker_id'];
-        $new_presence_hours['projectId'] = $presence_hours['project_id'];
-        $new_presence_hours['startHour'] = $presence_hours['start_hour'];
-        $new_presence_hours['endHour'] = $presence_hours['end_hour'];
-        $new_presence_hours['worker'] = array();
-        $new_presence_hours['worker'] ['userName'] = $presence_hours['user_name'];
-        return $new_presence_hours;
-    }
-
-    function format_date($date = null, $format = 'Y-m-d') {
-        $format_date;
-        if (isset($date)) {
-            $format_date = date($format, strtotime($date));
-        } else {
-            $format_date = date($format);
-        }
-        return "'$format_date'";
-    }
-
-    function get_value_or_null($array, $key) {
-        return array_key_exists($key, $array) && isset($array[$key]) ? "'{$array[$key]}'" : 'null';
-    }
-
-    function send_email_from_base_service($email) {
-
-        $to_address = $email['to_address'];
-        $subject = $email['subject'];
-        $message = $email['body'];
-        $headers = 'From: taskManagementCompany@gmail.com' . "\r\n" .
-                'Reply-To: taskManagementCompany@gmail.com' . "\r\n" .
-                'X-Mailer: PHP/' . phpversion();
-        mail($to_address, $subject, $message, $headers);
-        return true;
     }
 
 }

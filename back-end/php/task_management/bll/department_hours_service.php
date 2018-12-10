@@ -2,7 +2,7 @@
 
 class department_hours_service extends base_service {
 
-    function get_departments_hours($project_id) {
+    public function get_departments_hours($project_id) {
         $query = "SELECT department_hours_id,project_id,dh.department_id,num_hours,department_name " .
                 "FROM task_management.department_hours dh " .
                 "JOIN task_management.department d " .
