@@ -1,22 +1,23 @@
- .col-md-3{
+.col-md-3 {
     width: 23%;
     margin: 1%;
     height: 40vh;
+}
 
- }
-img{
+img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-} 
+}
 
-.mat-card-content{
-      text-align: center;
-  }
-.mat-card-actions
-{
+.mat-card-content {
     text-align: center;
 }
+
+.mat-card-actions {
+    text-align: center;
+}
+
 .mat-raised-button {
     width: 46%;
     margin: 2% !important;
