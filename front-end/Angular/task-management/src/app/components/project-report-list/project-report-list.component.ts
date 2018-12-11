@@ -47,7 +47,6 @@ export class ProjectReportListComponent implements OnInit {
 
   exportToExcel() { 
     let userName: string = JSON.parse(localStorage.getItem(Global.USER)).userName;
-    ;
     this.excelService.exportAsExcelFile(document.getElementsByTagName("table")[0], `${userName}_projects`);
   }
 
