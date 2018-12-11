@@ -16,9 +16,9 @@ export class ManagerComponent {
 
   constructor(private menuService: MenuService){
     this.menu = [
-      new MenuItem('Users Managment', '/taskManagement/manager/userManagement'),
-      new MenuItem('Projects Managment', '/taskManagement/manager/projectManagement'),
-      new MenuItem('Teams Management', '/taskManagement/manager/teamsManagement')
+      new MenuItem('Users Managment', '/taskManagement/main/manager/userManagement'),
+      new MenuItem('Projects Managment', '/taskManagement/main/manager/projectManagement'),
+      new MenuItem('Teams Management', '/taskManagement/main/manager/teamsManagement')
     ];
 
     this.menuService.setMenu(this.menu);

@@ -51,7 +51,7 @@ export class TmpUserComponent implements OnInit {
   }
 
   edit() {
-    this.router.navigate(['taskManagement/manager/userManagement/editUser', this.user.userId]);
+    this.router.navigate(['taskManagement/main/manager/userManagement/editUser', this.user.userId]);
   }
 
   delete() {
@@ -145,15 +145,15 @@ export class TmpUserComponent implements OnInit {
   }
 
   definePermissions() {
-    this.router.navigate(['taskManagement/manager/userManagement/permissions', this.user.userId]);
+    this.router.navigate(['taskManagement/main/manager/userManagement/permissions', this.user.userId]);
   }
 
   teamManagement() {
-    this.router.navigate(['taskManagement/manager/teamsManagement/teamManagement', this.user.userId]);
+    this.router.navigate(['taskManagement/main/manager/teamsManagement/teamManagement', this.user.userId]);
   }
 
   updateHours() {
-    this.router.navigate(['taskManagement/teamLeader/teamWorkers/workerHoursManagement', this.user.userId]);
+    this.router.navigate(['taskManagement/main/teamLeader/teamWorkers/workerHoursManagement', this.user.userId]);
   }
   
 }

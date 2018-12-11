@@ -86,7 +86,7 @@ export class EditUserComponent implements OnInit {
             type: 'success',
             title: `${this.user.userName} edited succsesully`,
           }).then(() => {
-            this.router.navigate(['taskManagement/manager/userManagement']);
+            this.router.navigate(['taskManagement/main/userManagement']);
           });
         }
       },

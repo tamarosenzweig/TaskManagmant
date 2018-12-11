@@ -16,9 +16,9 @@ export class TeamLeaderComponent {
 
   constructor(private menuService: MenuService) {
     this.menu = [
-      new MenuItem('Worker Hours Management','/taskManagement/teamLeader/workerHoursManagement/projectHoursList'),
-      new MenuItem('Follow Your Projects', '/taskManagement/teamLeader/ProjectList'),
-      new MenuItem('Workers Hours Status', '/taskManagement/teamLeader/workersHoursStatus')
+      new MenuItem('Worker Hours Management','/taskManagement/main/teamLeader/workerHoursManagement/projectHoursList'),
+      new MenuItem('Follow Your Projects', '/taskManagement/main/teamLeader/ProjectList'),
+      new MenuItem('Workers Hours Status', '/taskManagement/main/teamLeader/workersHoursStatus')
     ];
     this.menuService.setMenu(this.menu);
   }

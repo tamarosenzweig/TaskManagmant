@@ -24,6 +24,7 @@ import {
     AuthGuard,
     Resolver
 } from './imports';
+import { MainComponent } from './components/main/main.component';
 
 const appRoutes: Routes = [
     {
@@ -32,95 +33,100 @@ const appRoutes: Routes = [
                 path: 'login', component: LoginComponent, canActivate: [AuthGuard],
             },
             {
-                path: 'manager', component: ManagerComponent, canActivate: [AuthGuard], children: [
+                path: 'main', component: MainComponent, children: [
+                    {
+                        path: 'manager', component: ManagerComponent, canActivate: [AuthGuard], children: [
 
-                    {
-                        path: 'userManagement', component: UserManagementComponent, resolve: [Resolver], children: [
                             {
-                                path: 'userList', component: UserListComponent
+                                path: 'userManagement', component: UserManagementComponent, resolve: [Resolver], children: [
+                                    {
+                                        path: 'userList', component: UserListComponent
+                                    },
+                                    {
+                                        path: 'addUser', component: AddUserComponent
+                                    },
+                                    {
+                                        path: 'editUser/:id', component: EditUserComponent
+                                    },
+                                    {
+                                        path: 'permissions/:id', component: PermissionsComponent
+                                    },
+                                    {
+                                        path: '**', component: UserListComponent
+                                    },
+                                ]
                             },
                             {
-                                path: 'addUser', component: AddUserComponent
+                                path: 'projectManagement', component: ProjectManagementComponent, resolve: [Resolver], children: [
+                                    {
+                                        path: 'addProject', component: AddProjectComponent
+                                    },
+                                    {
+                                        path: 'reports', component: ReportComponent
+                                    },
+                                    {
+                                        path: '**', component: AddProjectComponent
+                                    }
+                                ]
                             },
                             {
-                                path: 'editUser/:id', component: EditUserComponent
+                                path: 'teamsManagement', component: TeamsManagementComponent, resolve: [Resolver], children: [
+                                    {
+                                        path: 'teamLeaderList', component: UserListComponent
+                                    },
+
+                                    {
+                                        path: 'teamManagement/:teamLeaderId', component: TeamManagementComponent
+                                    },
+                                    {
+                                        path: '**', component: UserListComponent
+                                    },
+                                ]
                             },
                             {
-                                path: 'permissions/:id', component: PermissionsComponent
-                            },
-                            {
-                                path: '**', component: UserListComponent
-                            },
-                        ]
-                    },
-                    {
-                        path: 'projectManagement', component: ProjectManagementComponent, resolve: [Resolver], children: [
-                            {
-                                path: 'addProject', component: AddProjectComponent
-                            },
-                            {
-                                path: 'reports', component: ReportComponent
-                            },
-                            {
-                                path: '**', component: AddProjectComponent
+                                path: '**', component: UserManagementComponent
                             }
                         ]
                     },
                     {
-                        path: 'teamsManagement', component: TeamsManagementComponent, resolve: [Resolver], children: [
+                        path: 'teamLeader', component: TeamLeaderComponent, canActivate: [AuthGuard], children: [
                             {
-                                path: 'teamLeaderList', component: UserListComponent
+                                path: 'workerHoursManagement', component: WorkerHoursManagementComponent, children: [
+                                    {
+                                        path: 'projectHoursList', component: ProjectHoursListComponent, resolve: [Resolver]
+                                    },
+                                    {
+                                        path: 'workersHours/:projectId', component: WorkersHoursComponent, resolve: [Resolver]
+                                    },
+                                ]
                             },
 
                             {
-                                path: 'teamManagement/:teamLeaderId', component: TeamManagementComponent
+                                path: 'ProjectList', component: ProjectListComponent, resolve: [Resolver]
                             },
+
                             {
-                                path: '**', component: UserListComponent
+                                path: 'workersHoursStatus', component: TeamLeaderGraphComponent, resolve: [Resolver]
                             },
                         ]
                     },
                     {
-                        path: '**', component: UserManagementComponent
-                    }
-                ]
-            },
-            {
-                path: 'teamLeader', component: TeamLeaderComponent, canActivate: [AuthGuard], children: [
-                    {
-                        path: 'workerHoursManagement', component: WorkerHoursManagementComponent, children: [
+                        path: 'worker', component: WorkerComponent, canActivate: [AuthGuard], children: [
                             {
-                                path: 'projectHoursList', component: ProjectHoursListComponent, resolve: [Resolver]
+                                path: 'home', component: HomeComponent, resolve: [Resolver]
                             },
                             {
-                                path: 'workersHours/:projectId', component: WorkersHoursComponent, resolve: [Resolver]
-                            },
+                                path: '**', component: HomeComponent
+                            }
                         ]
-                    },
-
-                    {
-                        path: 'ProjectList', component: ProjectListComponent, resolve: [Resolver]
-                    },
-
-                    {
-                        path: 'workersHoursStatus', component: TeamLeaderGraphComponent, resolve: [Resolver]
-                    },
-                ]
-            },
-            {
-                path: 'worker', component: WorkerComponent, canActivate: [AuthGuard], children: [
-                    {
-                        path: 'home', component: HomeComponent, resolve: [Resolver]
-                    },
-                    {
-                        path: '**', component: HomeComponent
                     }
                 ]
             }
         ]
     },
+
     // otherwise redirect to LoginComponent
-   { path: '**', component:LoginComponent,canActivate: [AuthGuard] }
+    { path: '**', component: LoginComponent, canActivate: [AuthGuard] }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

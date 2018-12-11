@@ -158,15 +158,15 @@ export class UserService {
             Global.CURRENT_USER = user;
             let status: eStatus = <eStatus>+localStorage.getItem(Global.STATUS);
             if (status == eStatus.MANAGER) {
-                this.router.navigate(['taskManagement/manager/userManagement']);
+                this.router.navigate(['taskManagement/main/manager/userManagement']);
             }
             else {
                 if (status == eStatus.TEAM_LEADER) {
-                    this.router.navigate(['taskManagement/teamLeader/workerHoursManagement/projectHoursList']);
+                    this.router.navigate(['taskManagement/main/teamLeader/workerHoursManagement/projectHoursList']);
                 }
                 else//status == eStatus.WORKER 
                 {
-                    this.router.navigate(['taskManagement/worker/home']);
+                    this.router.navigate(['taskManagement/main/worker/home']);
                 }
             }
 

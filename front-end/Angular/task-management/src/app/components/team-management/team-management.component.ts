@@ -85,7 +85,7 @@ export class TeamManagementComponent implements OnInit {
         type: 'success',
         text: `saved succesfully`,
       }).then(()=>{
-        this.router.navigate(['taskManagement/manager/teamsManagement'])
+        this.router.navigate(['taskManagement/main/manager/teamsManagement'])
       });
     }
   }

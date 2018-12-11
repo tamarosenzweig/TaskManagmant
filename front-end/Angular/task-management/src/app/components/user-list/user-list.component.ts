@@ -32,7 +32,7 @@ export class UserListComponent implements OnInit {
   }
 
   initUsers() {
-    if (this.activatedRoute.snapshot['_routerState'].url == '/taskManagement/manager/teamsManagement') {
+    if (this.activatedRoute.snapshot['_routerState'].url == '/taskManagement/main/manager/teamsManagement') {
       this.getAllTeamLeaders();
       this.listKind = eListKind.TEAM_LEADERS;
     }

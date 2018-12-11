@@ -22,7 +22,9 @@ export class MenuComponent {
       (menu: MenuItem[]) => {
         this.menu = menu;
         if (menu) {
-          this.menu.push(new MenuItem('Logout', '/taskManagement/login'));
+          if (menu[menu.length - 1].name != 'Logout') {
+            this.menu.push(new MenuItem('Logout', '/taskManagement/login'));
+          }
           this.activeLink = this.menu[0].name;
         }
       });
@@ -47,5 +49,5 @@ export class MenuComponent {
   logout() {
     this.userService.logout();
   }
-  
+
 }

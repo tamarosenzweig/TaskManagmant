@@ -1,3 +1,8 @@
+#main {
+    overflow-y: auto;
+    height: 85%;
+}
+
 main {
     min-height: 80%;
     overflow: hidden;

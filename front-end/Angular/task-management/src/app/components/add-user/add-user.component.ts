@@ -55,7 +55,7 @@ export class AddUserComponent {
             type: 'success',
             title: `${this.user.userName} added succsesully`,
           }).then(() => {
-            this.router.navigate(['taskManagement/manager/userManagement']);
+            this.router.navigate(['taskManagement/main/manager/userManagement']);
           });
 
         }

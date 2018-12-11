@@ -22,7 +22,7 @@ export class TmpProjectHoursComponent {
   //----------------METHODS-------------------
 
   updateWorkersHours() {
-    this.router.navigate(['taskManagement/teamLeader/workerHoursManagement/workersHours',this.project.projectId]);
+    this.router.navigate(['taskManagement/main/teamLeader/workerHoursManagement/workersHours',this.project.projectId]);
   }
 
 }

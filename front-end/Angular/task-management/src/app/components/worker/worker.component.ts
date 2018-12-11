@@ -16,7 +16,7 @@ export class WorkerComponent {
 
   constructor(private menuService: MenuService) {
     this.menu = [
-      new MenuItem('home', '/taskManagement/worker/home')
+      new MenuItem('home', '/taskManagement/main/worker/home')
     ];
     this.menuService.setMenu(this.menu);
   }
