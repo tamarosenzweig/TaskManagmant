@@ -17,7 +17,6 @@ export class PermissionService {
     constructor(private http: HttpClient) {
         this.deletePermissionSubject=new Subject<Permission>();
         this.addPermissionSubject=new Subject<Permission>();
-
     }
 
     //----------------METHODS-------------------
@@ -25,7 +24,7 @@ export class PermissionService {
     //POST
     addPemission(permission:Permission): Observable<any> {
         let url: string = `${this.basicURL}/addPemission`;
-        return this.http.post(url,JSON.stringify(permission));
+        return this.http.post(url,permission);
     }
 
     //POST
@@ -33,4 +32,5 @@ export class PermissionService {
         let url: string = `${this.basicURL}/deletePemission?permissionId=${permissionId}`;
         return this.http.post(url, null);
     }
+    
 }

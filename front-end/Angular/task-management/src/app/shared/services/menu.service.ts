@@ -10,7 +10,6 @@ export class MenuService {
     menuSubject: Subject<MenuItem[]>;
     activeLinkSubject: Subject<number> = new Subject<number>();
 
-
     //----------------CONSTRUCTOR------------------
 
     constructor() {
@@ -24,4 +23,5 @@ export class MenuService {
     setMenu(menu: MenuItem[]) {
         this.menuSubject.next(menu);
     }
+    
 }

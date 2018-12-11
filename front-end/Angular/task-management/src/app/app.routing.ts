@@ -119,7 +119,6 @@ const appRoutes: Routes = [
             }
         ]
     },
-    //{ path: '', redirectTo:'/taskManagement/login' },
     // otherwise redirect to LoginComponent
    { path: '**', component:LoginComponent,canActivate: [AuthGuard] }
 ];

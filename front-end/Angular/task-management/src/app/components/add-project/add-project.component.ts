@@ -1,19 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder,FormGroup, FormControl, FormGroupDirective } from '@angular/forms';
 import { asEnumerable } from 'linq-es2015';
-import { MatDialog } from '@angular/material';
+import swal from 'sweetalert2';
 import {
   ProjectService, CustomerService, UserService, DepartmentService, ValidatorsService,
   Project, Customer, User, Department, DepartmentHours, Permission,
   Global,
-  DialogComponent
 } from '../../imports';
-import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
-  styleUrls: ['./../../../form-style.css','./add-project.component.css']
+  styleUrls: ['./../../../form-style.css', './add-project.component.css']
 })
 export class AddProjectComponent implements OnInit {
 
@@ -27,15 +25,18 @@ export class AddProjectComponent implements OnInit {
   departments: Department[];
   extraWorkers: User[];
   selectedWorkers: User[];
+
   //allow access 'Object' type via interpolation
   objectHolder: typeof Object = Object;
-  FormGroup = FormGroup;
+
+  @ViewChild('formDirective')
+  formDirective: FormGroupDirective;
+
 
   //----------------CONSTRUCTOR------------------
 
   constructor(
     private formBuilder: FormBuilder,
-    public dialog: MatDialog,
     private projectService: ProjectService,
     private customerService: CustomerService,
     private userService: UserService,
@@ -53,9 +54,8 @@ export class AddProjectComponent implements OnInit {
   }
 
   initFormGroup() {
-    //to  do unique validaton
     this.projectFormGroup = this.formBuilder.group({
-      projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('projectName')],
+      projectName: ['', this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('projectName')],
       customerId: ['', this.validatorsService.stringValidatorArr('customer')],
       teamLeaderId: ['', this.validatorsService.stringValidatorArr('team leader')],
       totalHours: this.getDepartmentControls(),
@@ -101,7 +101,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   getDepartmentControls(): FormGroup {
-    let formGroup: FormGroup = new FormGroup({},this.validatorsService.sumValidator('total hours',1));
+    let formGroup: FormGroup = new FormGroup({}, this.validatorsService.sumValidator('total hours', 1));
     this.departments.forEach(department => {
       let formControl: FormControl = new FormControl(null, this.validatorsService.numberValidatorArr(department.departmentName, 0));
       formControl.updateValueAndValidity();
@@ -136,7 +136,7 @@ export class AddProjectComponent implements OnInit {
 
   onSubmit() {
     this.project = this.projectFormGroup.value;
-    this.project.managerId = JSON.parse(localStorage.getItem(Global.USER)).userId;
+    this.project.managerId = Global.CURRENT_USER.userId;
     this.project.totalHours = this.getTotalHours();
     this.project.startDate.setHours(this.project.startDate.getHours() - this.project.startDate.getTimezoneOffset() / 60);
     this.project.endDate.setHours(this.project.endDate.getHours() - this.project.endDate.getTimezoneOffset() / 60);
@@ -167,12 +167,16 @@ export class AddProjectComponent implements OnInit {
           swal({
             type: 'success',
             title: `${this.project.projectName} added succsesully`,
-          })
+          });
+          this.formDirective.resetForm();
+          this.project=null;
         }
-        else{
-          swal.showValidationMessage(
-            `Sorry,${this.project.projectName} failed`
-          );
+        else {
+          swal({
+            type: 'error',
+            title: 'Oops...',
+            text: `Sorry,${this.project.projectName} failed`,
+          });
         }
       },
       err =>

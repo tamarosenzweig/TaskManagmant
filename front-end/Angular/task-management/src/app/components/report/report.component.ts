@@ -3,8 +3,6 @@ import {
   ProjectService, PresenceHoursService, ExcelService,
   Project, ProjectFilter, Global
 } from '../../imports';
-import { DepartmentHours } from '../../shared/models/department-hours.model';
-import asEnumerable from 'linq-es2015';
 
 @Component({
   selector: 'app-report',
@@ -29,7 +27,7 @@ export class ReportComponent implements OnInit {
       (conditions: ProjectFilter) => {
         this.conditions = conditions;
       }
-    )
+    );
   }
 
   //----------------METHODS-------------------
@@ -72,7 +70,7 @@ export class ReportComponent implements OnInit {
         workingPercent: (presenceHours / project.totalHours) * 100 + '%'
       }
     });
-    let userName: string = JSON.parse(localStorage.getItem(Global.USER)).userName;
+    let userName: string = Global.CURRENT_USER.userName;
     this.excelService.exportAsExcelFile(data, `${userName}_projects`);
   }
 

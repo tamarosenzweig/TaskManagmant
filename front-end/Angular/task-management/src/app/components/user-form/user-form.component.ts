@@ -1,20 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
   UserService, DepartmentService, ProjectService, ValidatorsService,
-  User, Department,
+  User, Department, Project,
   Global
 } from '../../imports';
-import { Project } from '../../shared/models/project.model';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./../../../form-style.css']
 })
-export class UserFormComponent implements OnInit, AfterViewInit {
-  ngAfterViewInit(): void {
-  }
+export class UserFormComponent implements OnInit {
 
   //----------------PROPERTIRS-------------------
 
@@ -76,6 +73,7 @@ export class UserFormComponent implements OnInit, AfterViewInit {
       teamLeaderId: [this.user.teamLeaderId],
       isTeamLeader: [this.user.teamLeaderId == null],
     });
+
     if (this.user.userId > 0) {
       this.userFormGroup.removeControl("password");
       this.userFormGroup.removeControl("confirmPassword");
@@ -153,11 +151,9 @@ export class UserFormComponent implements OnInit, AfterViewInit {
     this.dataEvent.emit(data);
   }
 
-  /**
-   * @method
-   * get image from event emitter of 'upload-image' component 
-   * when user choose his profile image
-   */
+
+  // get image from event emitter of 'upload-image' component 
+  //when user choose his profile image
   getImage(value: any) {
     this.imageFile = value;
   }
@@ -174,6 +170,7 @@ export class UserFormComponent implements OnInit, AfterViewInit {
     this.departmentId.setAsyncValidators(null);
     this.departmentId.setValidators(null);
   }
+
   //----------------GETTERS-------------------
 
   //getters of the form group controls
@@ -205,5 +202,6 @@ export class UserFormComponent implements OnInit, AfterViewInit {
   get isTeamLeader() {
     return this.userFormGroup.controls['isTeamLeader'];
   }
+  
 }
 

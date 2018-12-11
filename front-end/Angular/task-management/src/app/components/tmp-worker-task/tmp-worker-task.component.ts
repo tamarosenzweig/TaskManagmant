@@ -1,9 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import {
   PresenceHoursService,
-  WorkerHours, PresenceHours, User,
-  Global, DialogComponent
+  WorkerHours, PresenceHours, 
+  Global
 } from '../../imports';
 import swal from 'sweetalert2';
 
@@ -38,8 +37,7 @@ export class TmpWorkerTaskComponent implements OnInit {
 
   //----------------CONSTRUCTOR------------------
 
-  constructor(private dialog: MatDialog,
-    private presenceHoursService: PresenceHoursService) {
+  constructor(private presenceHoursService: PresenceHoursService) {
     this.isStarted = false;
     this.btnMessage = 'start your task';
     this.isStartedEvent = new EventEmitter<boolean>();
@@ -64,7 +62,7 @@ export class TmpWorkerTaskComponent implements OnInit {
   }
 
   addPresenceHours() {
-    let userId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId
+    let userId: number = Global.CURRENT_USER.userId
     let startDate = new Date();
     this.presenceHours = new PresenceHours(0, userId, this.workerHour.projectId, startDate, null);
     this.presenceHoursService.addPresenceHours(this.presenceHours).subscribe(
@@ -119,8 +117,6 @@ export class TmpWorkerTaskComponent implements OnInit {
     this.presenceHoursService.UpdatePresenceSubject.next();
   }
 
- 
-
   updatePresenceSum(){
     this.presenceHoursService.getPresenceHoursSum(this.workerHour.projectId, this.workerHour.workerId).subscribe(
       (presenceSum: number) => {
@@ -134,4 +130,5 @@ export class TmpWorkerTaskComponent implements OnInit {
       }
     );
    }
+   
 }

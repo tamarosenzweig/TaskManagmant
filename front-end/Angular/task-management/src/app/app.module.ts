@@ -98,7 +98,6 @@ import {
   WorkerGraphComponent,
   GraphChartComponent,
   DatePickerComponent,
-  DialogComponent,
   TreeTableComponent,
   //routing
   routing
@@ -158,7 +157,6 @@ import {
     WorkerGraphComponent,
     GraphChartComponent,
     DatePickerComponent,
-    DialogComponent,
     TreeTableComponent,
     ProjectFilterPipe,
   ],
@@ -202,7 +200,6 @@ import {
 
   ],
   entryComponents: [
-    DialogComponent,
     SendEmailComponent,
     UpdateHoursDialogComponent,
   ],

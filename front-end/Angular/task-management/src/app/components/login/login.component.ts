@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import {
   UserService, ValidatorsService,
   User, eStatus,
   Global
 } from '../../imports';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -26,7 +26,6 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dialog: MatDialog,
     private userService: UserService,
     private validatorsService: ValidatorsService,
   ) {
@@ -54,7 +53,8 @@ export class LoginComponent {
         (user: User) => {
           if (user != null) {
             //enter user to localStorage
-            localStorage.setItem(Global.USER, JSON.stringify(user));
+            localStorage.setItem(Global.CURRENT_USER_ID, user.userId.toString());
+            Global.CURRENT_USER = user;
             //enter user status to localStorage
             let status: eStatus;
             if (user.managerId == null) {

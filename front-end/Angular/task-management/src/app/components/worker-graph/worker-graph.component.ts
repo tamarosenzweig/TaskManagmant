@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PresenceHoursService, User ,Global} from '../../imports';
+import { PresenceHoursService, Global } from '../../imports';
 
 @Component({
   selector: 'app-worker-graph',
@@ -7,8 +7,9 @@ import { PresenceHoursService, User ,Global} from '../../imports';
   styleUrls: ['./worker-graph.component.css']
 })
 export class WorkerGraphComponent implements OnInit {
-  //----------------PROPERTIRS-------------------
   
+  //----------------PROPERTIRS-------------------
+
   projectsHours: { label: string, y: number }[];
   presenceHours: { label: string, y: number }[];
 
@@ -16,11 +17,11 @@ export class WorkerGraphComponent implements OnInit {
 
   constructor(private presenceHoursService: PresenceHoursService) {
     this.presenceHoursService.UpdatePresenceSubject.subscribe(
-      ()=>{
+      () => {
         this.getPresenceStatusPerProjects();
       }
-    )
-   }
+    );
+  }
 
   //----------------METHODS-------------------
 
@@ -28,11 +29,11 @@ export class WorkerGraphComponent implements OnInit {
     this.getPresenceStatusPerProjects();
   }
 
-   getPresenceStatusPerProjects() {
-    let workerId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+  getPresenceStatusPerProjects() {
+    let workerId: number = Global.CURRENT_USER.userId;
 
     this.presenceHoursService.getPresenceStatusPerProjects(workerId).subscribe(
-      (data:{projectName:string,projectHours:number,presenceHours:number}[]) => {
+      (data: { projectName: string, projectHours: number, presenceHours: number }[]) => {
         console.log(data);
         // init projectHours
         this.projectsHours = data.map(d => {
@@ -44,7 +45,7 @@ export class WorkerGraphComponent implements OnInit {
           return { label: d.projectName, y: d.presenceHours };
         });
       },
-      err=>{
+      err => {
         console.log(err);
       });
   }

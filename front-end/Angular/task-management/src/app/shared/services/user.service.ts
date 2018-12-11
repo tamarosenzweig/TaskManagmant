@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import * as sha256 from 'async-sha256';
-import { MenuService, Login,User, eStatus, Email, ChangePassword,Global } from '../../imports';
+import { MenuService, Login, User, eStatus, Email, ChangePassword, Global } from '../../imports';
 
 @Injectable()
 export class UserService {
@@ -27,13 +27,13 @@ export class UserService {
     //POST
     login(email: string, password: string): Observable<any> {
         let url: string = `${this.basicURL}/login`;
-        let data =new Login(email, password);
-        return this.http.post(url,data);
+        let login = new Login(email, password);
+        return this.http.post(url, login);
     }
 
     //GET
     getAllUsers(): Observable<any> {
-        let managerId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+        let managerId: number = Global.CURRENT_USER.userId;
         let url: string = `${this.basicURL}/getAllUsers?managerId=${managerId}`;
         return this.http.get(url);
     }
@@ -46,7 +46,7 @@ export class UserService {
 
     //GET
     getAllTeamLeaders(): Observable<any> {
-        let managerId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+        let managerId: number = Global.CURRENT_USER.userId;
         let url: string = `${this.basicURL}/getAllTeamLeaders?managerId=${managerId}`;
         return this.http.get(url);
     }
@@ -56,29 +56,30 @@ export class UserService {
         let url: string = `${this.basicURL}/getUserById?userId=${userId}`;
         return this.http.get(url);
     }
+
     //GET
-    hasWorkers(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicURL}/hasWorkers?teamLeaderId=${teamLeaderId}`;
+    getUserByEmail(email: string): Observable<any> {
+        let url: string = `${this.basicURL}/getUserByEmail?email=${email}`;
         return this.http.get(url);
     }
 
     //POST
     addUser(user: User): Observable<any> {
         let url: string = `${this.basicURL}/addUser`;
-        return this.http.post(url,JSON.stringify(user));
+        return this.http.post(url, user);
     }
 
     //PUT
     editUser(user: User): Observable<any> {
         let url: string = `${this.basicURL}/editUser`;
-        return this.http.put(url, JSON.stringify(user));
+        return this.http.put(url, user);
     }
 
     //POST
     deleteUser(user: User): Observable<any> {
         //move user profile image to archives if exist
         if (user.profileImageName)
-            this.removeUploadedImage(user.profileImageName, true).subscribe(()=>{});
+            this.removeUploadedImage(user.profileImageName, true).subscribe(() => { });
         let url: string = `${this.basicURL}/deleteUser?userId=${user.userId}`;
         return this.http.post(url, null);
     }
@@ -101,12 +102,11 @@ export class UserService {
     }
 
     //POST
-    //todo
     sendEmail(email: Email): Observable<any> {
-        let url: string =`${this.basicURL}/sendEmail`;
+        let url: string = `${this.basicURL}/sendEmail`;
         let formData: FormData = new FormData();
         formData.append('email', JSON.stringify(email));
-        formData.append('user', localStorage.getItem(Global.USER));
+        formData.append('user', JSON.stringify(Global.CURRENT_USER));
         return this.http.post(url, formData);
     }
 
@@ -116,36 +116,12 @@ export class UserService {
         return this.http.post(url, user);
     }
 
-    logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem(Global.USER);
-        localStorage.removeItem(Global.STATUS);
-        this.menuService.setMenu(null);
-    }
-    navigateByStatus() {
-        if (localStorage.getItem(Global.STATUS) == null) {
-            this.router.navigate(['taskManagement/login']);
-        }
-        let status: eStatus = <eStatus>+localStorage.getItem(Global.STATUS);
-        if (status == eStatus.MANAGER) {
-            this.router.navigate(['taskManagement/manager/userManagement']);
-        }
-        else
-            if (status == eStatus.TEAM_LEADER) {
-                this.router.navigate(['taskManagement/teamLeader/workerHoursManagement/projectHoursList']);
-            }
-            else//status == eStatus.WORKER {
-                this.router.navigate(['taskManagement/worker/home']);
-    }
-    async hashValue(val: string) {
-        let hashVal = await sha256(val);
-        return hashVal;
-    }
     //GET
-    getUserByEmail(email: string): Observable<any> {
-        let url: string = `${this.basicURL}/getUserByEmail?email=${email}`;
+    hasWorkers(teamLeaderId: number): Observable<any> {
+        let url: string = `${this.basicURL}/hasWorkers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
+
     //POST
     forgotPassword(email: string): Observable<any> {
         let url: string = `${this.basicURL}/forgotPassword?email=${email}`;
@@ -153,17 +129,57 @@ export class UserService {
     }
 
     //POST
-    confirmToken(changePassword:ChangePassword): Observable<any> {
+    confirmToken(changePassword: ChangePassword): Observable<any> {
         let url: string = `${this.basicURL}/confirmToken`;
         return this.http.post(url, changePassword);
     }
 
     //POST
-    //tdo
     changePassword(user: User): Observable<any> {
         let url: string = `${this.basicURL}/changePassword`;
         return this.http.put(url, user);
     }
 
+    logout() {
+        // remove user from global and local storage to log user out
+        Global.CURRENT_USER = null;
+        localStorage.clear();
+        this.menuService.setMenu(null);
+    }
+
+    async navigateByStatus() {
+        if (localStorage.getItem(Global.STATUS) == null || localStorage.getItem(Global.CURRENT_USER_ID) == null) {
+            localStorage.clear();
+            this.router.navigate(['taskManagement/login']);
+        }
+        let currentUserId: string = localStorage.getItem(Global.CURRENT_USER_ID);
+        let user: User = await this.getUserById(+currentUserId).toPromise();
+        if (user) {
+            Global.CURRENT_USER = user;
+            let status: eStatus = <eStatus>+localStorage.getItem(Global.STATUS);
+            if (status == eStatus.MANAGER) {
+                this.router.navigate(['taskManagement/manager/userManagement']);
+            }
+            else {
+                if (status == eStatus.TEAM_LEADER) {
+                    this.router.navigate(['taskManagement/teamLeader/workerHoursManagement/projectHoursList']);
+                }
+                else//status == eStatus.WORKER 
+                {
+                    this.router.navigate(['taskManagement/worker/home']);
+                }
+            }
+
+        }
+        else {
+            localStorage.clear();
+            this.router.navigate(['taskManagement/login']);
+        }
+    }
+    
+    async hashValue(val: string) {
+        let hashVal = await sha256(val);
+        return hashVal;
+    }
 
 }

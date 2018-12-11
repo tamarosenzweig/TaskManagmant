@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { asEnumerable } from 'linq-es2015';
 import { FormControl } from '@angular/forms';
-import { PresenceHoursService, User, Global } from '../../imports';
+import { asEnumerable } from 'linq-es2015';
+import { PresenceHoursService, Global } from '../../imports';
 
 @Component({
   selector: 'app-team-leader-graph',
@@ -17,7 +17,7 @@ export class TeamLeaderGraphComponent implements OnInit {
   hoursStatus: { userName: string, projectName: string, projectHours: number, presenceHours: number }[];
   projectsHours: { label: string, y: number }[];
   presenceHours: { label: string, y: number }[];
-  titleX:string="workers";
+  titleX:string;
 
   projects: { projectId: number, projectName: string }[];
   projectControl: FormControl;
@@ -25,6 +25,7 @@ export class TeamLeaderGraphComponent implements OnInit {
   //----------------CONSTRUCTOR------------------
 
   constructor(private presenceHoursService: PresenceHoursService) {
+    this.titleX='workers';
     this.projectControl = new FormControl();
   }
   //----------------METHODS-------------------
@@ -34,7 +35,7 @@ export class TeamLeaderGraphComponent implements OnInit {
   }
 
   getPresenceStatusPerWorkers() {
-    let teamLeaderId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+    let teamLeaderId: number = Global.CURRENT_USER.userId;
 
     this.presenceHoursService.getPresenceStatusPerWorkers(teamLeaderId)
       .subscribe(
@@ -53,6 +54,7 @@ export class TeamLeaderGraphComponent implements OnInit {
           console.log(err);
         });
   }
+
   onProjectChange() {
     let projectName: string =this.projectControl.value;
     this.initGraphData(projectName);
@@ -71,4 +73,5 @@ export class TeamLeaderGraphComponent implements OnInit {
       return { label: data.userName, y: data.presenceHours };
     });
   }
+  
 }

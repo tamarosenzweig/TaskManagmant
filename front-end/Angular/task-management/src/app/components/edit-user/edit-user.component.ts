@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { UserService, User, DialogComponent } from '../../imports';
 import swal from 'sweetalert2';
+import { UserService, User } from '../../imports';
 
 @Component({
   selector: 'app-edit-user',
@@ -21,7 +20,6 @@ export class EditUserComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
@@ -42,7 +40,7 @@ export class EditUserComponent implements OnInit {
   onSubmit(data: { user: User, imageFile: string }) {
     this.initUser(data.user);
     //remove profile image in the server
-    if (this.user.profileImageName != null) {
+    if (this.user.profileImageName != null&&data.imageFile) {
       this.userService.removeUploadedImage(this.user.profileImageName,false)
         .subscribe(() => {
           this.user.profileImageName = null;
@@ -95,5 +93,4 @@ export class EditUserComponent implements OnInit {
       err => console.log(err));
   }
 
- 
 }

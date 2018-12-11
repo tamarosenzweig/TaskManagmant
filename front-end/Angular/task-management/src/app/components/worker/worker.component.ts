@@ -20,4 +20,5 @@ export class WorkerComponent {
     ];
     this.menuService.setMenu(this.menu);
   }
+  
 }

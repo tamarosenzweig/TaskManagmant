@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 export class TextareaComponent implements OnInit {
 
   //----------------PROPERTIRS-------------------
+
   @Input()
   formControl: FormControl;
   @Input()
@@ -17,6 +18,7 @@ export class TextareaComponent implements OnInit {
   rows: number = 2;
 
   rowNumber: number;
+
   //allow access 'Object' type via interpolation
   objectHolder: typeof Object = Object;
 
@@ -37,4 +39,5 @@ export class TextareaComponent implements OnInit {
           this.rowNumber--;
     }
   }
+  
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { UserService, ProjectService, User, Project, BaseService } from '../../imports';
+import {
+  UserService, ProjectService, BaseService,
+  User, Project
+} from '../../imports';
 
 @Component({
   selector: 'app-filter-report',
@@ -23,7 +26,7 @@ export class FilterReportComponent implements OnInit {
   constructor(
     private userService: UserService,
     private projectService: ProjectService,
-    private baseService:BaseService,
+    private baseService: BaseService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -36,7 +39,7 @@ export class FilterReportComponent implements OnInit {
       this.projectService.filterSubject.next(this.filterFormGroup.value);
     });
 
-    this.months=this.baseService.getMonths();
+    this.months = this.baseService.getMonths();
     this.initWorkersAndTeamLeaders();
     this.initProjects();
   }

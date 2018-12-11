@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {
   WorkerHoursService,
-  WorkerHours, User,
+  WorkerHours,
   Global
-}
-  from '../../imports';
+} from '../../imports';
 
 @Component({
   selector: 'app-worker-task-list',
@@ -13,9 +12,10 @@ import {
 })
 export class WorkerTaskListComponent implements OnInit {
 
+  //----------------PROPERTIRS-------------------
+
   workerHours: WorkerHours[] = [];
   isStartedTaskExist: boolean;
-
 
   //----------------CONSTRUCTOR------------------
 
@@ -24,12 +24,13 @@ export class WorkerTaskListComponent implements OnInit {
   }
 
   //----------------METHODS------------------
+  
   ngOnInit() {
     this.getAllWorkerHours();
   }
 
   getAllWorkerHours() {
-    let workerId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+    let workerId: number = Global.CURRENT_USER.userId;
     this.workerHoursService.getAllWorkerHours(workerId).subscribe(
       (workerHours: WorkerHours[]) => {
         this.workerHours = workerHours;
@@ -39,7 +40,7 @@ export class WorkerTaskListComponent implements OnInit {
       }
     )
   }
-  
+
   disableButtons(isStarted: boolean) {
     this.isStartedTaskExist = isStarted;
   }

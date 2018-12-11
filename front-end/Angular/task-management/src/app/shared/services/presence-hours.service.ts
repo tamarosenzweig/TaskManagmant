@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
 import AsEnumerable from 'linq-es2015';
-import { Global, PresenceHours, Project, Department, User } from '../../imports';
+import {  PresenceHours, Project, Department, User,Global } from '../../imports';
 
 @Injectable()
 export class PresenceHoursService {
@@ -11,6 +11,7 @@ export class PresenceHoursService {
 
     basicURL: string = Global.HOST + `/presenceHours`;
     UpdatePresenceSubject:Subject<void>;
+
     //----------------CONSTRUCTOR------------------
 
     constructor(private http: HttpClient) {

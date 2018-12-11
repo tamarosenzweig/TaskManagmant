@@ -23,6 +23,7 @@ export class UpdateHoursDialogComponent {
 
   numHoursControl: FormControl;
   presenceHours: number;
+  
   //----------------CONSTRUCTOR------------------
 
   constructor(

@@ -24,7 +24,6 @@ export class Resolver implements Resolve<void> {
             }
             return false;
         });
-
     }
 
 }

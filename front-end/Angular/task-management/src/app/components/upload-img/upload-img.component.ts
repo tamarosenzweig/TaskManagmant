@@ -60,4 +60,5 @@ export class UploadImgComponent {
     this.imageControl.setValue(null);
     this.eventImage.emit(null);
   }
+  
 }

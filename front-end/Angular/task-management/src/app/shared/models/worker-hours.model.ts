@@ -1,4 +1,4 @@
-import { Project, User } from "../../imports";
+import { Project, User } from '../../imports';
 
 export class WorkerHours {
     constructor(

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import swal from 'sweetalert2'
-import { UserService } from '../../shared/services/user.service';
-import { User } from '../../imports';
-import { ChangePassword } from '../../shared/models/change-password.model';
+import { UserService,User,ChangePassword } from '../../imports';
 
 @Component({
   selector: 'app-forgot-password',
@@ -12,8 +10,8 @@ import { ChangePassword } from '../../shared/models/change-password.model';
 export class ForgotPasswordComponent {
 
   user: User;
-
   count: number;
+
   constructor(private userService: UserService) {
   }
 
@@ -107,6 +105,7 @@ export class ForgotPasswordComponent {
           title: 'Password changed successfully!',
         })
       }
-    })
+    });
   }
+
 }
