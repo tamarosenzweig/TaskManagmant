@@ -90,7 +90,10 @@ namespace BLL
                 };
 
                 User foundUser = DBAccess.RunReader(query, InitUser);
-                foundUser.Permissions = PermissionService.GetPermissions(foundUser.UserId);
+                if (foundUser != null)
+                {
+                    foundUser.Permissions = PermissionService.GetPermissions(foundUser.UserId);
+                }
                 return foundUser;
             }
             catch (Exception ex)

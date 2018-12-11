@@ -101,10 +101,10 @@ namespace BLL
                 List<Project> projects = ProjectService.GetProjectsInWorkingByTeamLeaderId((int)user.TeamLeaderId);
                 projects.ForEach(project =>
                 {
-                    WorkerHours workerHours = WorkerHoursService.GetWorkerHoursPerProject(user.UserId, project.ProjectId)[0];
-                    if (workerHours == null)
+                    List<WorkerHours> workerHoursList = GetWorkerHoursPerProject(user.UserId, project.ProjectId);
+                    if (workerHoursList.Count==0)
                     {
-                        workerHours = new WorkerHours { ProjectId = project.ProjectId, WorkerId = user.UserId };
+                        WorkerHours workerHours = new WorkerHours { ProjectId = project.ProjectId, WorkerId = user.UserId };
                         AddWorkerHours(workerHours);
                     }
                 });
