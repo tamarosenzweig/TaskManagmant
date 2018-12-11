@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, ProjectService, User, Project } from '../../imports';
 import { ActivatedRoute } from '@angular/router';
+import { UserService, ProjectService, User, Project } from '../../imports';
 
 @Component({
   selector: 'app-permissions',
@@ -53,4 +53,5 @@ export class PermissionsComponent implements OnInit {
       }
     );
   }
+  
 }

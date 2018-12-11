@@ -35,9 +35,9 @@ export class MenuComponent {
 
   //----------------METHODS-------------------
 
-  // //  Whenever the data in the parent changes, this method gets triggered. You 
-  // // can act on the changes here. You will have both the previous value and the 
-  // // current value here.
+  //  Whenever the data in the parent changes, this method gets triggered. You 
+  // can act on the changes here. You will have both the previous value and the 
+  // current value here.
 
   onClick(item: MenuItem) {
     if (item.name == 'Logout')
@@ -47,4 +47,5 @@ export class MenuComponent {
   logout() {
     this.userService.logout();
   }
+  
 }

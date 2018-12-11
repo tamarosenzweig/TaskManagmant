@@ -39,4 +39,5 @@ export class InputComponent {
   keyUp() {
     this.keyUpEvent.emit();
   }
+  
 }

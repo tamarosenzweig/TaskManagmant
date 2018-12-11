@@ -1,12 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import swal from 'sweetalert2';
 import {
   UserService, WorkerHoursService, ProjectService,
   User, eListKind,
-  Global, DialogComponent, Project
+  Global, Project
 } from '../../imports';
-import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tmp-user',
@@ -32,7 +31,6 @@ export class TmpUserComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public dialog: MatDialog,
     private userService: UserService,
     private workerHoursService: WorkerHoursService,
     private projectService: ProjectService
@@ -40,8 +38,11 @@ export class TmpUserComponent implements OnInit {
 
   //----------------METHODS-------------------
 
-  ngOnInit(): void {
-    //init imageUrl
+  ngOnInit() {
+    this.initImageUrl();
+  }
+
+  initImageUrl() {
     this.imageUrl = `${Global.UERS_PROFILES}/`;
     if (this.user.profileImageName)
       this.imageUrl += this.user.profileImageName;
@@ -52,9 +53,8 @@ export class TmpUserComponent implements OnInit {
   edit() {
     this.router.navigate(['taskManagement/manager/userManagement/editUser', this.user.userId]);
   }
-  
-  delete() {
 
+  delete() {
     swal({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -66,10 +66,8 @@ export class TmpUserComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.confirmedDelete();
-       
       }
-    })
-
+    });
   }
 
 
@@ -83,7 +81,7 @@ export class TmpUserComponent implements OnInit {
         .subscribe(
           (hasUncomletedHours: boolean) => {
             if (hasUncomletedHours) {
-              let msg='Immposible to delete a worker who has incomplete hours';
+              let msg = 'Immposible to delete a worker who has incomplete hours';
               swal({
                 type: 'error',
                 title: 'Oops...',
@@ -108,8 +106,8 @@ export class TmpUserComponent implements OnInit {
           type: 'error',
           title: 'Oops...',
           text: msg,
-        })       
-         return;
+        })
+        return;
       }
       else {
         let hasProjects: boolean = await this.projectService.hasProjects(this.user.userId).toPromise();
@@ -157,4 +155,5 @@ export class TmpUserComponent implements OnInit {
   updateHours() {
     this.router.navigate(['taskManagement/teamLeader/teamWorkers/workerHoursManagement', this.user.userId]);
   }
+  
 }

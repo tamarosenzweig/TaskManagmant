@@ -23,7 +23,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   initProjectList() {
-    let teamLeaderId: number = JSON.parse(localStorage.getItem(Global.USER)).userId;
+    let teamLeaderId: number = Global.CURRENT_USER.userId;
     this.projectService.getProjectsByTeamLeaderId(teamLeaderId).subscribe(
       (projects: Project[]) => {
         this.projectService.initDates(projects);

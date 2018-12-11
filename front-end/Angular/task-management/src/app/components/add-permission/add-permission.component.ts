@@ -1,6 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ProjectService,PermissionService, User,Project, Permission } from '../../imports';
+import {
+  ProjectService, PermissionService,
+  User, Project, Permission
+} from '../../imports';
 
 @Component({
   selector: 'app-add-permission',
@@ -9,7 +12,7 @@ import { ProjectService,PermissionService, User,Project, Permission } from '../.
 })
 export class AddPermissionComponent implements OnInit {
 
-    //----------------PROPERTIRS-------------------
+  //----------------PROPERTIRS-------------------
 
   @Input()
   user: User;
@@ -18,7 +21,7 @@ export class AddPermissionComponent implements OnInit {
 
   projectControl: FormControl;
 
-    //----------------CONSTRUCTOR------------------
+  //----------------CONSTRUCTOR------------------
 
   constructor(
     private projectService: ProjectService,
@@ -27,7 +30,7 @@ export class AddPermissionComponent implements OnInit {
     this.projectControl = new FormControl();
 
     this.permissionService.deletePermissionSubject.subscribe(
-      (permission:Permission)=>{
+      (permission: Permission) => {
         this.projects.push(permission.project);
         this.projectControl.setValue(null);
       }
@@ -42,10 +45,10 @@ export class AddPermissionComponent implements OnInit {
   initProjectList() {
     this.projectService.getAllProjects().subscribe(
       (projects: Project[]) => {
-        let teamLeaderId:number=this.user.teamLeaderId==null?this.user.userId:this.user.teamLeaderId;
+        let teamLeaderId: number = this.user.teamLeaderId == null ? this.user.userId : this.user.teamLeaderId;
         this.projects = projects.filter(project =>
           project.teamLeaderId != teamLeaderId &&
-          this.user.permissions.some(permission => permission.projectId == project.projectId)==false);
+          this.user.permissions.some(permission => permission.projectId == project.projectId) == false);
       },
       err => {
         console.log(err);
@@ -54,20 +57,21 @@ export class AddPermissionComponent implements OnInit {
   }
 
   addPermission() {
-    let permission: Permission = new Permission(0, this.user.userId,this.projectControl.value, true);
+    let permission: Permission = new Permission(0, this.user.userId, this.projectControl.value, true);
     this.permissionService.addPemission(permission).subscribe(
       (permissionId: number) => {
-        if (permissionId>0){
-          permission.permissionId=permissionId;
-          permission.worker=this.user;
-          permission.project=this.projects.find(project=>project.projectId==this.projectControl.value);
+        if (permissionId > 0) {
+          permission.permissionId = permissionId;
+          permission.worker = this.user;
+          permission.project = this.projects.find(project => project.projectId == this.projectControl.value);
           this.permissionService.addPermissionSubject.next(permission);
-          this.projects.splice(this.projects.findIndex(project=>project.projectId==permission.projectId),1);
+          this.projects.splice(this.projects.findIndex(project => project.projectId == permission.projectId), 1);
         }
       },
-      err=>{
+      err => {
         console.log(err);
       }
     );
   }
+  
 }

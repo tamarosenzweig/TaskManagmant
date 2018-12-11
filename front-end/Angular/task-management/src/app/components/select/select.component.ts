@@ -42,4 +42,5 @@ export class SelectComponent {
   onChange() {
     this.onChangeEvent.emit(this.formControl.value);
   }
+  
 }

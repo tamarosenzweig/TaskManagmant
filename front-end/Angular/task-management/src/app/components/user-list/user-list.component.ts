@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService, User,eListKind,Global } from '../../imports';
+import { UserService, User,eListKind } from '../../imports';
 
 @Component({
   selector: 'app-user-list',

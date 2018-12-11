@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { UserService, User, Global, DialogComponent } from '../../imports';
 import swal from 'sweetalert2';
+import { UserService, User, Global } from '../../imports';
 
 @Component({
   selector: 'app-team-management',
@@ -27,7 +26,6 @@ export class TeamManagementComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private dialog: MatDialog
   ) { }
 
   //----------------METHODS-------------------
@@ -68,8 +66,11 @@ export class TeamManagementComponent implements OnInit {
   belongWorkersToTeamLeader(selectedWorkers: User[]) {
     let allEdited: boolean = true;
     selectedWorkers.forEach(selectedWorker => {
+
       selectedWorker.teamLeaderId = this.teamLeaderId;
+      selectedWorker.teamLeader=null;
       selectedWorker.permissions = null;
+
       this.userService.editUser(selectedWorker).subscribe(
         (edited: boolean) => {
           if (edited == false)
@@ -83,11 +84,10 @@ export class TeamManagementComponent implements OnInit {
       swal({
         type: 'success',
         text: `saved succesfully`,
-      }).then(result=>{
+      }).then(()=>{
         this.router.navigate(['taskManagement/manager/teamsManagement'])
-      })
+      });
     }
-
   }
 
 }

@@ -112,7 +112,6 @@ export { WorkerGraphComponent } from './components/worker-graph/worker-graph.com
 
 export { GraphChartComponent } from './components/graph-chart/graph-chart.component';
 export { DatePickerComponent } from './components/date-picker/date-picker.component';
-export { DialogComponent } from './components/dialog/dialog.component';
 export { TreeTableComponent } from './components/tree-table/tree-table.component';
 
 //routing

@@ -41,12 +41,14 @@ export class SendEmailComponent {
   //----------------GETTERS-------------------
 
   //getters of the form group controls
+
   get subject() {
     return this.emailFormGroup.controls['subject'];
   }
   get body() {
     return this.emailFormGroup.controls['body'];
   }
+  
 }
 
 

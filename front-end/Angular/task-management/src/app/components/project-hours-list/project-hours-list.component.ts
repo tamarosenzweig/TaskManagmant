@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService, Project, User,Global } from '../../imports';
+import { ProjectService, Project,Global } from '../../imports';
 
 @Component({
   selector: 'app-project-hours-list',
@@ -9,18 +9,19 @@ import { ProjectService, Project, User,Global } from '../../imports';
 export class ProjectHoursListComponent implements OnInit {
 
   //----------------PROPERTIRS-------------------
+  
   projects: Project[];
 
   //----------------CONSTRUCTOR------------------
+
   constructor(private projectService: ProjectService) {
     this.projects = [];
   }
 
-
   //----------------METHODS-------------------
 
   ngOnInit() {
-    let teamLeaderId: number = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+    let teamLeaderId: number = Global.CURRENT_USER.userId;
     this.projectService.getProjectsByTeamLeaderId(teamLeaderId).subscribe(
       (projects: Project[]) => {
         this.projectService.initDates(projects)
@@ -29,7 +30,7 @@ export class ProjectHoursListComponent implements OnInit {
       err => {
         console.log(err);
       }
-    )
+    );
   }
 
 }

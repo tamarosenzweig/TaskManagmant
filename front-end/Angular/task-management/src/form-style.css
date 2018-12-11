@@ -35,38 +35,13 @@
   -webkit-box-align: center;
   -webkit-box-pack: center;
 }
-  .thumbur:before {
-      content: '';
-      position: absolute;
-      width: 3px;
-      height: 12px;
-      background-color: #efefef;
-      left: 50%;
-      bottom: 22px;
-      z-index: 5;
-      -webkit-transform: translateX(-50%);
-      transform: translateX(-50%);
-      border-bottom-left-radius: 1px;
-      border-bottom-right-radius: 1px;
-  }
-.thumbur i.fa-lock{
+
+.thumbur i.fa{
   position: relative;
   color: #03A9F4;
-  font-size: 55px;
+  font-size: 45px;
 }
 
-  i.fa-lock::after {
-      content: '';
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background-color: #efefef;
-  left: 50%;
-  top: 30px;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  border-radius: 100%;
-  }
   form{
       margin-top:3%;
   }

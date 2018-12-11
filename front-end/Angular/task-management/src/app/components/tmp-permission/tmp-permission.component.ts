@@ -1,11 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import swal from 'sweetalert2';
 import {
   PermissionService, WorkerHoursService,
   Permission,
-  DialogComponent
 } from '../../imports';
-import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tmp-permission',
@@ -22,7 +20,6 @@ export class TmpPermissionComponent {
   //----------------CONSTRUCTOR------------------
 
   constructor(
-    private dialog: MatDialog,
     private permissionService: PermissionService,
     private workerHoursService: WorkerHoursService
   ) { }
@@ -51,6 +48,5 @@ export class TmpPermissionComponent {
         }
       );
   }
-
 
 }

@@ -1,7 +1,7 @@
 <mat-card class="container">
   <div class="row">
     <div class="thumbur">
-      <i class="fa fa-lock"></i>
+      <i class="fa fa-users"></i>
     </div>
     <h2>Team managmant
       <small>in our company</small>
@@ -16,7 +16,7 @@
               Team Leader:
               <small>{{teamLeader.userName}}</small>
             </h3>
-            <img *ngIf="teamLeader.profileImageName" src="{{global.UPLOADS}}/UsersProfiles/{{teamLeader.profileImageName}}">
+            <img *ngIf="teamLeader.profileImageName" src="{{global.UERS_PROFILES}}/{{teamLeader.profileImageName}}">
             <i *ngIf="!teamLeader.profileImageName" class="fa fa-user-circle-o"></i>
             <h3>Team Workers:</h3>
           </div>
@@ -35,5 +35,4 @@
       </div>
     </mat-card-content>
   </div>
-
 </mat-card>

@@ -4,8 +4,11 @@
 
 export const environment = {
   production: false,
-  //host:'http://localhost:8080/task_management'
+  //for c#
   host:'http://localhost:4722'
+
+  //for php
+  //host:'http://localhost:8080/task_management'
 };
 
 /*

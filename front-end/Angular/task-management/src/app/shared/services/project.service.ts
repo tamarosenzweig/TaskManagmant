@@ -27,6 +27,12 @@ export class ProjectService {
     }
 
     //GET
+    getProjectById(projectId: number): Observable<any> {
+        let url: string = `${this.basicURL}/getProjectById?projectId=${projectId}`;
+        return this.http.get(url);
+    }
+
+    //GET
     getAllProjects(): Observable<any> {
         let url: string = `${this.basicURL}/getAllProjects`;
         return this.http.get(url);
@@ -45,15 +51,11 @@ export class ProjectService {
     }
 
     //GET
-    getProjectById(projectId: number): Observable<any> {
-        let url: string = `${this.basicURL}/getProjectById?projectId=${projectId}`;
-        return this.http.get(url);
-    }
-    //GET
     hasProjects(teamLeaderId: number): Observable<any> {
         let url: string = `${this.basicURL}/hasProjects?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
+    
     //POST
     checkUniqueValidation(project: Project): Observable<any> {
         let url: string = `${this.basicURL}/checkUniqueValidation`;

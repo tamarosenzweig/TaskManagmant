@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TreeNode } from 'primeng/api';
-import { PresenceHoursService, BaseService, Project, Global, ExcelService } from '../../imports';
+import { PresenceHoursService, BaseService, ExcelService, Project, Global, } from '../../imports';
 
 @Component({
   selector: 'app-project-report-list',
@@ -45,9 +45,8 @@ export class ProjectReportListComponent implements OnInit {
     this.initProjectsInfo();
   }
 
-  exportToExcel() { 
-    let userName: string = JSON.parse(localStorage.getItem(Global.USER)).userName;
-    ;
+  exportToExcel() {
+    let userName: string = Global.CURRENT_USER.userName;
     this.excelService.exportAsExcelFile(document.getElementsByTagName("table")[0], `${userName}_projects`);
   }
 
@@ -129,6 +128,5 @@ export class ProjectReportListComponent implements OnInit {
     });
     return <TreeNode>(root);
   }
-
 
 }

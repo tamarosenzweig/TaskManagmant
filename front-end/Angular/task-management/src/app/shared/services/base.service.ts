@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class BaseService {
 
-
     //----------------METHODS-------------------
 
     /**
@@ -59,4 +58,5 @@ export class BaseService {
         }
         return months;
     }
+    
 }

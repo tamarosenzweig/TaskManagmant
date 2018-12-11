@@ -1,8 +1,7 @@
 import { Component, } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { UserService, User, DialogComponent, Global } from '../../imports';
 import swal from 'sweetalert2';
+import { UserService, User, Global } from '../../imports';
 
 @Component({
   selector: 'app-add-user',
@@ -21,7 +20,6 @@ export class AddUserComponent {
 
   constructor(
     private userService: UserService,
-    public dialog: MatDialog,
     private router: Router
   ) {
     this.user = new User(0, '', '', '', '', null, null,null,null);
@@ -32,11 +30,13 @@ export class AddUserComponent {
 
   onSubmit(data: { user: User, imageFile: string }) {
     this.user = data.user;
+
     //upload profile image in the server
     if (data.imageFile) {
       this.userService.uploadImageProfile(data.imageFile)
         .subscribe((newFilename: string) => {
-          //placement image name to the user object
+          
+          //insert image name to the user object
           this.user.profileImageName = newFilename;
           this.addUser();
         });
@@ -47,18 +47,20 @@ export class AddUserComponent {
 
   async addUser() {
     this.user.password = this.user.confirmPassword = await this.userService.hashValue(this.user.password);
-    this.user.managerId = (<User>JSON.parse(localStorage.getItem(Global.USER))).userId;
+    this.user.managerId = Global.CURRENT_USER.userId;
     this.userService.addUser(this.user).subscribe(
       (created:boolean) => {
         if (created) {
           swal({
             type: 'success',
             title: `${this.user.userName} added succsesully`,
-          })
+          }).then(() => {
+            this.router.navigate(['taskManagement/manager/userManagement']);
+          });
+
         }
       },
       err => console.log(err));
   }
-
  
 }

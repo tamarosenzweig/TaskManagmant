@@ -1,7 +1,8 @@
 <mat-card class="container">
   <div class="row">
     <div class="thumbur">
-      <i class="fa fa-lock"></i>
+      <i *ngIf="caption=='Add User'" class="fa fa-plus"></i>
+      <i *ngIf="caption=='Edit User'" class="fa fa-pencil"></i>
     </div>
     <h2>Manage our users
       <small>in our company</small>
@@ -12,8 +13,8 @@
 
         <!-- userName,email,password,confirmPassword -->
         <div class="row">
-          <app-input *ngFor="let control of objectHolder.values(userFormGroup.controls)| slice:0:end;let i=index" [formControl]="control"
-            [type]="types[i]" [placeholder]="placeholders[i]" ngDefaultControl class="col-md-6"></app-input>
+          <app-input *ngFor="let control of objectHolder.values(userFormGroup.controls)| slice:0:end;let i=index"
+            [formControl]="control" [type]="types[i]" [placeholder]="placeholders[i]" ngDefaultControl class="col-md-6"></app-input>
         </div>
 
         <div class="row">
@@ -25,12 +26,12 @@
             <div>
               <div *ngIf="!isTeamLeader.value">
                 <!-- departmentId -->
-                <app-select  [list]="departments" key="departmentId" value="departmentName" [formControl]="departmentId"
+                <app-select [list]="departments" key="departmentId" value="departmentName" [formControl]="departmentId"
                   placeholder="Department" ngDefaultControl></app-select>
 
                 <!-- teamLeaderId -->
-                <app-select [list]="teamLeaders" key="userId" value="userName" [formControl]="teamLeaderId"
-                  placeholder="Team leader" ngDefaultControl></app-select>
+                <app-select [list]="teamLeaders" key="userId" value="userName" [formControl]="teamLeaderId" placeholder="Team leader"
+                  ngDefaultControl></app-select>
               </div>
             </div>
           </div>

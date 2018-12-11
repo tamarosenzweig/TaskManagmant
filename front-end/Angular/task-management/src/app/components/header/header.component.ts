@@ -10,9 +10,6 @@ export class HeaderComponent {
 
   //----------------PROPERTIRS-------------------
 
-  //allow access types via interpolation
-  localStorage: Storage = localStorage;
+  //allow access globals via interpolation
   global: any = Global;
-  json = JSON;
-
 }

@@ -42,6 +42,7 @@ export class GraphChartComponent implements OnInit {
     this.renderChart();
 
   }
+
   renderChart() {
     let chart = new CanvasJS.Chart('chartContainer', {
       exportEnabled: true,
@@ -91,6 +92,7 @@ export class GraphChartComponent implements OnInit {
     }
     e.chart.render();
   }
+
   //  Whenever the data in the parent changes, this method gets triggered. You 
   // can act on the changes here. You will have both the previous value and the 
   // current value here.
@@ -101,4 +103,5 @@ export class GraphChartComponent implements OnInit {
     this.presenceHours = changes.presenceHours.currentValue;
     this.renderChart();
   }
+  
 }
