@@ -3,10 +3,7 @@
         <button (click)="openRequestForm()" class="hamburger" matTooltip="Search and filter reports" aria-label="Button that displays a tooltip when focused or hovered over">
             <i class="material-icons glyphicon glyphicon-menu-hamburger"></i>
         </button>
-        <button (click)="exportToExcel()" mat-raised-button color="primary">
-            <img src="./../../../assets/excelLogo.png">
-            
-        </button>
+        <img class="excel" src="./../../../assets/excelLogo.png" (click)="exportToExcel()">
 
         <div class="requestForm" [ngClass]="state">
             <div (click)="closeRequestForm()" class="closeRequestForm">
@@ -16,5 +13,5 @@
             <app-filter-report></app-filter-report>
         </div>
     </div>
-    <app-project-report-list [projects]="projectsReport | projectFilter:conditions"></app-project-report-list>
+    <app-project-report-list [projects]="projectsReport | projectFilter:conditions" #projectReportList></app-project-report-list>
 </div>

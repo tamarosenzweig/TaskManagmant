@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild,ElementRef} from '@angular/core';
 import {
-  ProjectService, PresenceHoursService, ExcelService,
+  ProjectService, ExcelService,
   Project, ProjectFilter, Global
 } from '../../imports';
 
@@ -17,11 +17,13 @@ export class ReportComponent implements OnInit {
   conditions: ProjectFilter;
   state: string;
 
+  @ViewChild('projectReportList')
+  projectReportList:ElementRef;
+
   //----------------CONSTRUCTOR------------------
 
   constructor(
     private projectService: ProjectService,
-    private presenceHoursService: PresenceHoursService,
     private excelService: ExcelService) {
     this.projectService.filterSubject.subscribe(
       (conditions: ProjectFilter) => {
@@ -55,23 +57,22 @@ export class ReportComponent implements OnInit {
   }
 
   exportToExcel() {
-    let data = this.projectsReport.map(project => {
-      let presenceHours: number = this.presenceHoursService.getPresenceHoursForProject(project);
-      return {
-        projectName: project.projectName,
-        customerName: project.customer.customerName,
-        teamLeaderName: project.teamLeader.userName,
-        teamLeaderEmail: project.teamLeader.email,
-        startDate: project.startDate,
-        endDate: project.endDate,
-        projectHours: project.totalHours,
-        presenceHours: presenceHours,
-        toDoHours: project.totalHours - presenceHours,
-        workingPercent: (presenceHours / project.totalHours) * 100 + '%'
-      }
-    });
     let userName: string = Global.CURRENT_USER.userName;
-    this.excelService.exportAsExcelFile(data, `${userName}_projects`);
+    let excelData=[];
+    let projectsInfo=this.projectReportList.projectsInfo;
+    projectsInfo.forEach(project=>{
+      excelData.push(project.data);
+      project.children.forEach(department=>{
+        department.data.name=`    ${department.data.name}`;
+        excelData.push(department.data);
+        
+        department.children.forEach(worker=>{
+          worker.data.name=`        ${worker.data.name}`;
+          excelData.push(worker.data);
+        });
+      });
+    });
+    this.excelService.exportAsExcelFile(excelData, `${userName}_projects`);
   }
 
   openRequestForm() {

@@ -40,8 +40,9 @@ span {
     color: grey;
 }
 
-button {
+.excel {
     margin: 2%;
+    width: 2%;
 }
 
 .requestForm {

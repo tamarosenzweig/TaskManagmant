@@ -21,8 +21,7 @@ export class ProjectReportListComponent implements OnInit {
 
   constructor(
     private presenceHoursService: PresenceHoursService,
-    private baseService: BaseService,
-    private excelService: ExcelService) {
+    private baseService: BaseService) {
     this.colomns = [
       { field: 'name', header: 'Name' },
       { field: 'teamLeader', header: 'TeamLeader' },
@@ -44,12 +43,6 @@ export class ProjectReportListComponent implements OnInit {
   ngOnInit() {
     this.initProjectsInfo();
   }
-
-  exportToExcel() {
-    let userName: string = Global.CURRENT_USER.userName;
-    this.excelService.exportAsExcelFile(document.getElementsByTagName("table")[0], `${userName}_projects`);
-  }
-
 
   //  Whenever the data in the parent changes, this method gets triggered. You 
   // can act on the changes here. You will have both the previous value and the 

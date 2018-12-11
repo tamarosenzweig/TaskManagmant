@@ -10,16 +10,8 @@ export class ExcelService {
   }
 
   public exportAsExcelFile(json: any, excelFileName: string): void {
-    console.log(json.toString());
-    const worksheet: XLSX.WorkSheet = XLSX.utils.table_to_sheet(json,
-      //   { 
-      //   ignoreHiddenRows: true,
-      //   ignoreHiddenCells: true
-      // }
-    );
-    //Table2ToSheetOpts: false
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     XLSX.writeFile(workbook, ExcelService.toExportFileName(excelFileName), {});
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
   }
 }
