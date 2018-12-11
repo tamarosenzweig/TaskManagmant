@@ -28,13 +28,21 @@ To install the app in your computer you have to:
   2. Run the `back-end` project.(the web api one)  This is the server. Navigate to `http://localhost:4722/`. 
      The app will automatically reload if you change any     of the source files. The details on the server you can see also in the `environments` file  in the angular app, or in the `app config` file   in the cs project (win form) in the `appSetting` attribute.
 
-  3.  Run `ng serve` for a dev server, if you want to run the angular project. Navigate to `http://localhost:4200/`. 
-      The app will automatically reload if you change any of the source files. Or just run the `cs` project.
+
+  3.  Run the `php` server by 
+        ```sh 
+        shift+f6
+        ```
+        on the index.php page
 
   4.  Run `ng serve` for a dev server, if you want to run the angular project. Navigate to `http://localhost:4200/`. 
-      The app will automatically reload if you change any of the source files. Or just run the `cs` project.
+      The app will automatically reload if you change any of the source files.
+      shoose which server you want to: the web api or the php one. 
+      you can choose it in the `enviorments` and in the `global` page. update it.
+
+  5. Run the win form project, if you want it to be the client.
       
-        *important note: in order to send email from the php server(just if you have xampp) in your computer follow this instruction:* 
+        *important note: in order to `send email` feature  from the php server(just if you have xampp) in your computer follow this instruction:* 
         
         in php.ini file find [mail function] and change
         ```sh
