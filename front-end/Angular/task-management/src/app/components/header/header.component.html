@@ -1,8 +1,8 @@
 <header class="row">
 
-    <div class="logo">
-        <img src="./../../../assets/logo.png">
-      </div>
+  <div class="logo">
+    <img src="./../../../assets/logo.png">
+  </div>
 
   <app-menu></app-menu>
 
@@ -12,7 +12,8 @@
       <img *ngIf="global.CURRENT_USER.profileImageName" src="{{global.UERS_PROFILES}}/{{global.CURRENT_USER.profileImageName}}">
       <i *ngIf="!global.CURRENT_USER.profileImageName" class="fa fa-user-circle-o"></i>
     </div>
-
+  </div>
+  
   <div class="user" *ngIf="!global.CURRENT_USER">
     <span class="userName col-md-8">Guest</span>
     <div class="profile col-md-4">
@@ -21,4 +22,3 @@
   </div>
 
 </header>
-

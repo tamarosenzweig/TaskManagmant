@@ -1,22 +1,24 @@
-.col-md-3{
+.col-md-3 {
     width: 23%;
     margin: 1%;
- }
-.mat-card-actions
-{
+}
+
+.mat-card-actions {
     text-align: center;
 }
+
 .mat-raised-button {
     width: 65%;
 }
 
 dl {
-  width: 100%;
-  overflow: hidden;
-  padding: 0;
-  margin: 0
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0
 }
-dt, dd{
+
+dt, dd {
     float: left;
     width: 50%;
     margin: 2% 0;

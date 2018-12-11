@@ -1,10 +1,12 @@
-.group{
+.group {
     margin-bottom: 0;
 }
-.row{
+
+.row {
     margin-left: 7% !important;
 }
-.selected{
+
+.selected {
     margin-top: 2%;
     font-size: 19px;
 }

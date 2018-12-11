@@ -1,7 +1,8 @@
-.col-md-3{
+.col-md-3 {
     width: 23%;
     margin: 2% 0;
 }
+
 .col-md-4 {
     width: 30.333333%;
     margin: 1.5%;
@@ -10,10 +11,10 @@
     overflow-y: auto;
 }
 
-dt,dd{
+dt, dd {
     float: left;
 }
 
-dd{
+dd {
     width: 5%
 }

@@ -1,17 +1,18 @@
-.col-md-3{
+.col-md-3 {
     width: 23%;
     margin: 1%;
- }
-img{
+}
+
+img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-} 
+}
 
-.mat-card-actions
-{
+.mat-card-actions {
     text-align: center;
 }
+
 .mat-raised-button {
     width: 46%;
     margin: 2% !important;
@@ -20,25 +21,27 @@ img{
 down vote
 accepted
 dl {
-  width: 100%;
-  overflow: hidden;
-  /* background: #ff0; */
-  padding: 0;
-  margin: 0
+    width: 100%;
+    overflow: hidden;
+    /* background: #ff0; */
+    padding: 0;
+    margin: 0
 }
+
 dt {
-  float: left;
-  width: 50%;
-  /* adjust the width; make sure the total of both is 100% */
-  /* background: #cc0; */
-  padding: 0;
-  margin: 0
+    float: left;
+    width: 50%;
+    /* adjust the width; make sure the total of both is 100% */
+    /* background: #cc0; */
+    padding: 0;
+    margin: 0
 }
+
 dd {
-  float: left;
-  width: 50%;
-  /* adjust the width; make sure the total of both is 100% */
-  /* //background: #dd0; */
-  padding: 0;
-  margin: 0
+    float: left;
+    width: 50%;
+    /* adjust the width; make sure the total of both is 100% */
+    /* //background: #dd0; */
+    padding: 0;
+    margin: 0
 }
