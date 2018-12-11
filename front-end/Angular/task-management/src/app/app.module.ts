@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'primeng/accordion';
 import { TreeTableModule } from 'primeng/treetable';
@@ -166,6 +167,7 @@ import {
     ReactiveFormsModule,
     routing,
     HttpClientModule,
+    HttpModule,
     BrowserAnimationsModule,
     AccordionModule,
     TreeTableModule,

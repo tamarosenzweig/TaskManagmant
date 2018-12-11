@@ -36,7 +36,7 @@ export class ValidatorsService {
     confirmPasswordValidator(fromGroup: FormGroup): Array<ValidatorFn> {
         return [
             f => !f.value ? { 'val': '\'confirmPassword\'  is required' } : null,
-            f => f.value && fromGroup.get('password').value != f.value ? { 'val': '\'confirmPassword\' doesn\'t not match to \'password\'' } : null
+            f => f.value && fromGroup.get('password').value != f.value ? { 'val': '\'password\' and \'confirmPassword\' do not match' } : null
         ];
     }
 
@@ -94,7 +94,10 @@ export class ValidatorsService {
         return f => f.value && f.value < presenceHours ? { 'val': 'Worker hours can\'t be less than presence hours' } : null;
     }
     workerHoursDepartmentValidator(workerHours: number, departmentHours: number, departmentHoursSum: number): ValidatorFn {
-        return f => f.value && departmentHoursSum - workerHours + (+f.value) > departmentHours ? { 'val': 'Hours defined for workers are greater than the hours defined for this department' } : null;
+        return f => 
+        f.value && departmentHoursSum - workerHours + (+f.value) > departmentHours ?
+         { 'val': 'Hours defined for workers are greater than the hours defined for this department' } 
+         : null;
     }
 
     TeamLeaderValidator(teamLeaderId: number, workerId: number,teamProjectIdList:number[]): AsyncValidatorFn {

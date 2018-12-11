@@ -71,6 +71,7 @@ export class EditUserComponent implements OnInit {
       this.userService.uploadImageProfile(data.imageFile)
         .subscribe((newFilename: string) => {
           //placement image name to the user object
+          console.log(newFilename);
           this.user.profileImageName = newFilename;
           this.editUser(this.user);
         });
@@ -81,11 +82,11 @@ export class EditUserComponent implements OnInit {
 
   editUser(user: User) {
     this.userService.editUser(user).subscribe(
-      (edited: boolean) => {
+      (edited:boolean) => {
         if (edited) {
           swal({
             type: 'success',
-            text: `${this.user.userName} edited succsesully`,
+            title: `${this.user.userName} edited succsesully`,
           }).then(() => {
             this.router.navigate(['taskManagement/manager/userManagement']);
           });

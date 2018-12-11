@@ -7,7 +7,7 @@ import swal from 'sweetalert2';
 @Component({
   selector: 'app-team-management',
   templateUrl: './team-management.component.html',
-  styleUrls: ['./../../../form-style.css','./team-management.component.css']
+  styleUrls: ['./../../../form-style.css', './team-management.component.css']
 })
 export class TeamManagementComponent implements OnInit {
 
@@ -79,16 +79,15 @@ export class TeamManagementComponent implements OnInit {
           console.log(err);
         })
     });
-    if (allEdited == true)
-      {
-        swal({
-          type: 'success',
-          text: `saved succsesully`,
-        }).then(res => {
-          this.router.navigate(['taskManagement/manager/teamsManagement'])
-        })
-      }
-  }
+    if (allEdited == true) {
+      swal({
+        type: 'success',
+        text: `saved succesfully`,
+      }).then(result=>{
+        this.router.navigate(['taskManagement/manager/teamsManagement'])
+      })
+    }
 
+  }
 
 }

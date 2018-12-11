@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import * as sha256 from 'async-sha256';
-import { MenuService, Login,User, eStatus, Email,ChangePassword, Global } from '../../imports';
+import { MenuService, Login,User, eStatus, Email, ChangePassword,Global } from '../../imports';
 
 @Injectable()
 export class UserService {
@@ -11,6 +11,7 @@ export class UserService {
     //----------------PROPERTIRS-------------------
 
     basicURL: string = Global.HOST + `/user`;
+
     updateUserListSubject: Subject<void>;
     resetPermissionSubject: Subject<void>;
 
@@ -26,8 +27,8 @@ export class UserService {
     //POST
     login(email: string, password: string): Observable<any> {
         let url: string = `${this.basicURL}/login`;
-        let data = new Login(email, password);
-        return this.http.post(url, data);
+        let data =new Login(email, password);
+        return this.http.post(url,data);
     }
 
     //GET
@@ -36,12 +37,7 @@ export class UserService {
         let url: string = `${this.basicURL}/getAllUsers?managerId=${managerId}`;
         return this.http.get(url);
     }
-    //  //GET
-    //php
-    // getAllUsers(): Observable<any> {
-    //     let url: string = "http://localhost:8080/task_management/web_api.php?funcation=getAllWorkers";        ;
-    //     return this.http.get(url);
-    // }
+
     //GET
     getAllTeamUsers(teamLeaderId: number): Observable<any> {
         let url: string = `${this.basicURL}/getAllTeamUsers?teamLeaderId=${teamLeaderId}`;
@@ -61,21 +57,21 @@ export class UserService {
         return this.http.get(url);
     }
     //GET
-    HasWorkers(teamLeaderId: number): Observable<any> {
-        let url: string = `${this.basicURL}/HasWorkers?teamLeaderId=${teamLeaderId}`;
+    hasWorkers(teamLeaderId: number): Observable<any> {
+        let url: string = `${this.basicURL}/hasWorkers?teamLeaderId=${teamLeaderId}`;
         return this.http.get(url);
     }
 
     //POST
     addUser(user: User): Observable<any> {
         let url: string = `${this.basicURL}/addUser`;
-        return this.http.post(url, user);
+        return this.http.post(url,JSON.stringify(user));
     }
 
     //PUT
     editUser(user: User): Observable<any> {
         let url: string = `${this.basicURL}/editUser`;
-        return this.http.put(url, user);
+        return this.http.put(url, JSON.stringify(user));
     }
 
     //POST
@@ -97,7 +93,7 @@ export class UserService {
 
     //POST
     removeUploadedImage(profileImageName: string, moveToArchives: boolean): Observable<any> {
-        let url: string = this.basicURL + `/removeUploadedImage`;
+        let url: string = `${this.basicURL}/removeUploadedImage`;
         let formData: FormData = new FormData();
         formData.append('profileImageName', profileImageName);
         formData.append('moveToArchives', String(moveToArchives));
@@ -105,8 +101,9 @@ export class UserService {
     }
 
     //POST
+    //todo
     sendEmail(email: Email): Observable<any> {
-        let url: string = this.basicURL + `/sendEmail`;
+        let url: string =`${this.basicURL}/sendEmail`;
         let formData: FormData = new FormData();
         formData.append('email', JSON.stringify(email));
         formData.append('user', localStorage.getItem(Global.USER));
@@ -156,12 +153,13 @@ export class UserService {
     }
 
     //POST
-    confirmToken(changePassword: ChangePassword): Observable<any> {
+    confirmToken(changePassword:ChangePassword): Observable<any> {
         let url: string = `${this.basicURL}/confirmToken`;
         return this.http.post(url, changePassword);
     }
 
     //POST
+    //tdo
     changePassword(user: User): Observable<any> {
         let url: string = `${this.basicURL}/changePassword`;
         return this.http.put(url, user);

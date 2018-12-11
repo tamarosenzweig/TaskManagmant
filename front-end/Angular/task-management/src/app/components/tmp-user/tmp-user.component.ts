@@ -52,6 +52,7 @@ export class TmpUserComponent implements OnInit {
   edit() {
     this.router.navigate(['taskManagement/manager/userManagement/editUser', this.user.userId]);
   }
+  
   delete() {
 
     swal({
@@ -65,10 +66,12 @@ export class TmpUserComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.confirmedDelete();
+       
       }
     })
 
   }
+
 
 
   async confirmedDelete() {
@@ -80,7 +83,7 @@ export class TmpUserComponent implements OnInit {
         .subscribe(
           (hasUncomletedHours: boolean) => {
             if (hasUncomletedHours) {
-              let msg:string='Immposible to delete a worker who has incomplete hours';
+              let msg='Immposible to delete a worker who has incomplete hours';
               swal({
                 type: 'error',
                 title: 'Oops...',
@@ -98,15 +101,15 @@ export class TmpUserComponent implements OnInit {
     }
     //if  this user is a team-leader and he has workers or projects we can't delete him
     else {
-      let hasWorkes: boolean = await this.userService.HasWorkers(this.user.userId).toPromise();
+      let hasWorkes: boolean = await this.userService.hasWorkers(this.user.userId).toPromise();
       if (hasWorkes) {
         let msg: string = 'Impossible to delete team-leader who has workers';
         swal({
           type: 'error',
           title: 'Oops...',
           text: msg,
-        });
-        return;
+        })       
+         return;
       }
       else {
         let hasProjects: boolean = await this.projectService.hasProjects(this.user.userId).toPromise();
@@ -116,7 +119,7 @@ export class TmpUserComponent implements OnInit {
             type: 'error',
             title: 'Oops...',
             text: msg,
-          });
+          })
           return;
         }
       }
@@ -128,12 +131,13 @@ export class TmpUserComponent implements OnInit {
     this.userService.deleteUser(this.user).subscribe(
       (deleted: boolean) => {
         if (deleted) {
-          this.userService.updateUserListSubject.next();
+          console.log(deleted);
           swal(
             'Deleted!',
             'Your file has been deleted.',
             'success'
           )
+          this.userService.updateUserListSubject.next();
         }
       },
       err => {

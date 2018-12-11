@@ -25,7 +25,7 @@ export class PermissionService {
     //POST
     addPemission(permission:Permission): Observable<any> {
         let url: string = `${this.basicURL}/addPemission`;
-        return this.http.post(url,permission);
+        return this.http.post(url,JSON.stringify(permission));
     }
 
     //POST

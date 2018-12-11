@@ -1,8 +1,0 @@
-<div *ngIf="menu" class="menu">
-  <nav mat-tab-nav-bar >
-    <a *ngFor="let item of menu" mat-tab-link class="row" (click)="activeLink = item.name;onClick(item)" [active]="activeLink == item.name"
-      routerLink="{{item.routing}}">
-      {{item.name}}
-    </a>
-  </nav>
-</div>

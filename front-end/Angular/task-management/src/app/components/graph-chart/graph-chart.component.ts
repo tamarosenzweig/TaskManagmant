@@ -8,7 +8,7 @@ import { BaseService } from '../../imports';
   styleUrls: ['./graph-chart.component.css']
 })
 export class GraphChartComponent implements OnInit {
- 
+
   @Input()
   title: string;
 
@@ -31,12 +31,12 @@ export class GraphChartComponent implements OnInit {
   @Input()
   presenceHours: { label: string, y: number }[] = [];
 
-  constructor(private baseService: BaseService) {
-    let months = this.baseService.getMonths();
-    let monthId: number = new Date().getMonth();
-    let currMonth: string = months.find(month => month.monthId == monthId).monthName;
-    this.title = currMonth;
-  }
+  constructor(private baseService:BaseService) {
+    let months =this.baseService.getMonths();
+    let monthId:number=new Date().getMonth();
+    let currMonth:string = months.find(month=>month.monthId==monthId).monthName;
+    this.title=currMonth;
+   }
 
   ngOnInit() {
     this.renderChart();

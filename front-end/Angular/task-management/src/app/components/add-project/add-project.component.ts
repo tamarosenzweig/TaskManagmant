@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { asEnumerable } from 'linq-es2015';
 import { MatDialog } from '@angular/material';
 import {
@@ -13,7 +13,7 @@ import swal from 'sweetalert2';
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
-  styleUrls: ['./../../../form-style.css', './add-project.component.css']
+  styleUrls: ['./../../../form-style.css','./add-project.component.css']
 })
 export class AddProjectComponent implements OnInit {
 
@@ -53,8 +53,9 @@ export class AddProjectComponent implements OnInit {
   }
 
   initFormGroup() {
+    //to  do unique validaton
     this.projectFormGroup = this.formBuilder.group({
-      projectName: ['', this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('projectName')],
+      projectName: ['',this.validatorsService.stringValidatorArr('project name', 2, 15, /^[A-Za-z0-9]+$/), this.validatorsService.uniqueProjectValidator('projectName')],
       customerId: ['', this.validatorsService.stringValidatorArr('customer')],
       teamLeaderId: ['', this.validatorsService.stringValidatorArr('team leader')],
       totalHours: this.getDepartmentControls(),
@@ -100,7 +101,7 @@ export class AddProjectComponent implements OnInit {
   }
 
   getDepartmentControls(): FormGroup {
-    let formGroup: FormGroup = new FormGroup({}, this.validatorsService.sumValidator('total hours', 1));
+    let formGroup: FormGroup = new FormGroup({},this.validatorsService.sumValidator('total hours',1));
     this.departments.forEach(department => {
       let formControl: FormControl = new FormControl(null, this.validatorsService.numberValidatorArr(department.departmentName, 0));
       formControl.updateValueAndValidity();
@@ -165,17 +166,19 @@ export class AddProjectComponent implements OnInit {
         if (created) {
           swal({
             type: 'success',
-            text: `${this.project.projectName} added succsesully`,
-          }).then(res => {
-            this.project = null;
+            title: `${this.project.projectName} added succsesully`,
           })
+        }
+        else{
+          swal.showValidationMessage(
+            `Sorry,${this.project.projectName} failed`
+          );
         }
       },
       err =>
         console.log(err)
     );
   }
-
 
 
   //----------------GETTERS-------------------
