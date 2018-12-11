@@ -17,7 +17,6 @@ class base_service extends singleton {
     }
 
     public function basic_send_email($email) {
-
         $to_address = $email['to_address'];
         $subject = $email['subject'];
         $message = $email['body'];
