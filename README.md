@@ -258,9 +258,9 @@ Task Managmant uses a number of extension:
  
 
 ***
-## WinForms +  Angular
+# WinForms +  Angular
 
-## login 
+## Login 
 ![picture](screens/Login.png)
 
 ## Manager Screens
@@ -282,7 +282,7 @@ Task Managmant uses a number of extension:
 #### Reports
 ![picture](screens/Reports.png)
 
- ### Team Management
+### Team Management
 ![picture](screens/TeamManagement.png)  
 
 
