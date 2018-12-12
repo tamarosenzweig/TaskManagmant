@@ -273,7 +273,7 @@ Task Managmant uses a number of extension:
 ![picture](screens/EditUser.png) 
 #### Delete User
 ![picture](screens/DeleteUser.png)
-####Add Permissions 
+#### Add Permissions 
 ![picture](screens/AddPermission.png)
 
 ### Projects Management
