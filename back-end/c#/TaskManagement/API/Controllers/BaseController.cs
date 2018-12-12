@@ -9,10 +9,17 @@ namespace API.Controllers
     {
         public List<string> GetErrorList(List<ModelState> modelStateList)
         {
-            List<string> errors = new List<string>();
-            modelStateList.ForEach(value => value.Errors.ToList()
-                .ForEach(err => errors.Add(err.ErrorMessage)));
-            return errors;
+            try
+            {
+                List<string> errors = new List<string>();
+                modelStateList.ForEach(value => value.Errors.ToList()
+                    .ForEach(err => errors.Add(err.ErrorMessage)));
+                return errors;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

@@ -17,6 +17,10 @@ namespace TaskManagmant.Forms
         public WorkersHoursForm(Project project)
         {
             InitializeComponent();
+
+            pnlContainer.Location = new Point((ClientSize.Width - pnlContainer.Width) / 2, (ClientSize.Height - pnlContainer.Height) / 2);
+            pnlContainer.Anchor = AnchorStyles.None;
+
             myProject = project;
             initData();
         }
@@ -25,7 +29,7 @@ namespace TaskManagmant.Forms
         {
             string panelName = $"pnl{departmentHours.Department.DepartmentName}";
             string labelName = $"lbl{departmentHours.DepartmentHoursId},{worker.UserId}";
-            Controls[panelName].Controls[labelName].Text = worker.WorkerHours[0].NumHours.ToString();
+            pnlContainer.Controls[panelName].Controls[labelName].Text = worker.WorkerHours[0].NumHours.ToString();
         }
 
         private void BtnEdit_Click(object sender, EventArgs e)
@@ -63,7 +67,7 @@ namespace TaskManagmant.Forms
                 panel.Location = new Point(x, y);
                 panel.Size = new Size(width, height);
                 panel.BorderStyle = BorderStyle.FixedSingle;
-                Controls.Add(panel);
+                pnlContainer.Controls.Add(panel);
 
                 //title
                 Label title = new Label();

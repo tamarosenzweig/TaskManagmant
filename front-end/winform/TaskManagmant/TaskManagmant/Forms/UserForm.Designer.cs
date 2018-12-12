@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pnlContainer = new System.Windows.Forms.Panel();
+            this.btnRemoveImg = new System.Windows.Forms.Button();
             this.cmbTeamLeader = new System.Windows.Forms.ComboBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.cmbDepartmentName = new System.Windows.Forms.ComboBox();
@@ -48,7 +49,6 @@
             this.lblPassword = new System.Windows.Forms.Label();
             this.lblConfirmPassword = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnRemoveImg = new System.Windows.Forms.Button();
             this.pnlContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picImg)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
@@ -79,6 +79,20 @@
             this.pnlContainer.Name = "pnlContainer";
             this.pnlContainer.Size = new System.Drawing.Size(1020, 410);
             this.pnlContainer.TabIndex = 0;
+            // 
+            // btnRemoveImg
+            // 
+            this.btnRemoveImg.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnRemoveImg.Location = new System.Drawing.Point(705, 354);
+            this.btnRemoveImg.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRemoveImg.Name = "btnRemoveImg";
+            this.btnRemoveImg.Size = new System.Drawing.Size(300, 31);
+            this.btnRemoveImg.TabIndex = 84;
+            this.btnRemoveImg.Text = "remove image";
+            this.btnRemoveImg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnRemoveImg.UseVisualStyleBackColor = true;
+            this.btnRemoveImg.Visible = false;
+            this.btnRemoveImg.Click += new System.EventHandler(this.btnRemoveImg_Click);
             // 
             // cmbTeamLeader
             // 
@@ -265,20 +279,6 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
-            // btnRemoveImg
-            // 
-            this.btnRemoveImg.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnRemoveImg.Location = new System.Drawing.Point(705, 354);
-            this.btnRemoveImg.Margin = new System.Windows.Forms.Padding(2);
-            this.btnRemoveImg.Name = "btnRemoveImg";
-            this.btnRemoveImg.Size = new System.Drawing.Size(300, 31);
-            this.btnRemoveImg.TabIndex = 84;
-            this.btnRemoveImg.Text = "remove image";
-            this.btnRemoveImg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnRemoveImg.UseVisualStyleBackColor = true;
-            this.btnRemoveImg.Visible = false;
-            this.btnRemoveImg.Click += new System.EventHandler(this.btnRemoveImg_Click);
-            // 
             // UserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -287,6 +287,7 @@
             this.Controls.Add(this.pnlContainer);
             this.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.Name = "UserForm";
+            this.ShowInTaskbar = false;
             this.Text = "AddUserForm";
             this.pnlContainer.ResumeLayout(false);
             this.pnlContainer.PerformLayout();

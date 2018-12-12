@@ -39,13 +39,15 @@
             this.listPermissionWorkers = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.pnlContainer = new System.Windows.Forms.Panel();
+            this.pnlContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblInstuction1
             // 
             this.lblInstuction1.AutoSize = true;
             this.lblInstuction1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblInstuction1.Location = new System.Drawing.Point(586, 141);
+            this.lblInstuction1.Location = new System.Drawing.Point(658, 93);
             this.lblInstuction1.Name = "lblInstuction1";
             this.lblInstuction1.Size = new System.Drawing.Size(190, 34);
             this.lblInstuction1.TabIndex = 23;
@@ -55,7 +57,7 @@
             // 
             this.lblInstuction2.AutoSize = true;
             this.lblInstuction2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblInstuction2.Location = new System.Drawing.Point(842, 141);
+            this.lblInstuction2.Location = new System.Drawing.Point(914, 93);
             this.lblInstuction2.Name = "lblInstuction2";
             this.lblInstuction2.Size = new System.Drawing.Size(171, 51);
             this.lblInstuction2.TabIndex = 22;
@@ -65,7 +67,7 @@
             // lblSelctedTitle
             // 
             this.lblSelctedTitle.AutoSize = true;
-            this.lblSelctedTitle.Location = new System.Drawing.Point(843, 99);
+            this.lblSelctedTitle.Location = new System.Drawing.Point(915, 51);
             this.lblSelctedTitle.Name = "lblSelctedTitle";
             this.lblSelctedTitle.Size = new System.Drawing.Size(151, 21);
             this.lblSelctedTitle.TabIndex = 21;
@@ -75,7 +77,7 @@
             // lblProjectTeamTitle
             // 
             this.lblProjectTeamTitle.AutoSize = true;
-            this.lblProjectTeamTitle.Location = new System.Drawing.Point(16, 99);
+            this.lblProjectTeamTitle.Location = new System.Drawing.Point(88, 51);
             this.lblProjectTeamTitle.Name = "lblProjectTeamTitle";
             this.lblProjectTeamTitle.Size = new System.Drawing.Size(181, 21);
             this.lblProjectTeamTitle.TabIndex = 20;
@@ -83,7 +85,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(842, 480);
+            this.btnSave.Location = new System.Drawing.Point(500, 460);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(200, 32);
             this.btnSave.TabIndex = 19;
@@ -94,7 +96,7 @@
             // cmbOtherWorkers
             // 
             this.cmbOtherWorkers.FormattingEnabled = true;
-            this.cmbOtherWorkers.Location = new System.Drawing.Point(586, 200);
+            this.cmbOtherWorkers.Location = new System.Drawing.Point(658, 152);
             this.cmbOtherWorkers.Name = "cmbOtherWorkers";
             this.cmbOtherWorkers.Size = new System.Drawing.Size(200, 29);
             this.cmbOtherWorkers.TabIndex = 18;
@@ -104,7 +106,7 @@
             // 
             this.listSelectedWorkers.FormattingEnabled = true;
             this.listSelectedWorkers.ItemHeight = 21;
-            this.listSelectedWorkers.Location = new System.Drawing.Point(842, 199);
+            this.listSelectedWorkers.Location = new System.Drawing.Point(914, 151);
             this.listSelectedWorkers.Name = "listSelectedWorkers";
             this.listSelectedWorkers.Size = new System.Drawing.Size(200, 256);
             this.listSelectedWorkers.TabIndex = 17;
@@ -114,7 +116,7 @@
             // 
             this.listProjectWorkers.FormattingEnabled = true;
             this.listProjectWorkers.ItemHeight = 21;
-            this.listProjectWorkers.Location = new System.Drawing.Point(14, 199);
+            this.listProjectWorkers.Location = new System.Drawing.Point(86, 151);
             this.listProjectWorkers.Name = "listProjectWorkers";
             this.listProjectWorkers.Size = new System.Drawing.Size(200, 256);
             this.listProjectWorkers.TabIndex = 16;
@@ -123,7 +125,7 @@
             // 
             this.listPermissionWorkers.FormattingEnabled = true;
             this.listPermissionWorkers.ItemHeight = 21;
-            this.listPermissionWorkers.Location = new System.Drawing.Point(278, 199);
+            this.listPermissionWorkers.Location = new System.Drawing.Point(350, 151);
             this.listPermissionWorkers.Name = "listPermissionWorkers";
             this.listPermissionWorkers.Size = new System.Drawing.Size(200, 256);
             this.listPermissionWorkers.TabIndex = 24;
@@ -132,7 +134,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(273, 89);
+            this.label1.Location = new System.Drawing.Point(345, 41);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(187, 42);
             this.label1.TabIndex = 25;
@@ -142,34 +144,43 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label2.Location = new System.Drawing.Point(279, 141);
+            this.label2.Location = new System.Drawing.Point(351, 93);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(171, 51);
             this.label2.TabIndex = 26;
             this.label2.Text = "Double click on an item \r\nto remove the permission \r\nof this worker to the projec" +
     "t";
             // 
+            // pnlContainer
+            // 
+            this.pnlContainer.Controls.Add(this.listProjectWorkers);
+            this.pnlContainer.Controls.Add(this.label2);
+            this.pnlContainer.Controls.Add(this.listSelectedWorkers);
+            this.pnlContainer.Controls.Add(this.label1);
+            this.pnlContainer.Controls.Add(this.cmbOtherWorkers);
+            this.pnlContainer.Controls.Add(this.listPermissionWorkers);
+            this.pnlContainer.Controls.Add(this.btnSave);
+            this.pnlContainer.Controls.Add(this.lblInstuction1);
+            this.pnlContainer.Controls.Add(this.lblProjectTeamTitle);
+            this.pnlContainer.Controls.Add(this.lblInstuction2);
+            this.pnlContainer.Controls.Add(this.lblSelctedTitle);
+            this.pnlContainer.Location = new System.Drawing.Point(71, 38);
+            this.pnlContainer.Name = "pnlContainer";
+            this.pnlContainer.Size = new System.Drawing.Size(1200, 523);
+            this.pnlContainer.TabIndex = 27;
+            // 
             // PermissionManagmantForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 749);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.listPermissionWorkers);
-            this.Controls.Add(this.lblInstuction1);
-            this.Controls.Add(this.lblInstuction2);
-            this.Controls.Add(this.lblSelctedTitle);
-            this.Controls.Add(this.lblProjectTeamTitle);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.cmbOtherWorkers);
-            this.Controls.Add(this.listSelectedWorkers);
-            this.Controls.Add(this.listProjectWorkers);
+            this.ClientSize = new System.Drawing.Size(1370, 598);
+            this.Controls.Add(this.pnlContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.Name = "PermissionManagmantForm";
             this.Text = "AddPermissionForm";
+            this.pnlContainer.ResumeLayout(false);
+            this.pnlContainer.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -186,5 +197,6 @@
         private System.Windows.Forms.ListBox listPermissionWorkers;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel pnlContainer;
     }
 }

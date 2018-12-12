@@ -54,12 +54,12 @@
             this.PnlContainer.Controls.Add(this.lblPassword);
             this.PnlContainer.Location = new System.Drawing.Point(224, 145);
             this.PnlContainer.Name = "PnlContainer";
-            this.PnlContainer.Size = new System.Drawing.Size(450, 340);
+            this.PnlContainer.Size = new System.Drawing.Size(450, 361);
             this.PnlContainer.TabIndex = 5;
             // 
             // btnForgotPassword
             // 
-            this.btnForgotPassword.Location = new System.Drawing.Point(25, 288);
+            this.btnForgotPassword.Location = new System.Drawing.Point(136, 315);
             this.btnForgotPassword.Name = "btnForgotPassword";
             this.btnForgotPassword.Size = new System.Drawing.Size(178, 33);
             this.btnForgotPassword.TabIndex = 7;
@@ -135,24 +135,25 @@
             // 
             // pnlHeader
             // 
+            this.pnlHeader.BackColor = System.Drawing.SystemColors.Control;
             this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(774, 100);
+            this.pnlHeader.Size = new System.Drawing.Size(882, 100);
             this.pnlHeader.TabIndex = 6;
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 539);
+            this.ClientSize = new System.Drawing.Size(882, 539);
             this.Controls.Add(this.pnlHeader);
             this.Controls.Add(this.PnlContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(15, 16, 15, 16);
             this.Name = "LoginForm";
             this.Opacity = 0D;
-            this.Text = "LoginForm";
+            this.Text = "Login";
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.PnlContainer.ResumeLayout(false);
             this.PnlContainer.PerformLayout();

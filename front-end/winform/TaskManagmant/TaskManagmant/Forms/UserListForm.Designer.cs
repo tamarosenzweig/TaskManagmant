@@ -30,13 +30,14 @@
         {
             this.SuspendLayout();
             // 
-            // AllUsersForm
+            // UserListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1004, 411);
-            this.Name = "AllUsersForm";
+            this.Name = "UserListForm";
             this.Text = "AllUsers";
             this.ResumeLayout(false);
 

@@ -18,18 +18,21 @@ namespace TaskManagmant.UserControls
         public ProjectUserControl(Project project)
         {
             InitializeComponent();
-            this.myProject = project;
+            myProject = project;
             initData();
         }
 
         private void initData()
         {
-            this.projectName.Text += myProject.ProjectName;
-            this.totalHours.Text += myProject.TotalHours.ToString();
-            this.startDate.Text += myProject.StartDate.ToShortDateString();
-            this.endDate.Text += myProject.EndDate.ToShortDateString();
-            this.customer.Text += myProject.Customer.CustomerName;
-            this.teamLeader.Text += myProject.TeamLeader.UserName;
+            lblProjectName.Text = myProject.ProjectName;
+            lblDonePrecents1.Text = $"{PresenceHoursService.GetPercentHoursForProject(myProject)}%";
+            lblCustomer1.Text = myProject.Customer.CustomerName;
+            lblStartDate1.Text = myProject.StartDate.ToShortDateString();
+            lblEndDate1.Text = myProject.EndDate.ToShortDateString();
+            lblTotalHours1.Text = $"{myProject.TotalHours} hours";
+            double presenceHours= PresenceHoursService.GetPresenceHoursForProject(myProject);
+            lblWorkedHours1.Text = $"{presenceHours} hours";
+            lblNeedsHours1.Text = $"{(myProject.TotalHours - presenceHours)} hours";
         }
         
     }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-
 using System.Windows.Forms;
 using TaskManagmant.Dialogs;
 using TaskManagmant.Help;
@@ -21,7 +20,12 @@ namespace TaskManagmant.Forms
             InitializeComponent();
             this.loginForm = loginForm;
 
-            pnlHeader.Controls.Add(new HeaderControl());
+            HeaderControl header = new HeaderControl();
+            header.Dock = DockStyle.Fill;
+            pnlHeader.Controls.Add(header);
+
+            pnlContainer.Location = new Point((ClientSize.Width - pnlContainer.Width) / 2, 150);
+            pnlContainer.Anchor = AnchorStyles.None;
 
             timer1.Tick += timer1_Tick;
             timer1.Start();
@@ -73,10 +77,10 @@ namespace TaskManagmant.Forms
             List<decimal> presenceHoursList = presenceStatusList.Select(presenceStatus => (decimal)presenceStatus.presenceHours).ToList();
             List<int> projectHoursList = presenceStatusList.Select(presenceStatus => (int)presenceStatus.projectHours).ToList();
 
-            projectsGraph.Series["Presence Hours"].Points.DataBindXY(projectNameList, presenceHoursList);
             projectsGraph.Series["Project Hours"].Points.DataBindXY(projectNameList, projectHoursList);
+            projectsGraph.Series["Presence Hours"].Points.DataBindXY(projectNameList, presenceHoursList);
 
-            projectsGraph.Location = new Point((Width - projectsGraph.Width) / 2, PnlWorkerTaskList.Location.Y + PnlWorkerTaskList.Height + 20);
+            projectsGraph.Location = new Point((Width - projectsGraph.Width) / 2, projectsGraph.Location.Y);
         }
 
         private void ShowWorkerTasks()
@@ -86,11 +90,11 @@ namespace TaskManagmant.Forms
             workerHoursList.ForEach(workerHours =>
             {
                 WorkerTaskControl workerTaskControl = new WorkerTaskControl(workerHours, EnableWorkerTasks);
-                workerTaskControl.Location = new Point(0, index * workerTaskControl.Height);
+                workerTaskControl.Location = new Point(100, index * workerTaskControl.Height);
                 PnlWorkerTaskList.Controls.Add(workerTaskControl);
                 index++;
             });
-            PnlWorkerTaskList.Location = new Point((Width - PnlWorkerTaskList.Width) / 2, 150);
+            PnlWorkerTaskList.Location = new Point((Width - PnlWorkerTaskList.Width) / 2, PnlWorkerTaskList.Location.Y);
         }
 
     }

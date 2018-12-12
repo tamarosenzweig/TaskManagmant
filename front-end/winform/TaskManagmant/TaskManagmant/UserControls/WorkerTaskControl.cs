@@ -79,7 +79,7 @@ namespace TaskManagmant.UserControls
                     BeginInvoke(new Action(() =>
                     {
                         BtnTaskClick();
-                        Global.createDialog(ParentForm, "Your task is complete", "You can turn to another task.if you need more time to this task pleas contact your team-leader", false);
+                        Global.CreateDialog(ParentForm, "You can turn to another task. if you need more time to this task pleas contact your team-leader", "Your task is complete");
                         Enabled = false;
                         BackColor = Color.Gray;
                     }));

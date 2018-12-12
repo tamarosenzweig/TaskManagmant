@@ -25,7 +25,10 @@ namespace BLL
                     workerHours.IsComplete = true;
                 else
                     workerHours.IsComplete = false;
-                string query = $"UPDATE task_management.worker_hours SET num_hours={workerHours.NumHours},is_complete={workerHours.IsComplete} WHERE worker_hours_id={workerHours.WorkerHoursId};";
+                string query = "UPDATE task_management.worker_hours " +
+                    $"SET num_hours={workerHours.NumHours},is_complete={workerHours.IsComplete} " +
+                    $"WHERE worker_hours_id={workerHours.WorkerHoursId};";
+
                 ProjectService.UpdateProjectStatus(workerHours.ProjectId);
                 return DBAccess.RunNonQuery(query) == 1;
 
@@ -85,7 +88,8 @@ namespace BLL
         {
             try
             {
-                string query = $"INSERT INTO task_management.worker_hours(project_id,worker_id,num_hours,is_complete) VALUES ({workerHours.ProjectId},{workerHours.WorkerId},{workerHours.NumHours},1);";
+                string query = "INSERT INTO task_management.worker_hours(project_id,worker_id,num_hours,is_complete) " +
+                    $"VALUES ({workerHours.ProjectId},{workerHours.WorkerId},{workerHours.NumHours},1);";
                 return DBAccess.RunNonQuery(query) == 1;
             }
             catch (Exception ex)
@@ -102,7 +106,7 @@ namespace BLL
                 projects.ForEach(project =>
                 {
                     List<WorkerHours> workerHoursList = GetWorkerHoursPerProject(user.UserId, project.ProjectId);
-                    if (workerHoursList.Count==0)
+                    if (workerHoursList.Count == 0)
                     {
                         WorkerHours workerHours = new WorkerHours { ProjectId = project.ProjectId, WorkerId = user.UserId };
                         AddWorkerHours(workerHours);
@@ -113,7 +117,11 @@ namespace BLL
 
         private static string GetWorkerHoursQuery()
         {
-            string query = $"SELECT w.*,project_name,user_name,email,department_name FROM task_management.worker_hours w JOIN task_management.project p ON w.project_id=p.project_id JOIN task_management.user u ON w.worker_id=u.user_id JOIN task_management.department d ON u.department_id=d.department_id";
+            string query = $"SELECT w.*,project_name,user_name,email,department_name " +
+                $"FROM task_management.worker_hours w " +
+                $"JOIN task_management.project p ON w.project_id=p.project_id " +
+                $"JOIN task_management.user u ON w.worker_id=u.user_id " +
+                $"JOIN task_management.department d ON u.department_id=d.department_id";
             return query;
         }
 

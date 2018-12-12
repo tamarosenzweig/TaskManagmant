@@ -13,14 +13,14 @@ namespace BLL
             try
             {
                 string query;
-                query = $"INSERT INTO task_management.permission(worker_id,project_id) " +
-                    "VALUES({permission.WorkerId},{permission.ProjectId});" +
+                query = "INSERT INTO task_management.permission(worker_id,project_id) " +
+                    $"VALUES({permission.WorkerId},{permission.ProjectId});" +
                     "SELECT @@IDENTITY;";
                 int permissionId = Convert.ToInt32(DBAccess.RunScalar(query));
-                WorkerHours workerHours = WorkerHoursService.GetWorkerHoursPerProject(permission.WorkerId, permission.ProjectId)[0];
-                if (workerHours == null)
+                List<WorkerHours> workerHoursList = WorkerHoursService.GetWorkerHoursPerProject(permission.WorkerId, permission.ProjectId);
+                if (workerHoursList.Count == 0)
                 {
-                    workerHours = new WorkerHours { ProjectId = permission.ProjectId, WorkerId = permission.WorkerId };
+                    WorkerHours workerHours = new WorkerHours { ProjectId = permission.ProjectId, WorkerId = permission.WorkerId };
                     WorkerHoursService.AddWorkerHours(workerHours);
                 }
                 return permissionId;
@@ -46,7 +46,9 @@ namespace BLL
 
         public static List<Permission> GetPermissions(int userId)
         {
-            string query = $"SELECT per.*, u.user_name,pro.project_name FROM task_management.permission per JOIN task_management.user u ON per.worker_id = u.user_id JOIN task_management.project pro ON per.project_id = pro.project_id WHERE per.is_active = 1 and per.worker_id = {userId};";
+            string query = "SELECT per.*, u.user_name,pro.project_name FROM task_management.permission per " +
+                "JOIN task_management.user u ON per.worker_id = u.user_id JOIN task_management.project pro ON per.project_id = pro.project_id " +
+                $"WHERE per.is_active = 1 and per.worker_id = {userId};";
             return GetPermissions(query);
         }
 

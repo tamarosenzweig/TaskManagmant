@@ -34,9 +34,11 @@ namespace TaskManagmant.Forms
         {
             InitializeComponent();
             this.user = user;
+            oldUser = user;
             isToEditUser = user.UserId != 0;
             this.openUserListForm = openUserListForm;
-            pnlContainer.Location = new Point((Global.SIZE.Width - pnlContainer.Width) / 2, (Global.SIZE.Height - pnlContainer.Height) / 2);
+            pnlContainer.Location = new Point((ClientSize.Width - pnlContainer.Width) / 2, (ClientSize.Height - pnlContainer.Height) / 2);
+            pnlContainer.Anchor = AnchorStyles.None;
             InitControlsValidations();
             InitData();
         }
@@ -104,9 +106,9 @@ namespace TaskManagmant.Forms
             {
                 user.TeamLeaderId = null;
                 user.DepartmentId = null;
-                user.TeamLeader = null;
-                user.Department = null;
             }
+            user.TeamLeader = null;
+            user.Department = null;
             if (!isToEditUser)
             {
                 string hPassword = Global.ComputeHashToSha256(txtPassword.Text);
@@ -116,7 +118,7 @@ namespace TaskManagmant.Forms
                 user.ManagerId = Global.USER.UserId;
                 if (selectedFile != null)
                     user.ProfileImageName = UserService.UploadImageProfile(selectedFile);
-                bool isCreated = UserService.AddUser(user);
+                bool isCreated = UserService.AddUser(this,user);
                 if (isCreated)
                 {
                     ShowDialog("Add user", $"{user.UserName} added succesfully");
@@ -131,19 +133,22 @@ namespace TaskManagmant.Forms
                     bool hasWorkers = UserService.HasWorkes(user.UserId);
                     if (hasWorkers)
                     {
-                        MessageBox.Show("It is not possible to change a team-leader to be a worker when he has workers");
+                        string message = "It is not possible to change a team-leader to be a worker when he has workers";
+                        Global.CreateDialog(this, message);
                         checkIsATeamLeader.Checked = true;
+                        user = oldUser;
                         return;
                     }
                     //check if he has projects
                     bool hasProjects = ProjectService.HasProjects(user.UserId);
                     if (hasProjects)
                     {
-                        MessageBox.Show("It is not possible to change a team-leader to be a worker when he has projects");
+                        string message = "It is not possible to change a team-leader to be a worker when he has projects";
+                        Global.CreateDialog(this, message);
                         checkIsATeamLeader.Checked = true;
+                        user = oldUser;
                         return;
                     }
-                    //todo in angular
                     return;
                 }
                 //if the user edited from team-worker to...
@@ -152,22 +157,27 @@ namespace TaskManagmant.Forms
                     //to team-leader
                     if (user.TeamLeaderId == null)
                     {
-                        MessageBox.Show("It is not possible to change a worker to be a team-team-leader who has hours for the teams project");
+                        string message = "It is not possible to change a worker to be a team-team-leader who has hours for the teams project";
+                        Global.CreateDialog(this, message);
                         checkIsATeamLeader.Checked = false;
                     }
                     //to difference team
                     else
                     {
-                        MessageBox.Show("It is not possible to move a worker to different team if he has hours for the teams project");
+                        string message = "It is not possible to move a worker to different team if he has hours for the teams project";
+                        Global.CreateDialog(this, message);
                         cmbTeamLeader.SelectedValue = oldUser.TeamLeaderId;
+                        user = oldUser;
                         return;
                     }
                 }
                 // department is changed
                 if (oldUser.DepartmentId != user.DepartmentId && WorkerHoursService.HasIncomletHours(user.UserId, teamProjectIdList))
                 {
-                    MessageBox.Show("It is not possible to move a department worker if he has incomplete hours");
+                    string message = "It is not possible to move a department worker if he has incomplete hours";
+                    Global.CreateDialog(this, message);
                     cmbDepartmentName.SelectedValue = oldUser.DepartmentId;
+                    user = oldUser;
                     return;
                 }
 
@@ -181,7 +191,7 @@ namespace TaskManagmant.Forms
                     user.ProfileImageName = UserService.UploadImageProfile(selectedFile);
                 }
 
-                bool isCreated = UserService.EditUser(user);
+                bool isCreated = UserService.EditUser(this,user);
                 if (isCreated)
                 {
                     ShowDialog("Edit User", $"{user.UserName} edited succesfully");
@@ -263,7 +273,7 @@ namespace TaskManagmant.Forms
 
         private void ShowDialog(string title, string msg)
         {
-            Global.createDialog(this, title, msg, false);
+            Global.CreateDialog(this, msg,title);
             Close();
             openUserListForm(true);
         }
