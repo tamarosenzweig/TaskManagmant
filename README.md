@@ -92,8 +92,7 @@ Task Managmant uses a number of extension:
 
 * [Telerik](https://docs.telerik.com/devtools/winforms/introduction) Performance you demand, UI you can't believe
 
-## System diagram:
-![picture](step1.png)
+
 
 ***
 ## Web api
