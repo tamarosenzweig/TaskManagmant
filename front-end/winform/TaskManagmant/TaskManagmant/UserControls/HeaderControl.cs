@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using TaskManagmant.Help;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TaskManagmant.Help;
 
 namespace TaskManagmant.UserControls
 {
@@ -16,6 +9,7 @@ namespace TaskManagmant.UserControls
         public HeaderControl()
         {
             InitializeComponent();
+
             string imageUrl = $"{Global.UPLOADS}/UsersProfiles/";
             if (Global.USER != null)
             {
@@ -30,10 +24,14 @@ namespace TaskManagmant.UserControls
                 imageUrl += "guest.jpg";
                 lblUserName.Text = "Welcome";
             }
-            picUserProfile.Load(imageUrl);
-            picUserProfile.SizeMode = PictureBoxSizeMode.Zoom;
-            picUserProfile.BackColor = Color.Transparent;
+            try
+            {
+                picUserProfile.Load(imageUrl);
+                picUserProfile.SizeMode = PictureBoxSizeMode.Zoom;
+                picUserProfile.BackColor = Color.Transparent;
+            }
+            catch
+            {}
         }
-
     }
 }

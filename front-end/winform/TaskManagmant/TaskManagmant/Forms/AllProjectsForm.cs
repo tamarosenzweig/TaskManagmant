@@ -1,9 +1,10 @@
 ﻿using BOL;
-using System.Collections.Generic;
-using System.Drawing;
 using TaskManagmant.Help;
 using TaskManagmant.Services;
 using TaskManagmant.UserControls;
+using System.Collections.Generic;
+using System.Drawing;
+
 
 namespace TaskManagmant.Forms
 {
@@ -23,14 +24,16 @@ namespace TaskManagmant.Forms
             int x = marginX;
             int y = marginY;
             int width = 840;
-            this.SuspendLayout();
+
+            SuspendLayout();
+
             for (int i = 0; projects != null && i < projects.Count; i++)
             {
                 ProjectUserControl userControl = new ProjectUserControl(projects[i]); //Textbox to be added
-                this.Controls.Add(userControl);
+                Controls.Add(userControl);
                 userControl.Name = projects[i].ProjectName; //Sets properties
                 userControl.Location = new Point(x, y);
-                this.Controls.Add(userControl);
+                Controls.Add(userControl);
 
                 if (width - x < userControl.Width + marginX)
                 {
@@ -42,7 +45,7 @@ namespace TaskManagmant.Forms
                     x += userControl.Width + marginX;
                 }
             }
-            this.ResumeLayout();
+            ResumeLayout();
         }
     }
 }

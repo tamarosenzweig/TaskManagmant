@@ -1,19 +1,22 @@
-﻿using System;
+﻿using BOL;
+using TaskManagmant.Help;
+using TaskManagmant.Help.Validators;
+using TaskManagmant.Services;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using TaskManagmant.Services;
-using BOL;
-using TaskManagmant.Help;
 using System.Collections.Generic;
 using System.Linq;
-using TaskManagmant.Help.Validators;
+
 
 namespace TaskManagmant.Forms
 {
+
     public delegate void OpenUserListFormDel(bool isUserList);
 
     public partial class UserForm : BaseForm
     {
+
         private User user;
 
         private bool isToEditUser;
@@ -34,7 +37,6 @@ namespace TaskManagmant.Forms
         {
             InitializeComponent();
             this.user = user;
-            oldUser = user;
             isToEditUser = user.UserId != 0;
             this.openUserListForm = openUserListForm;
             pnlContainer.Location = new Point((ClientSize.Width - pnlContainer.Width) / 2, (ClientSize.Height - pnlContainer.Height) / 2);
@@ -59,7 +61,7 @@ namespace TaskManagmant.Forms
             fileOpen.Dispose();
         }
 
-        private void btnRemoveImg_Click(object sender, EventArgs e)
+        private void BtnRemoveImg_Click(object sender, EventArgs e)
         {
             picImg.Image = null;
             selectedFile = null;
@@ -211,7 +213,7 @@ namespace TaskManagmant.Forms
             cmbTeamLeader.ValueMember = "UserId";
             if (isToEditUser == true)
             {
-                oldUser = new User { TeamLeaderId = user.TeamLeaderId, DepartmentId = user.DepartmentId };
+                oldUser = CloneUser(user);
                 txtEmail.Text = user.Email;
                 txtUserName.Text = user.UserName;
 
@@ -249,6 +251,24 @@ namespace TaskManagmant.Forms
             }
         }
 
+        private User CloneUser(User user)
+        {
+            return new User
+            {
+                UserId = user.UserId,
+                UserName = user.UserName,
+                Email =user.Email,
+                Password =user.Password,
+                ProfileImageName = user.ProfileImageName,
+                DepartmentId =user.DepartmentId,
+                TeamLeaderId = user.TeamLeaderId,
+                ManagerId = user.ManagerId,
+                IsActive =user.IsActive,
+                Department=user.Department,
+                TeamLeader=user.TeamLeader
+            };
+        }
+
         private void InitControlsValidations()
         {
             validators = new Dictionary<string, StringValidator>
@@ -277,8 +297,6 @@ namespace TaskManagmant.Forms
             Close();
             openUserListForm(true);
         }
-
-
     }
 }
 

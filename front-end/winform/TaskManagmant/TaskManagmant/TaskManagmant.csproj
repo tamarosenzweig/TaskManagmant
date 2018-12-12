@@ -297,15 +297,11 @@
     <Compile Include="Forms\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Help\PlaceHolder.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Help\ProjectFilter.cs" />
+    <Compile Include="Help\Models\ProjectFilter.cs" />
     <Compile Include="Help\ProjectsManagmant.cs" />
     <Compile Include="Help\Validators\DateValidator.cs" />
     <Compile Include="Help\Validators\IsMatchStringValidator.cs" />
     <Compile Include="Help\Validators\IValidator.cs" />
-    <Compile Include="Help\Validators\NumberValidator.cs" />
     <Compile Include="Help\Validators\StringValidator.cs" />
     <Compile Include="Help\Validators\Validator.cs" />
     <Compile Include="Program.cs" />
@@ -329,7 +325,7 @@
       <DependentUpon>ProjectUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Help\ReportItem.cs" />
+    <Compile Include="Help\Models\ReportItem.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\PresenceHoursService.cs" />
@@ -461,9 +457,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="assets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="logo.ico" />
   </ItemGroup>

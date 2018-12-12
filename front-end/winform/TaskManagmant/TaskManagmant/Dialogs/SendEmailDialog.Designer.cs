@@ -40,7 +40,7 @@
             this._Subject.Size = new System.Drawing.Size(229, 20);
             this._Subject.TabIndex = 0;
             this._Subject.Text = "Subject";
-            this._Subject.TextChanged += new System.EventHandler(this._Subject_TextChanged);
+            this._Subject.TextChanged += new System.EventHandler(this.Subject_TextChanged);
             this._Subject.Enter += new System.EventHandler(this.Input_Enter);
             this._Subject.Leave += new System.EventHandler(this.Input_Leave);
             // 
@@ -51,7 +51,7 @@
             this._Body.Size = new System.Drawing.Size(229, 156);
             this._Body.TabIndex = 1;
             this._Body.Text = "Body";
-            this._Body.TextChanged += new System.EventHandler(this._Body_TextChanged);
+            this._Body.TextChanged += new System.EventHandler(this.Body_TextChanged);
             this._Body.Enter += new System.EventHandler(this.Input_Enter);
             this._Body.Leave += new System.EventHandler(this.Input_Leave);
             // 
@@ -65,7 +65,7 @@
             this.BtnSend.UseVisualStyleBackColor = true;
             this.BtnSend.Click += new System.EventHandler(this.BtnSend_Click);
             // 
-            // SendEmailForm
+            // SendEmailDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -73,9 +73,9 @@
             this.Controls.Add(this.BtnSend);
             this.Controls.Add(this._Body);
             this.Controls.Add(this._Subject);
-            this.Name = "SendEmailForm";
+            this.Name = "SendEmailDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SendEmail";
+            this.Text = "Send Email";
             this.ResumeLayout(false);
             this.PerformLayout();
 

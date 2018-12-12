@@ -1,4 +1,5 @@
 ﻿using BOL;
+using TaskManagmant.Help;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,15 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Windows.Forms;
-using TaskManagmant.Help;
 
 namespace TaskManagmant.Services
 {
     public static class WorkerHoursService
     {
+
         private static string baseURL = $"{Global.HOST}/workerHours";
 
+        //GET
         public static List<WorkerHours> GetAllWorkerHours()
         {
             int workerId = Global.USER.UserId;
@@ -37,6 +39,7 @@ namespace TaskManagmant.Services
             }
         }
 
+        //PUT
         public static bool EditWorkersHours(WorkerHours workerHours)
         {
             //------------put request-------------
@@ -70,6 +73,7 @@ namespace TaskManagmant.Services
             }
         }
 
+        //POST
         public static bool HasIncomletHours(int workerId,List<int> projectIdList)
         {
             string url = $"{baseURL}/hasUncomletedHours";

@@ -1,18 +1,20 @@
 ﻿using BOL;
-using System;
-using System.Windows.Forms;
-using TaskManagmant.Services;
 using TaskManagmant.Help;
 using TaskManagmant.Forms;
+using TaskManagmant.Services;
+using System;
+using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
+
 
 namespace TaskManagmant.UserControls
 {
 
     public partial class TmpUserControl : UserControl
     {
+
         private User user;
 
         public TmpUserControl(User user, bool isWorkerList)
@@ -26,8 +28,13 @@ namespace TaskManagmant.UserControls
                 imageUrl += user.ProfileImageName;
             else
                 imageUrl += "guest.jpg";
-            picUserProfile.Load(imageUrl);
-            picUserProfile.BackColor = Color.Transparent;
+            try
+            {
+                picUserProfile.Load(imageUrl);
+                picUserProfile.BackColor = Color.Transparent;
+            }
+            catch
+            { }
 
             //user name
             lblUserName.Text = user.UserName;
@@ -84,11 +91,8 @@ namespace TaskManagmant.UserControls
                     }
                     UserService.DeleteUser(user);
                     (ParentForm as UserListForm).InitForm();
-
                 }
             }
-
-
         }
 
         private void EditUser_Click(object sender, EventArgs e)
@@ -142,6 +146,5 @@ namespace TaskManagmant.UserControls
                 pnlButtons.Controls.Add(button);
             }
         }
-
     }
 }

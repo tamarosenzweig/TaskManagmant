@@ -47,7 +47,7 @@
             this.btnContinue.TabIndex = 15;
             this.btnContinue.Text = "Finish";
             this.btnContinue.UseVisualStyleBackColor = true;
-            this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
+            this.btnContinue.Click += new System.EventHandler(this.BtnContinue_Click);
             // 
             // errorProvider
             // 
@@ -77,8 +77,8 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(235, 29);
             this.txtPassword.TabIndex = 19;
-            this.txtPassword.TextChanged += new System.EventHandler(this.txt_TextChanged);
-            this.txtPassword.Leave += new System.EventHandler(this.txt_Leave);
+            this.txtPassword.TextChanged += new System.EventHandler(this.Txt_TextChanged);
+            this.txtPassword.Leave += new System.EventHandler(this.Txt_Leave);
             // 
             // txtConfirmPassword
             // 
@@ -86,8 +86,8 @@
             this.txtConfirmPassword.Name = "txtConfirmPassword";
             this.txtConfirmPassword.Size = new System.Drawing.Size(235, 29);
             this.txtConfirmPassword.TabIndex = 20;
-            this.txtConfirmPassword.TextChanged += new System.EventHandler(this.txt_TextChanged);
-            this.txtConfirmPassword.Leave += new System.EventHandler(this.txt_Leave);
+            this.txtConfirmPassword.TextChanged += new System.EventHandler(this.Txt_TextChanged);
+            this.txtConfirmPassword.Leave += new System.EventHandler(this.Txt_Leave);
             // 
             // NewPasswordDialog
             // 
@@ -103,7 +103,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "NewPasswordDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NewPasswordDialog";
+            this.Text = "New Password";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

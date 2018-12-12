@@ -64,28 +64,28 @@
             this.followYourProjectsToolStripMenuItem.Name = "followYourProjectsToolStripMenuItem";
             this.followYourProjectsToolStripMenuItem.Size = new System.Drawing.Size(163, 25);
             this.followYourProjectsToolStripMenuItem.Text = "Follow your projects";
-            this.followYourProjectsToolStripMenuItem.Click += new System.EventHandler(this.followYourProjectsToolStripMenuItem_Click);
+            this.followYourProjectsToolStripMenuItem.Click += new System.EventHandler(this.FollowYourProjectsToolStripMenuItem_Click);
             // 
             // teamWorkerListToolStripMenuItem
             // 
             this.teamWorkerListToolStripMenuItem.Name = "teamWorkerListToolStripMenuItem";
             this.teamWorkerListToolStripMenuItem.Size = new System.Drawing.Size(212, 25);
             this.teamWorkerListToolStripMenuItem.Text = "Workers hours managmant";
-            this.teamWorkerListToolStripMenuItem.Click += new System.EventHandler(this.teamWorkerListToolStripMenuItem_Click);
+            this.teamWorkerListToolStripMenuItem.Click += new System.EventHandler(this.TeamWorkerListToolStripMenuItem_Click);
             // 
             // workersHoursStatusToolStripMenuItem
             // 
             this.workersHoursStatusToolStripMenuItem.Name = "workersHoursStatusToolStripMenuItem";
             this.workersHoursStatusToolStripMenuItem.Size = new System.Drawing.Size(172, 25);
             this.workersHoursStatusToolStripMenuItem.Text = "Workers Hours Status";
-            this.workersHoursStatusToolStripMenuItem.Click += new System.EventHandler(this.workersHoursStatusToolStripMenuItem_Click);
+            this.workersHoursStatusToolStripMenuItem.Click += new System.EventHandler(this.WorkersHoursStatusToolStripMenuItem_Click);
             // 
             // logOutToolStripMenuItem
             // 
             this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
             this.logOutToolStripMenuItem.Size = new System.Drawing.Size(75, 25);
             this.logOutToolStripMenuItem.Text = "Log out";
-            this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
+            this.logOutToolStripMenuItem.Click += new System.EventHandler(this.LogOutToolStripMenuItem_Click);
             // 
             // TeamLeaderForm
             // 

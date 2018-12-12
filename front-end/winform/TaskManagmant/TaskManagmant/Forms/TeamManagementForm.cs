@@ -1,12 +1,13 @@
 ﻿using BOL;
+using TaskManagmant.Help;
+using TaskManagmant.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TaskManagmant.Help;
-using TaskManagmant.Services;
+
 
 namespace TaskManagmant.Forms
 {
@@ -31,11 +32,11 @@ namespace TaskManagmant.Forms
             InitData();
         }
 
-        private void cmbOtherWorkers_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbOtherWorkers_SelectedIndexChanged(object sender, EventArgs e)
         {
             User selectedUser = (sender as ComboBox).SelectedItem as User;
 
-            if (checkWorkrToTeamValidator(selectedUser.UserId))
+            if (CheckWorkrToTeamValidator(selectedUser.UserId))
             {
                 if (selectedWorkers != null && selectedUser != null)
                 {
@@ -46,10 +47,9 @@ namespace TaskManagmant.Forms
                     cmbOtherWorkers.Items.Remove(selectedUser);
                 }
             }
-
         }
 
-        private void listSelectedWorkers_DoubleClick(object sender, EventArgs e)
+        private void ListSelectedWorkers_DoubleClick(object sender, EventArgs e)
         {
             User selectedUser = (sender as ListBox).SelectedItem as User;
 
@@ -60,7 +60,7 @@ namespace TaskManagmant.Forms
             cmbOtherWorkers.Items.Add(selectedUser);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             bool edited = true;
             selectedWorkers.ForEach(worker =>
@@ -75,7 +75,6 @@ namespace TaskManagmant.Forms
                 Global.CreateDialog(this, "Saved Successfully!", "Team Management");
             else
                 Global.CreateDialog(this, "Saving Failed!", "Team Management");
-
         }
 
         private void InitData()
@@ -92,10 +91,9 @@ namespace TaskManagmant.Forms
             listSelectedWorkers.DisplayMember = "UserName";
 
             cmbOtherWorkers.SelectedIndex = -1;
-
         }
 
-        private bool checkWorkrToTeamValidator(int workerId)
+        private bool CheckWorkrToTeamValidator(int workerId)
         {
             int teamLeaderOfWorker = (int)otherWorkers.Find(worker => worker.UserId == workerId).TeamLeaderId;
             List<Project> projects = ProjectService.GetProjectsByTeamLeaderId(teamLeaderOfWorker);

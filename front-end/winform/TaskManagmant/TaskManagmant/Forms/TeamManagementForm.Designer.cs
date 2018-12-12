@@ -57,7 +57,7 @@
             this.listSelectedWorkers.Name = "listSelectedWorkers";
             this.listSelectedWorkers.Size = new System.Drawing.Size(200, 256);
             this.listSelectedWorkers.TabIndex = 1;
-            this.listSelectedWorkers.DoubleClick += new System.EventHandler(this.listSelectedWorkers_DoubleClick);
+            this.listSelectedWorkers.DoubleClick += new System.EventHandler(this.ListSelectedWorkers_DoubleClick);
             // 
             // cmbOtherWorkers
             // 
@@ -66,7 +66,7 @@
             this.cmbOtherWorkers.Name = "cmbOtherWorkers";
             this.cmbOtherWorkers.Size = new System.Drawing.Size(200, 29);
             this.cmbOtherWorkers.TabIndex = 2;
-            this.cmbOtherWorkers.SelectedIndexChanged += new System.EventHandler(this.cmbOtherWorkers_SelectedIndexChanged);
+            this.cmbOtherWorkers.SelectedIndexChanged += new System.EventHandler(this.CmbOtherWorkers_SelectedIndexChanged);
             // 
             // btnSave
             // 
@@ -76,7 +76,7 @@
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // lblTeamTitle
             // 

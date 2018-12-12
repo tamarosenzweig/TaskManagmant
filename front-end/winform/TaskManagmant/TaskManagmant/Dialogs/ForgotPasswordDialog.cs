@@ -1,29 +1,23 @@
 ﻿using BOL;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using TaskManagmant.Help;
 using TaskManagmant.Help.Validators;
 using TaskManagmant.Services;
+using System;
+using System.Windows.Forms;
+
 
 namespace TaskManagmant.Dialogs
 {
     public partial class ForgotPasswordDialog : Form
     {
-        string email;
-        StringValidator emailValidator;
+        private string email;
+
+        private StringValidator emailValidator;
 
         public ForgotPasswordDialog()
         {
             InitializeComponent();
             InitData();
-            txtEamil.TabStop = true;
         }
 
         private void txtEamil_TextChanged(object sender, EventArgs e)

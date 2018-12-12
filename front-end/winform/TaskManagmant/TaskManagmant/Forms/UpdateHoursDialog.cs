@@ -1,20 +1,17 @@
 ﻿using BOL;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using TaskManagmant.Help;
 using TaskManagmant.Services;
+using System;
+using System.Data;
+using System.Linq;
+using System.Windows.Forms;
+
 
 namespace TaskManagmant.Forms
 {
     public partial class UpdateHoursDialog : Form
     {
+
        private User myWorker;
 
        private double workerPresence;
@@ -29,7 +26,7 @@ namespace TaskManagmant.Forms
             InitData();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             int editedHours= Convert.ToInt32(numericHours.Value);
             if (editedHours < workerPresence)

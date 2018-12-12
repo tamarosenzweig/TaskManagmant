@@ -43,7 +43,7 @@
             this.btnContinue.TabIndex = 12;
             this.btnContinue.Text = "Continue";
             this.btnContinue.UseVisualStyleBackColor = true;
-            this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
+            this.btnContinue.Click += new System.EventHandler(this.BtnContinue_Click);
             // 
             // lblTitle
             // 
@@ -83,7 +83,8 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "VerificationCodeDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "verificationCodeFormDialog";
+            this.Text = "Verification Code";
+            this.TopMost = true;
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using BOL;
+﻿using BOL;
 using TaskManagmant.Forms;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
 
 namespace TaskManagmant.UserControls
 {
     public partial class TmpProjectControl : UserControl
     {
+
         private Project myProject;
+
         public TmpProjectControl(Project project, bool isTeamLeader)
         {
             InitializeComponent();
@@ -78,6 +75,5 @@ namespace TaskManagmant.UserControls
             addPermissionForm.MdiParent = managerForm;
             addPermissionForm.Show();
         }
-
     }
 }

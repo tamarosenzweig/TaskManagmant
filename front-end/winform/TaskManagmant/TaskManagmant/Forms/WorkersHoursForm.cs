@@ -1,12 +1,13 @@
 ﻿using BOL;
+using TaskManagmant.Help;
+using TaskManagmant.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TaskManagmant.Help;
-using TaskManagmant.Services;
+
 
 namespace TaskManagmant.Forms
 {
@@ -22,7 +23,7 @@ namespace TaskManagmant.Forms
             pnlContainer.Anchor = AnchorStyles.None;
 
             myProject = project;
-            initData();
+            InitData();
         }
 
         public void UpdateWorkerHours(User worker, DepartmentHours departmentHours)
@@ -46,7 +47,7 @@ namespace TaskManagmant.Forms
 
         }
 
-        private void initData()
+        private void InitData()
         {
             lblProjectName.Text = myProject.ProjectName;
             lblTotalHours.Text = myProject.TotalHours.ToString();
@@ -58,6 +59,7 @@ namespace TaskManagmant.Forms
             int y = 110;
             int width = 360;
             int height = 400;
+
             myProject.DepartmentsHours.ForEach(departmentHours =>
             {
                 Department department = departmentHours.Department;

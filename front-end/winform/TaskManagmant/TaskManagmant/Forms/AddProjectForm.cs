@@ -81,7 +81,7 @@ namespace TaskManagmant.Forms
             BtnEnable();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             Project project = new Project()
             {

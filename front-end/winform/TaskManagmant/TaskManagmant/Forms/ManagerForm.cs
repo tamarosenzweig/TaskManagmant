@@ -1,16 +1,16 @@
 ﻿using BOL;
 using TaskManagmant.Help;
-using System;
-using System.Collections.Generic;
 using TaskManagmant.UserControls;
-using TaskManagmant.Services;
+using System;
 using System.Windows.Forms;
+
 
 namespace TaskManagmant.Forms
 {
     public partial class ManagerForm : BaseForm
     {
-        LoginForm loginForm;
+
+        private LoginForm loginForm;
 
         public ManagerForm(LoginForm loginForm)
         {
@@ -65,12 +65,12 @@ namespace TaskManagmant.Forms
             Close();
         }
 
-        private void permissionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PermissionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenPermissionForm();
         }
 
-        private void ManagerForm_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        private void ManagerForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (Global.USER != null)
                 loginForm.Close();

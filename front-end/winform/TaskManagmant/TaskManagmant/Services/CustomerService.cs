@@ -1,18 +1,18 @@
 ﻿using BOL;
-using Newtonsoft.Json;
+using TaskManagmant.Help;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using TaskManagmant.Help;
+using Newtonsoft.Json;
+
 
 namespace TaskManagmant.Services
 {
     public static class CustomerService
     {
+
+        //GET
         public static List<Customer> GetAllCustomers()
         {
             List<Customer> customers;

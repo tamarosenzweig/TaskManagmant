@@ -1,16 +1,16 @@
 ﻿using BOL;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 using TaskManagmant.Help;
 using TaskManagmant.Services;
 using TaskManagmant.UserControls;
+using System.Collections.Generic;
+using System.Drawing;
+
 
 namespace TaskManagmant.Forms
 {
     public partial class UserListForm : BaseForm
     {
+
         private List<User> users;
 
         private bool isWorkerList;
@@ -19,7 +19,6 @@ namespace TaskManagmant.Forms
         {
             InitializeComponent();
             this.isWorkerList = isWorkerList;
-
             InitForm();
         }
 

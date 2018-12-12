@@ -10,24 +10,18 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Configuration;
-using System.Xml;
-using System.Xml.Linq;
-using System.Collections;
-using TaskManagmant.Forms;
-using System.Diagnostics;
+
 
 namespace TaskManagmant.Services
 {
     public static class UserService
     {
+
         private static string baseURL = $"{Global.HOST}/user";
 
+        //POST
         public static User Login(Login login)
         {
-            //------------post request-------------
             string url = $"{baseURL}/login";
 
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
@@ -65,37 +59,7 @@ namespace TaskManagmant.Services
             }
         }
 
-        internal static User GetUserByEmail(string email)
-        {
-            string url = $"{Global.HOST}/user/getUserByEmail?email={email}";
-            return GetUser(url);
-        }
-
-        public static User GetUserById(int userId)
-        {
-            string url = $"{Global.HOST}/user/getUserById?userId={userId}";
-            return GetUser(url);
-        }
-
-        public static User GetUser(string url)
-        {
-            User user;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var json = response.Content.ReadAsStringAsync().Result;
-                user = JsonConvert.DeserializeObject<User>(json);
-                return user;
-            }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-                return null;
-            }
-        }
-
+        //GET
         public static List<User> GetAllUsers()
         {
             int managerId = Global.USER.UserId;
@@ -103,6 +67,13 @@ namespace TaskManagmant.Services
             return GetUsers(url);
         }
 
+        //GET
+        public static List<User> GetAllTeamUsers(int teamLeaderId)
+        {
+            string url = $"{Global.HOST}/user/getAllTeamUsers?teamLeaderId={teamLeaderId}";
+            return GetUsers(url);
+        }
+        //GET
         public static List<User> GetAllTeamLeaders()
         {
             int managerId = Global.USER.UserId;
@@ -110,12 +81,7 @@ namespace TaskManagmant.Services
             return GetUsers(url);
         }
 
-        public static List<User> GetAllTeamUsers(int teamLeaderId)
-        {
-            string url = $"{Global.HOST}/user/getAllTeamUsers?teamLeaderId={teamLeaderId}";
-            return GetUsers(url);
-        }
-
+        //GET
         public static List<User> GetUsers(string url)
         {
             try
@@ -136,13 +102,124 @@ namespace TaskManagmant.Services
                     return null;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string x = ex.Message;
                 return null;
             }
         }
 
+        //GET
+        public static User GetUserById(int userId)
+        {
+            string url = $"{Global.HOST}/user/getUserById?userId={userId}";
+            return GetUser(url);
+        }
+
+        //GET
+        internal static User GetUserByEmail(string email)
+        {
+            string url = $"{Global.HOST}/user/getUserByEmail?email={email}";
+            return GetUser(url);
+        }
+
+        //GET
+        public static User GetUser(string url)
+        {
+            User user;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                user = JsonConvert.DeserializeObject<User>(json);
+                return user;
+            }
+            else
+            {
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                return null;
+            }
+        }
+
+        //POST
+        public static bool AddUser(Form form, User myUser)
+        {
+            bool created = false;
+            string url = $"{Global.HOST}/user/addUser";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string credentialString = JsonConvert.SerializeObject(myUser, Formatting.None);
+                streamWriter.Write(credentialString);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            try
+            {
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    created = JsonConvert.DeserializeObject<bool>(result);
+                    return created;
+                }
+
+            }
+            catch (WebException ex)
+            {
+                using (var stream = ex.Response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                {
+                    string message = reader.ReadToEnd();
+                    Global.CreateDialog(form, message);
+                }
+                return created;
+            }
+        }
+
+        //PUT
+        public static bool EditUser(Form form, User myUser)
+        {
+            bool edited = false;
+            string url = $"{Global.HOST}/user/editUser";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "PUT";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(myUser, Newtonsoft.Json.Formatting.None);
+                streamWriter.Write(credentialString);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            try
+            {
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    edited = JsonConvert.DeserializeObject<bool>(result);
+                    return edited;
+                }
+
+            }
+            catch (WebException ex)
+            {
+                using (var stream = ex.Response.GetResponseStream())
+                using (var reader = new StreamReader(stream))
+                {
+                    string message = reader.ReadToEnd();
+                    Global.CreateDialog(form, message);
+                }
+                return edited;
+            }
+        }
+
+        //POST
         public static bool DeleteUser(User user)
         {
             //delete userProfile if exist
@@ -151,7 +228,6 @@ namespace TaskManagmant.Services
 
             //delete user
             bool isDeleted;
-            //------------post request-------------
             dynamic credential;
             string url = $"{Global.HOST}/user/deleteUser?userId={user.UserId}";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
@@ -160,7 +236,7 @@ namespace TaskManagmant.Services
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 credential = null;
-                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(credential, Newtonsoft.Json.Formatting.None);
+                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(credential, Formatting.None);
                 streamWriter.Write(credentialString);
                 streamWriter.Flush();
                 streamWriter.Close();
@@ -183,6 +259,7 @@ namespace TaskManagmant.Services
             }
         }
 
+        //POST
         public static string UploadImageProfile(string fileName)
         {
             string url = $"{Global.HOST}/user/uploadImageProfile";
@@ -237,6 +314,7 @@ namespace TaskManagmant.Services
             }
         }
 
+        //POST
         public static bool RemoveUploadedImage(string profileImageName, bool moveToArchives)
         {
             string url = $"{Global.HOST}/user/removeUploadedImage";
@@ -272,88 +350,10 @@ namespace TaskManagmant.Services
             }
         }
 
-        public static bool AddUser(Form form,User myUser)
-        {
-            //------------post request-------------
-            //dynamic credential;
-            bool created = false;
-            string url = $"{Global.HOST}/user/addUser";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(myUser, Newtonsoft.Json.Formatting.None);
-                streamWriter.Write(credentialString);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            try
-            {
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    created = JsonConvert.DeserializeObject<bool>(result);
-                    return created;
-                }
-
-            }
-            catch (WebException ex)
-            {
-                using (var stream = ex.Response.GetResponseStream())
-                using (var reader = new StreamReader(stream))
-                {
-                    string message = reader.ReadToEnd();
-                    Global.CreateDialog(form,message);
-                }
-                return created;
-            }
-        }
-
-        public static bool EditUser(Form form,User myUser)
-        {
-            //------------put request-------------
-            //dynamic credential;
-            bool edited = false;
-            string url = $"{Global.HOST}/user/editUser";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "PUT";
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                //credential = new { password = password.Text, eMail = email.Text };
-                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(myUser, Newtonsoft.Json.Formatting.None);
-                streamWriter.Write(credentialString);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            try
-            {
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    edited = JsonConvert.DeserializeObject<bool>(result);
-                    return edited;
-                }
-
-            }
-            catch (WebException ex)
-            {
-                using (var stream = ex.Response.GetResponseStream())
-                using (var reader = new StreamReader(stream))
-                {
-                    string message = reader.ReadToEnd();
-                    Global.CreateDialog(form, message);
-                }
-                return edited;
-            }
-        }
-
+        
+       //POST
         public static bool SendEmail(Email email)
         {
-            //------------post request-------------
             string url = $"{Global.HOST}/user/sendEmail";
 
             var postData = $"email={JsonConvert.SerializeObject(email)}";
@@ -388,12 +388,31 @@ namespace TaskManagmant.Services
             }
         }
 
+        //GET
+        public static bool HasWorkes(int teamLeaderId)
+        {
+            bool hasWorkes;
+            string url = $"{Global.HOST}/user/hasWorkers?teamLeaderId={teamLeaderId}";
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                hasWorkes = JsonConvert.DeserializeObject<bool>(json);
+                return hasWorkes;
+            }
+            else
+            {
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                return false;
+            }
+        }
+
+        //POST
         public static bool ForgotPassword(string email)
         {
-
-            //delete user
             bool isExist;
-            //------------post request-------------
             dynamic credential;
             string url = $"{Global.HOST}/user/forgotPassword?email={email}";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
@@ -425,16 +444,16 @@ namespace TaskManagmant.Services
             }
         }
 
+        //POST
         public static bool ConfirmToken(ChangePassword changePassword)
         {
-            //------------post request-------------
             string url = $"{baseURL}/confirmToken";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                string credentialString = JsonConvert.SerializeObject(changePassword, Newtonsoft.Json.Formatting.None);
+                string credentialString = JsonConvert.SerializeObject(changePassword, Formatting.None);
                 streamWriter.Write(credentialString);
                 streamWriter.Flush();
                 streamWriter.Close();
@@ -457,10 +476,9 @@ namespace TaskManagmant.Services
             }
         }
 
+        //PUT
         public static bool ChangePassword(User user)
         {
-            //------------put request-------------
-            //dynamic credential;
             bool edited = false;
             string url = $"{Global.HOST}/user/changePassword";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
@@ -468,8 +486,7 @@ namespace TaskManagmant.Services
             httpWebRequest.Method = "PUT";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                //credential = new { password = password.Text, eMail = email.Text };
-                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(user, Newtonsoft.Json.Formatting.None);
+                string credentialString = JsonConvert.SerializeObject(user, Formatting.None);
                 streamWriter.Write(credentialString);
                 streamWriter.Flush();
                 streamWriter.Close();
@@ -494,26 +511,6 @@ namespace TaskManagmant.Services
                 }
                 return edited;
             }
-        }
-
-        public static bool HasWorkes(int teamLeaderId)
-        {
-            bool hasWorkes;
-            string url = $"{Global.HOST}/user/hasWorkers?teamLeaderId={teamLeaderId}";
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var json = response.Content.ReadAsStringAsync().Result;
-                hasWorkes = JsonConvert.DeserializeObject<bool>(json);
-                return hasWorkes;
-            }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-                return false;
-            }
-        }
+        }      
     }
 }

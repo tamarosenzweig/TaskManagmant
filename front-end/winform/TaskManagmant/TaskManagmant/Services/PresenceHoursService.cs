@@ -1,76 +1,26 @@
-﻿using Newtonsoft.Json;
+﻿using BOL;
+using TaskManagmant.Help;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using TaskManagmant.Help;
-using BOL;
 using System.Net;
 using System.IO;
 using System.Windows.Forms;
 using System.Linq;
 
+
 namespace TaskManagmant.Services
 {
     public static class PresenceHoursService
     {
+
         private static string baseURL = $"{Global.HOST}/presenceHours";
 
-        public static List<dynamic> GetPresenceStatusPerProjects()
-        {
-            int workerId = Global.USER.UserId;
-            string url = $"{baseURL}/getPresenceStatusPerProjects?workerId={workerId}";
-            return GetPresenceStatus(url);
-        }
-
-        public static List<dynamic> GetPresenceStatusPerWorkers()
-        {
-            int teamLeaderId = Global.USER.UserId;
-            string url = $"{baseURL}/getPresenceStatusPerWorkers?teamLeaderId={teamLeaderId}";
-            return GetPresenceStatus(url);
-        }
-
-        public static List<dynamic> GetPresenceStatus(string url)
-        {
-            List<dynamic> presenceStatusList;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var json = response.Content.ReadAsStringAsync().Result;
-                presenceStatusList = JsonConvert.DeserializeObject<List<dynamic>>(json);
-                return presenceStatusList;
-            }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-                return null;
-            }
-        }
-
-        public static decimal GetPresenceHoursSum(int projectId, int workerId)
-        {
-            string url = $"{baseURL}/getPresenceHoursSum?projectId={projectId}&workerId={workerId}";
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var json = response.Content.ReadAsStringAsync().Result;
-                decimal presenceSum = JsonConvert.DeserializeObject<decimal>(json);
-                return presenceSum;
-            }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-                return -1;
-            }
-        }
-
+        //POST
         public static int AddPresenceHours(PresenceHours presenceHours)
         {
-            //------------post request-------------
             string url = $"{baseURL}/addPresenceHours";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
             httpWebRequest.ContentType = "application/json";
@@ -100,10 +50,9 @@ namespace TaskManagmant.Services
             }
         }
 
+        //PUT
         public static bool EditPresenceHours(PresenceHours presenceHours)
         {
-            //------------put request-------------
-            //dynamic credential;
             bool created = false;
             string url = $"{baseURL}/editPresenceHours";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
@@ -111,7 +60,7 @@ namespace TaskManagmant.Services
             httpWebRequest.Method = "PUT";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(presenceHours, Newtonsoft.Json.Formatting.None);
+                string credentialString = JsonConvert.SerializeObject(presenceHours, Formatting.None);
                 streamWriter.Write(credentialString);
                 streamWriter.Flush();
                 streamWriter.Close();
@@ -131,6 +80,62 @@ namespace TaskManagmant.Services
             {
                 MessageBox.Show(ex.ToString());
                 return created;
+            }
+        }
+
+        //GET
+        public static List<dynamic> GetPresenceStatusPerWorkers()
+        {
+            int teamLeaderId = Global.USER.UserId;
+            string url = $"{baseURL}/getPresenceStatusPerWorkers?teamLeaderId={teamLeaderId}";
+            return GetPresenceStatus(url);
+        }
+
+        //GET
+        public static List<dynamic> GetPresenceStatusPerProjects()
+        {
+            int workerId = Global.USER.UserId;
+            string url = $"{baseURL}/getPresenceStatusPerProjects?workerId={workerId}";
+            return GetPresenceStatus(url);
+        }
+
+        //GET
+        public static List<dynamic> GetPresenceStatus(string url)
+        {
+            List<dynamic> presenceStatusList;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                presenceStatusList = JsonConvert.DeserializeObject<List<dynamic>>(json);
+                return presenceStatusList;
+            }
+            else
+            {
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                return null;
+            }
+        }
+
+        //GET
+        public static decimal GetPresenceHoursSum(int projectId, int workerId)
+        {
+            string url = $"{baseURL}/getPresenceHoursSum?projectId={projectId}&workerId={workerId}";
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var json = response.Content.ReadAsStringAsync().Result;
+                decimal presenceSum = JsonConvert.DeserializeObject<decimal>(json);
+                return presenceSum;
+            }
+            else
+            {
+                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                return -1;
             }
         }
 

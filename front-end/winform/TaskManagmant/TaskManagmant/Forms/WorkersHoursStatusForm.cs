@@ -1,16 +1,18 @@
 ﻿using BOL;
+using TaskManagmant.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TaskManagmant.Services;
+
 
 namespace TaskManagmant.Forms
 {
     public partial class WorkersHoursStatusForm : BaseForm
     {
+
         private List<dynamic> presenceStatusList;
 
         public WorkersHoursStatusForm()
@@ -22,7 +24,8 @@ namespace TaskManagmant.Forms
 
             InitWorkersGraph();
         }
-        private void cmbProjects_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void CmbProjects_SelectedIndexChanged(object sender, EventArgs e)
         {
             string projectName = ((sender as ComboBox).SelectedItem as Project).ProjectName;
             lblSelectedProject.Text = projectName;
@@ -50,6 +53,5 @@ namespace TaskManagmant.Forms
             cmbProjects.DataSource = projectList;
             cmbProjects.DisplayMember = "ProjectName";
         }
-
     }
 }

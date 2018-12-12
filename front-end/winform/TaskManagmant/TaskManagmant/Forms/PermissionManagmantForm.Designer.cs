@@ -91,7 +91,7 @@
             this.btnSave.TabIndex = 19;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // cmbOtherWorkers
             // 
@@ -100,7 +100,7 @@
             this.cmbOtherWorkers.Name = "cmbOtherWorkers";
             this.cmbOtherWorkers.Size = new System.Drawing.Size(200, 29);
             this.cmbOtherWorkers.TabIndex = 18;
-            this.cmbOtherWorkers.SelectedIndexChanged += new System.EventHandler(this.cmbOtherWorkers_SelectedIndexChanged);
+            this.cmbOtherWorkers.SelectedIndexChanged += new System.EventHandler(this.CmbOtherWorkers_SelectedIndexChanged);
             // 
             // listSelectedWorkers
             // 
@@ -110,7 +110,7 @@
             this.listSelectedWorkers.Name = "listSelectedWorkers";
             this.listSelectedWorkers.Size = new System.Drawing.Size(200, 256);
             this.listSelectedWorkers.TabIndex = 17;
-            this.listSelectedWorkers.DoubleClick += new System.EventHandler(this.listSelectedWorkers_DoubleClick);
+            this.listSelectedWorkers.DoubleClick += new System.EventHandler(this.ListSelectedWorkers_DoubleClick);
             // 
             // listProjectWorkers
             // 
@@ -129,7 +129,7 @@
             this.listPermissionWorkers.Name = "listPermissionWorkers";
             this.listPermissionWorkers.Size = new System.Drawing.Size(200, 256);
             this.listPermissionWorkers.TabIndex = 24;
-            this.listPermissionWorkers.DoubleClick += new System.EventHandler(this.listPermissionWorkers_DoubleClick);
+            this.listPermissionWorkers.DoubleClick += new System.EventHandler(this.ListPermissionWorkers_DoubleClick);
             // 
             // label1
             // 

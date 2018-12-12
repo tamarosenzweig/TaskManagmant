@@ -1,22 +1,16 @@
-﻿using BOL;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TaskManagmant.Help;
-using TaskManagmant.Services;
+﻿using TaskManagmant.Help;
 using TaskManagmant.UserControls;
+using System;
+using System.Windows.Forms;
+
 
 namespace TaskManagmant.Forms
 {
     public partial class TeamLeaderForm : BaseForm
     {
-        LoginForm loginForm;
+
+        private LoginForm loginForm;
+
         public TeamLeaderForm(LoginForm loginForm)
         {
             InitializeComponent();
@@ -27,8 +21,8 @@ namespace TaskManagmant.Forms
             header.Dock = DockStyle.Fill;
             pnlHeader.Controls.Add(header);
         }
-        
-        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private void LogOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Global.USER = null;
             Global.UpdateCurrentUser(string.Empty);
@@ -36,25 +30,17 @@ namespace TaskManagmant.Forms
             Close();
         }
 
-        private void followYourProjectsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FollowYourProjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenAllProjectsForm();
         }
 
-        private void teamWorkerListToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TeamWorkerListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenWorkersHoursForm();
         }
 
-        private void OpenAllProjectsForm()
-        {
-            CloseAllForms();
-            AllProjectsForm allProjectsForm = new AllProjectsForm();
-            allProjectsForm.MdiParent = this;
-            allProjectsForm.Show();
-        }
-
-        private void workersHoursStatusToolStripMenuItem_Click(object sender, EventArgs e)
+        private void WorkersHoursStatusToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CloseAllForms();
             WorkersHoursStatusForm workersHoursStatusForm = new WorkersHoursStatusForm();
@@ -68,6 +54,14 @@ namespace TaskManagmant.Forms
                 loginForm.Close();
         }
 
+        private void OpenAllProjectsForm()
+        {
+            CloseAllForms();
+            AllProjectsForm allProjectsForm = new AllProjectsForm();
+            allProjectsForm.MdiParent = this;
+            allProjectsForm.Show();
+        }
+
         private void OpenWorkersHoursForm()
         {
             CloseAllForms();
@@ -79,7 +73,6 @@ namespace TaskManagmant.Forms
         public void CloseAllForms()
         {
             Array.ForEach(MdiChildren, form => form.Close());
-
         }
     }
 }

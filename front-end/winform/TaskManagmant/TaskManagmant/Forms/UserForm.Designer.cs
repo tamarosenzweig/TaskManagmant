@@ -92,7 +92,7 @@
             this.btnRemoveImg.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnRemoveImg.UseVisualStyleBackColor = true;
             this.btnRemoveImg.Visible = false;
-            this.btnRemoveImg.Click += new System.EventHandler(this.btnRemoveImg_Click);
+            this.btnRemoveImg.Click += new System.EventHandler(this.BtnRemoveImg_Click);
             // 
             // cmbTeamLeader
             // 

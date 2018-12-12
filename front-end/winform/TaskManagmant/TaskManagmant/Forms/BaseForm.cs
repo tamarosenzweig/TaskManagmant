@@ -1,6 +1,7 @@
-﻿using System.Drawing;
+﻿using TaskManagmant.Help;
+using System.Drawing;
 using System.Windows.Forms;
-using TaskManagmant.Help;
+
 
 namespace TaskManagmant.Forms
 {
@@ -14,7 +15,6 @@ namespace TaskManagmant.Forms
             Size = Screen.PrimaryScreen.WorkingArea.Size;
             Global.SIZE = Size;
             Font = new Font("Segoe UI", 12);
-
         }
     }
 }

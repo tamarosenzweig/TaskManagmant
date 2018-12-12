@@ -1,32 +1,28 @@
 ﻿using BOL.Help;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using TaskManagmant.Help;
 using TaskManagmant.Services;
+using System;
+using System.Windows.Forms;
+
 
 namespace TaskManagmant.Dialogs
 {
     public partial class SendEmailDialog : Form
     {
-        Email email;
+        private Email email;
+
         public SendEmailDialog()
         {
             InitializeComponent();
             email = new Email();
         }
-        private void _Subject_TextChanged(object sender, EventArgs e)
+
+        private void Subject_TextChanged(object sender, EventArgs e)
         {
             email.Subject = (sender as TextBox).Text;
         }
 
-        private void _Body_TextChanged(object sender, EventArgs e)
+        private void Body_TextChanged(object sender, EventArgs e)
         {
             email.Body = (sender as RichTextBox).Text;
         }

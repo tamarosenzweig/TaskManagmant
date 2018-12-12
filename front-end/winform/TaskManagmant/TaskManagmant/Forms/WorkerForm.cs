@@ -1,39 +1,49 @@
 ﻿using BOL;
+using TaskManagmant.Dialogs;
+using TaskManagmant.Help;
+using TaskManagmant.Services;
+using TaskManagmant.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TaskManagmant.Dialogs;
-using TaskManagmant.Help;
-using TaskManagmant.Services;
-using TaskManagmant.UserControls;
+
 
 namespace TaskManagmant.Forms
 {
     public partial class WorkerForm : BaseForm
     {
-        LoginForm loginForm;
+
+        private LoginForm loginForm;
+
         public WorkerForm(LoginForm loginForm)
         {
             InitializeComponent();
             this.loginForm = loginForm;
 
+            //header
             HeaderControl header = new HeaderControl();
             header.Dock = DockStyle.Fill;
             pnlHeader.Controls.Add(header);
 
-            pnlContainer.Location = new Point((ClientSize.Width - pnlContainer.Width) / 2, 150);
-            pnlContainer.Anchor = AnchorStyles.None;
-
-            timer1.Tick += timer1_Tick;
+            //date and time
+            lblDateTime.Location = new Point(0, pnlHeader.Height);
+            timer1.Tick += Timer1_Tick;
             timer1.Start();
+
+            //worker task list
             ShowWorkerTasks();
+
+            //buttons
+            pnlButtons.Location = new Point((Global.SIZE.Width/4-pnlButtons.Width)/2, lblDateTime.Location.Y + lblDateTime.Height);
+
+            //projects graph
             InitProjectsGraph();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             //show current date time
             DateTime datetime = DateTime.Now;
@@ -56,7 +66,7 @@ namespace TaskManagmant.Forms
             sendEmailDialog.Show();
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void BtnLogout_Click(object sender, EventArgs e)
         {
             Global.USER = null;
             Global.UpdateCurrentUser(string.Empty);
@@ -66,8 +76,27 @@ namespace TaskManagmant.Forms
 
         private void WorkerForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if(Global.USER!=null)
-            loginForm.Close();
+            if (Global.USER != null)
+                loginForm.Close();
+        }
+
+        private void ShowWorkerTasks()
+        {
+            List<WorkerHours> workerHoursList = WorkerHoursService.GetAllWorkerHours();
+            int index = 1;
+            PnlWorkerTaskList.Size = new Size(Global.SIZE.Width / 2, PnlWorkerTaskList.Height);
+            PnlWorkerTaskList.Location = new Point((Global.SIZE.Width - PnlWorkerTaskList.Width) / 2, lblDateTime.Location.Y + lblDateTime.Height);
+            int pnlHeight = 125;
+            workerHoursList.ForEach(workerHours =>
+            {
+                WorkerTaskControl workerTaskControl = new WorkerTaskControl(workerHours, EnableWorkerTasks);
+                workerTaskControl.Size = new Size(PnlWorkerTaskList.Width, workerTaskControl.Height);
+                workerTaskControl.Location = new Point(0, index * workerTaskControl.Height);
+                PnlWorkerTaskList.Controls.Add(workerTaskControl);
+                pnlHeight += workerTaskControl.Height;
+                index++;
+            });
+            PnlWorkerTaskList.Size = new Size(Global.SIZE.Width / 2, pnlHeight);
         }
 
         private void InitProjectsGraph()
@@ -80,23 +109,10 @@ namespace TaskManagmant.Forms
             projectsGraph.Series["Project Hours"].Points.DataBindXY(projectNameList, projectHoursList);
             projectsGraph.Series["Presence Hours"].Points.DataBindXY(projectNameList, presenceHoursList);
 
-            projectsGraph.Location = new Point((Width - projectsGraph.Width) / 2, projectsGraph.Location.Y);
+            lblTitleGraph.Location = new Point((Global.SIZE.Width - lblTitleGraph.Width) / 2, PnlWorkerTaskList.Location.Y + PnlWorkerTaskList.Height+lblTitleGraph.Height);
+            projectsGraph.Size = new Size(Global.SIZE.Width / 2, Global.SIZE.Height / 3);
+            projectsGraph.Location = new Point(PnlWorkerTaskList.Location.X / 2, lblTitleGraph.Location.Y-lblTitleGraph.Height);
         }
-
-        private void ShowWorkerTasks()
-        {
-            List<WorkerHours> workerHoursList = WorkerHoursService.GetAllWorkerHours();
-            int index = 0;
-            workerHoursList.ForEach(workerHours =>
-            {
-                WorkerTaskControl workerTaskControl = new WorkerTaskControl(workerHours, EnableWorkerTasks);
-                workerTaskControl.Location = new Point(100, index * workerTaskControl.Height);
-                PnlWorkerTaskList.Controls.Add(workerTaskControl);
-                index++;
-            });
-            PnlWorkerTaskList.Location = new Point((Width - PnlWorkerTaskList.Width) / 2, PnlWorkerTaskList.Location.Y);
-        }
-
     }
 }
 

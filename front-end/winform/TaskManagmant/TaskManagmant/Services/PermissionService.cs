@@ -1,24 +1,20 @@
 ﻿using BOL;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using TaskManagmant.Help;
+using Newtonsoft.Json;
+using System.IO;
+using System.Net;
+using System.Windows.Forms;
 
 namespace TaskManagmant.Services
 {
     public static class PermissionService
     {
+
         private static string baseURL = $"{Global.HOST}/permission";
 
+        //POST
         public static bool AddPermission(Permission permission)
         {
-            //------------post request-------------
             bool created = false;
             string url = $"{baseURL}/addPemission";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
@@ -49,10 +45,10 @@ namespace TaskManagmant.Services
             }
         }
 
+        //POST
         public static bool DeletePemission(int permissionId)
         {
             bool isDeleted;
-            //------------post request-------------
             dynamic credential;
             string url = $"{baseURL}/deletePemission?permissionId={permissionId}";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
@@ -61,7 +57,7 @@ namespace TaskManagmant.Services
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 credential = null;
-                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(credential, Formatting.None);
+                string credentialString =JsonConvert.SerializeObject(null, Formatting.None);
                 streamWriter.Write(credentialString);
                 streamWriter.Flush();
                 streamWriter.Close();
@@ -75,7 +71,6 @@ namespace TaskManagmant.Services
                     isDeleted = JsonConvert.DeserializeObject<bool>(result);
                     return isDeleted;
                 }
-
             }
             catch (WebException ex)
             {

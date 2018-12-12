@@ -38,26 +38,29 @@
             // lblProjectName
             // 
             this.lblProjectName.AutoSize = true;
-            this.lblProjectName.Location = new System.Drawing.Point(22, 18);
+            this.lblProjectName.Location = new System.Drawing.Point(30, 29);
+            this.lblProjectName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblProjectName.Name = "lblProjectName";
-            this.lblProjectName.Size = new System.Drawing.Size(68, 13);
+            this.lblProjectName.Size = new System.Drawing.Size(100, 21);
             this.lblProjectName.TabIndex = 0;
             this.lblProjectName.Text = "ProjectName";
             // 
             // lblNumHours
             // 
             this.lblNumHours.AutoSize = true;
-            this.lblNumHours.Location = new System.Drawing.Point(123, 18);
+            this.lblNumHours.Location = new System.Drawing.Point(160, 29);
+            this.lblNumHours.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNumHours.Name = "lblNumHours";
-            this.lblNumHours.Size = new System.Drawing.Size(57, 13);
+            this.lblNumHours.Size = new System.Drawing.Size(87, 21);
             this.lblNumHours.TabIndex = 1;
             this.lblNumHours.Text = "NumHours";
             // 
             // btnStartOrStop
             // 
-            this.btnStartOrStop.Location = new System.Drawing.Point(310, 13);
+            this.btnStartOrStop.Location = new System.Drawing.Point(390, 21);
+            this.btnStartOrStop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStartOrStop.Name = "btnStartOrStop";
-            this.btnStartOrStop.Size = new System.Drawing.Size(111, 23);
+            this.btnStartOrStop.Size = new System.Drawing.Size(166, 37);
             this.btnStartOrStop.TabIndex = 2;
             this.btnStartOrStop.Text = "Start Your Task";
             this.btnStartOrStop.UseVisualStyleBackColor = true;
@@ -66,32 +69,36 @@
             // lblTime
             // 
             this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(465, 17);
+            this.lblTime.Location = new System.Drawing.Point(600, 27);
+            this.lblTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(49, 13);
+            this.lblTime.Size = new System.Drawing.Size(70, 21);
             this.lblTime.TabIndex = 3;
             this.lblTime.Text = "00:00:00";
             // 
             // lblPresence
             // 
             this.lblPresence.AutoSize = true;
-            this.lblPresence.Location = new System.Drawing.Point(218, 18);
+            this.lblPresence.Location = new System.Drawing.Point(274, 29);
+            this.lblPresence.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPresence.Name = "lblPresence";
-            this.lblPresence.Size = new System.Drawing.Size(52, 13);
+            this.lblPresence.Size = new System.Drawing.Size(72, 21);
             this.lblPresence.TabIndex = 4;
             this.lblPresence.Text = "Presence";
             // 
             // WorkerTaskControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lblPresence);
             this.Controls.Add(this.lblTime);
             this.Controls.Add(this.btnStartOrStop);
             this.Controls.Add(this.lblNumHours);
             this.Controls.Add(this.lblProjectName);
+            this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "WorkerTaskControl";
-            this.Size = new System.Drawing.Size(543, 50);
+            this.Size = new System.Drawing.Size(814, 81);
             this.ResumeLayout(false);
             this.PerformLayout();
 

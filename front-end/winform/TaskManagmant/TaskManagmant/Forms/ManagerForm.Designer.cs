@@ -117,7 +117,7 @@
             this.permissionsToolStripMenuItem.Name = "permissionsToolStripMenuItem";
             this.permissionsToolStripMenuItem.Size = new System.Drawing.Size(163, 26);
             this.permissionsToolStripMenuItem.Text = "Permissions";
-            this.permissionsToolStripMenuItem.Click += new System.EventHandler(this.permissionsToolStripMenuItem_Click);
+            this.permissionsToolStripMenuItem.Click += new System.EventHandler(this.PermissionsToolStripMenuItem_Click);
             // 
             // teamsManagmantMenuItem
             // 

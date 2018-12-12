@@ -70,7 +70,7 @@
             this.cmbProjects.Name = "cmbProjects";
             this.cmbProjects.Size = new System.Drawing.Size(250, 29);
             this.cmbProjects.TabIndex = 12;
-            this.cmbProjects.SelectedIndexChanged += new System.EventHandler(this.cmbProjects_SelectedIndexChanged);
+            this.cmbProjects.SelectedIndexChanged += new System.EventHandler(this.CmbProjects_SelectedIndexChanged);
             // 
             // lblTitle
             // 

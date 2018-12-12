@@ -1,20 +1,19 @@
 ﻿using BOL;
+using TaskManagmant.Help;
+using TaskManagmant.Services;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TaskManagmant.Help;
-using TaskManagmant.Services;
+
 
 namespace TaskManagmant.Forms
 {
     public partial class PermissionManagmantForm : BaseForm
     {
+
         private Project myProject;
 
         private List<Permission> selectedWorkers;
@@ -33,10 +32,10 @@ namespace TaskManagmant.Forms
             pnlContainer.Anchor = AnchorStyles.None;
 
             myProject = project;
-            initData();
+            InitData();
         }
 
-        private void cmbOtherWorkers_SelectedIndexChanged(object sender, EventArgs e)
+        private void CmbOtherWorkers_SelectedIndexChanged(object sender, EventArgs e)
         {
             User selectedUser = (sender as ComboBox).SelectedItem as User;
             Permission permission = new Permission()
@@ -55,7 +54,7 @@ namespace TaskManagmant.Forms
             }
         }
 
-        private void listSelectedWorkers_DoubleClick(object sender, EventArgs e)
+        private void ListSelectedWorkers_DoubleClick(object sender, EventArgs e)
         {
             User user = (sender as ListBox).SelectedItem as User;
             selectedWorkers.RemoveAll(x => x.WorkerId == user.UserId);
@@ -65,7 +64,7 @@ namespace TaskManagmant.Forms
             cmbOtherWorkers.Items.Add(user);
         }
 
-        private void listPermissionWorkers_DoubleClick(object sender, EventArgs e)
+        private void ListPermissionWorkers_DoubleClick(object sender, EventArgs e)
         {
             User user = (sender as ListBox).SelectedItem as User;
             Permission permission = user.Permissions.First(p => p.ProjectId == myProject.ProjectId);
@@ -88,7 +87,7 @@ namespace TaskManagmant.Forms
             cmbOtherWorkers.Items.Add(user);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             if (selectedWorkers.Count > 0)
             {
@@ -122,7 +121,7 @@ namespace TaskManagmant.Forms
 
         }
 
-        private void initData()
+        private void InitData()
         {
             List<User> Allworkers = myProject.DepartmentsHours.SelectMany(departmentHour => departmentHour.Department.Workers).ToList();
             List<User> workers = Allworkers.Where(worker => worker.TeamLeaderId == myProject.TeamLeaderId).ToList();

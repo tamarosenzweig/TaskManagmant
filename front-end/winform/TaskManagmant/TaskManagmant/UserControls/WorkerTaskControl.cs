@@ -1,16 +1,19 @@
-﻿using System;
-using System.Windows.Forms;
-using BOL;
+﻿using BOL;
 using TaskManagmant.Help;
 using TaskManagmant.Services;
+using System;
+using System.Windows.Forms;
 using System.Drawing;
 using System.Threading.Tasks;
 
 namespace TaskManagmant.UserControls
 {
+
     public delegate void EnableWorkerTasksDel(WorkerTaskControl workerTaskControl, bool enable);
+
     public partial class WorkerTaskControl : UserControl
     {
+
         private WorkerHours workerHours;
 
         private PresenceHours presenceHours;
@@ -25,7 +28,8 @@ namespace TaskManagmant.UserControls
 
         private decimal presenceSum;
 
-        System.Threading.CancellationTokenSource cancellationTokenSource;
+        private System.Threading.CancellationTokenSource cancellationTokenSource;
+
         public WorkerTaskControl(WorkerHours workerHours, EnableWorkerTasksDel EnableWorkerTasksHandle)
         {
             InitializeComponent();
@@ -41,7 +45,7 @@ namespace TaskManagmant.UserControls
             BtnTaskClick();
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             time = time.Add(new TimeSpan(0, 0, 1));
 
@@ -64,7 +68,7 @@ namespace TaskManagmant.UserControls
 
         private void StartTask()
         {
-            startTimer();
+            StartTimer();
             isStarted = true;
             btnStartOrStop.Text = "Stop Your Task";
             AddPresenceHours();
@@ -114,12 +118,12 @@ namespace TaskManagmant.UserControls
             UpdatePresenceSum();
         }
 
-        private void startTimer()
+        private void StartTimer()
         {
             timer = new Timer();
             time = new TimeSpan(0, 0, 0);
             timer.Interval = (1000);
-            timer.Tick += new EventHandler(timer_Tick);
+            timer.Tick += new EventHandler(Timer_Tick);
             timer.Start();
         }
 

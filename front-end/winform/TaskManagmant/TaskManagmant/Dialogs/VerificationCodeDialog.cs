@@ -1,22 +1,18 @@
 ﻿using BOL;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using TaskManagmant.Help;
 using TaskManagmant.Services;
+using System;
+using System.Windows.Forms;
+
 
 namespace TaskManagmant.Dialogs
 {
     public partial class VerificationCodeDialog : Form
     {
-        User user;
-        int count;
+        private User user;
+
+        private int count;
+
         public VerificationCodeDialog(User user)
         {
             InitializeComponent();
@@ -24,7 +20,7 @@ namespace TaskManagmant.Dialogs
             count = 0;
         }
 
-        private void btnContinue_Click(object sender, EventArgs e)
+        private void BtnContinue_Click(object sender, EventArgs e)
         {
             if(count==3)
             {

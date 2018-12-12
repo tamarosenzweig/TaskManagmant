@@ -1,7 +1,8 @@
 ﻿using BOL;
-using System.Collections.Generic;
 using TaskManagmant.Help;
 using TaskManagmant.Services;
+using System.Collections.Generic;
+
 
 namespace TaskManagmant.Forms
 {
@@ -18,6 +19,5 @@ namespace TaskManagmant.Forms
            List<Project> projects = ProjectService.GetProjectsByTeamLeaderId(Global.USER.UserId);
            ProjectsManagmant.GetAllProjects(this, projects,true);
         }
-
     }
 }

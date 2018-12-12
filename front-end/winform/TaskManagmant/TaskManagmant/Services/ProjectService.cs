@@ -1,5 +1,5 @@
 ﻿using BOL;
-using Newtonsoft.Json;
+using TaskManagmant.Help;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,18 +7,19 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Windows.Forms;
-using TaskManagmant.Help;
+using Newtonsoft.Json;
+
 
 namespace TaskManagmant.Services
 {
     public static class ProjectService
     {
+
         private static string baseURL = $"{Global.HOST}/project";
 
+        //POST
         public static bool AddProject(Form form,Project project)
         {
-            //------------post request-------------
-            //dynamic credential;
             bool created = false;
             string url = $"{baseURL}/addProject";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
@@ -26,8 +27,7 @@ namespace TaskManagmant.Services
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                //credential = new { password = password.Text, eMail = email.Text };
-                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(project, Newtonsoft.Json.Formatting.None);
+                string credentialString = JsonConvert.SerializeObject(project, Newtonsoft.Json.Formatting.None);
                 streamWriter.Write(credentialString);
                 streamWriter.Flush();
                 streamWriter.Close();
@@ -55,6 +55,7 @@ namespace TaskManagmant.Services
             }
         }
 
+        //GET
         public static List<Project> GetAllProjects()
         {
             List<Project> projects;
@@ -75,6 +76,7 @@ namespace TaskManagmant.Services
             }
         }
 
+        //GET
         public static List<Project> GetProjectsByTeamLeaderId(int TeamLeaderId)
         {
             List<Project> projects;
@@ -95,6 +97,7 @@ namespace TaskManagmant.Services
             }
         }
 
+        //GET
         public static List<Project> GetProjectsReports()
         {
             List<Project> projects;
@@ -115,6 +118,7 @@ namespace TaskManagmant.Services
             }
         }
 
+        //GET
         public static bool HasProjects(int teamLeaderId)
         {
             bool hasProjects;

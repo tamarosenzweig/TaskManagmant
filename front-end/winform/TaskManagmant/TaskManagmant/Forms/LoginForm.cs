@@ -1,20 +1,22 @@
 ﻿using BOL;
 using BOL.Help;
+using TaskManagmant.Dialogs;
 using TaskManagmant.Help;
-using TaskManagmant.Services;
 using TaskManagmant.Help.Validators;
+using TaskManagmant.Services;
+using TaskManagmant.UserControls;
 using System;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
-using TaskManagmant.UserControls;
-using TaskManagmant.Dialogs;
+
 
 namespace TaskManagmant.Forms
 {
     public partial class LoginForm : BaseForm
     {
+
         private Dictionary<string, StringValidator> Validators;
 
         public LoginForm()
@@ -31,7 +33,6 @@ namespace TaskManagmant.Forms
             BtnLogin.Enabled = false;
 
             InitControlsValidations();
-
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -107,7 +108,7 @@ namespace TaskManagmant.Forms
             }
         }
 
-        private void btnForgotPassword_Click(object sender, EventArgs e)
+        private void BtnForgotPassword_Click(object sender, EventArgs e)
         {
             ForgotPasswordDialog forgotPasswordDialog = new ForgotPasswordDialog();
             forgotPasswordDialog.Show();
@@ -153,6 +154,5 @@ namespace TaskManagmant.Forms
             userForm.Show();
             Hide();
         }
-
     }
 }

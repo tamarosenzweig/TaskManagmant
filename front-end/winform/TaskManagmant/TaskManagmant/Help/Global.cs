@@ -1,13 +1,9 @@
 ﻿using BOL;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TaskManagmant.Forms;
 using System.Configuration;
 using System.Xml;
 using System.IO;
@@ -17,15 +13,21 @@ namespace TaskManagmant.Help
 {
     public static class Global
     {
-        public static string HOST { get; set; } = $"{ConfigurationManager.AppSettings["host"] }/api";
+        public static string HOST { get; set; }
 
         public static User USER { get; set; }
 
         public static Size SIZE { get; set; }
 
-        public static object UPLOADS { get; set; } = $"{ConfigurationManager.AppSettings["host"] }/Images";
+        public static object UPLOADS { get; set; }
 
-        public static bool CreateDialog(Form form, string message, string title="", bool isConfirmDialog=false)
+        static Global()
+        {
+            HOST = $"{ConfigurationManager.AppSettings["host"] }/api";
+            UPLOADS = $"{ConfigurationManager.AppSettings["host"] }/Images"; ;
+        }
+
+        public static bool CreateDialog(Form form, string message, string title = "", bool isConfirmDialog = false)
         {
             DialogResult result;
             using (var popup = new Form())
