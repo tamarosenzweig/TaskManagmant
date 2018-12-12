@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'primeng/accordion';
 import { TreeTableModule } from 'primeng/treetable';
-import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 import {
   MatInputModule,
@@ -183,7 +182,6 @@ import {
     MatListModule,
     MatDividerModule,
     MatTooltipModule,
-    ShowHidePasswordModule.forRoot()
   ],
   providers: [
     BaseService,
