@@ -1,4 +1,6 @@
-# Cross app - Task Managmant
+# Cross app - TaskMe
+
+##Task Managmant System
 
 ## Using this technologies:
 
@@ -10,8 +12,8 @@
 
 ## Authors
 
-* **Efart Zadok** - *a depeloper* - (efrat0879@gmail.com)
-* **Tamar Yankelevich- rosenzweig** - *a depeloper* - (tamary9097@gmail.com)
+* **Efart Zadok** - *a depeloper* - (efrat.zadok@seldatinc.com)
+* **Tamar Yankelevich- rosenzweig** - *a depeloper* - (tamar.rosenzweig@seldatinc.com)
 
 ## Description
  
@@ -257,24 +259,46 @@ Task Managmant uses a number of extension:
 
 ***
 ## WinForms +  Angular
-### login 
-![picture](screens/login.png)
-### Manager page
-![picture](screens/AddProject.png) 
-![picture](screens/AllUsers.png)  
-![picture](screens/AddUser.png) 
-![picture](screens/EditUser.png) 
-![picture](screens/DeleteUser.png) 
-![picture](screens/AddPermission.png) 
-![picture](screens/TeamManagement.png)  
-![picture](screens/reports.png)
-### Team leader page
-![picture](screens/allProjects.png) 
-![picture](screens/workersHoursStatus.png) 
-![picture](screens/updateDepartmentHours.png) 
 
-### Worker page 
-![picture](screens/home.png)  
-![picture](screens/sendEmail.png)  
+## login 
+![picture](screens/Login.png)
+
+## Manager Screens
+### Users Management
+#### All Users
+![picture](screens/AllUsers.png) 
+#### Add User
+![picture](screens/AddUser.png) 
+#### Edit User
+![picture](screens/EditUser.png) 
+#### Delete User
+![picture](screens/DeleteUser.png)
+####Add Permissions 
+![picture](screens/AddPermission.png)
+
+### Projects Management
+#### Add Project
+![picture](screens/AddProject.png) 
+#### Reports
+![picture](screens/Reports.png)
+
+ ### Team Management
+![picture](screens/TeamManagement.png)  
+
+
+## Team-Leader Screens
+### All Projects
+![picture](screens/AllProjects.png) 
+### workers Hours Status
+![picture](screens/WorkersHoursStatus.png) 
+### Update Department Hours
+![picture](screens/UpdateDepartmentHours.png) 
+
+
+## Worker Screens
+### Home 
+![picture](screens/Home.png)  
+### Send Email
+![picture](screens/SendEmail.png)  
 
  
