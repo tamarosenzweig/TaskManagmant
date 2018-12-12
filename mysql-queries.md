@@ -24,9 +24,11 @@ INSERT INTO task_management.department(department_name)
 
 /*========================= customers=========================*/
 
-INSERT INTO task_management.customer(customer_name) VALUES('Amdocs');
 INSERT INTO task_management.customer(customer_name) VALUES('Microsoft');
-INSERT INTO task_management.customer(customer_name) VALUES('Seldat');
+INSERT INTO task_management.customer(customer_name) VALUES('Google');
+INSERT INTO task_management.customer(customer_name) VALUES('Amazon');
+INSERT INTO task_management.customer(customer_name) VALUES('Ebay');
+INSERT INTO task_management.customer(customer_name) VALUES('Apple');
 
 /*========================= projects=========================*/
 
