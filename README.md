@@ -262,7 +262,7 @@ Task Managmant uses a number of extension:
 ![picture](screens/login.png)
 ### Manager page
 ![picture](screens/AddProject.png) 
-![picture](screens/allUsers.png)  
+![picture](screens/AllUsers.png)  
 ![picture](screens/AddUser.png) 
 ![picture](screens/EditUser.png) 
 ![picture](screens/DeleteUser.png) 
