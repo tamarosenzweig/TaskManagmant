@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TaskManagmant.Services;
@@ -15,6 +16,10 @@ namespace TaskManagmant.Forms
         public WorkersHoursStatusForm()
         {
             InitializeComponent();
+
+            pnlContainer.Location = new Point((ClientSize.Width - pnlContainer.Width) / 2, (ClientSize.Height - pnlContainer.Height) / 2);
+            pnlContainer.Anchor = AnchorStyles.None;
+
             InitWorkersGraph();
         }
         private void cmbProjects_SelectedIndexChanged(object sender, EventArgs e)

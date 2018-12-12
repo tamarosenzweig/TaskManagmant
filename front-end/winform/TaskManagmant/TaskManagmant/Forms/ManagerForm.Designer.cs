@@ -142,7 +142,7 @@
             this.Controls.Add(this.pnlHeader);
             this.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.Name = "ManagerForm";
-            this.Text = "ManagerForm";
+            this.Text = "Manager";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ManagerForm_FormClosed);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();

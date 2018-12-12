@@ -13,12 +13,14 @@ namespace TaskManagmant.Services
 {
     public static class ProjectService
     {
-        public static bool AddProject(Project project)
+        private static string baseURL = $"{Global.HOST}/project";
+
+        public static bool AddProject(Form form,Project project)
         {
             //------------post request-------------
             //dynamic credential;
             bool created = false;
-            string url = $"{Global.HOST}/project/addProject";
+            string url = $"{baseURL}/addProject";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
@@ -46,7 +48,8 @@ namespace TaskManagmant.Services
                 using (var stream = ex.Response.GetResponseStream())
                 using (var reader = new StreamReader(stream))
                 {
-                    MessageBox.Show(reader.ReadToEnd());
+                    string message = reader.ReadToEnd();
+                    Global.CreateDialog(form, message);
                 }
                 return created; 
             }
@@ -55,7 +58,7 @@ namespace TaskManagmant.Services
         public static List<Project> GetAllProjects()
         {
             List<Project> projects;
-            string url = $"{Global.HOST}/project/getAllProjects";
+            string url = $"{baseURL}/getAllProjects";
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync(url).Result;
@@ -77,7 +80,7 @@ namespace TaskManagmant.Services
             List<Project> projects;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            string url = $"{Global.HOST}/project/getProjectsByTeamLeaderId?TeamLeaderId={TeamLeaderId}";
+            string url = $"{baseURL}/getProjectsByTeamLeaderId?TeamLeaderId={TeamLeaderId}";
             HttpResponseMessage response = client.GetAsync(url).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -97,7 +100,7 @@ namespace TaskManagmant.Services
             List<Project> projects;
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            string url = $"{Global.HOST}/project/getProjectsReports";
+            string url = $"{baseURL}/getProjectsReports";
             HttpResponseMessage response = client.GetAsync(url).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -115,7 +118,7 @@ namespace TaskManagmant.Services
         public static bool HasProjects(int teamLeaderId)
         {
             bool hasProjects;
-            string url = $"{Global.HOST}/project/hasProjects?teamLeaderId={teamLeaderId}";
+            string url = $"{baseURL}/hasProjects?teamLeaderId={teamLeaderId}";
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync(url).Result;

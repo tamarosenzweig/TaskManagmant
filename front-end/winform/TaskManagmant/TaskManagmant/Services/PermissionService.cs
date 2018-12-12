@@ -14,11 +14,13 @@ namespace TaskManagmant.Services
 {
     public static class PermissionService
     {
+        private static string baseURL = $"{Global.HOST}/permission";
+
         public static bool AddPermission(Permission permission)
         {
             //------------post request-------------
             bool created = false;
-            string url = $"{Global.HOST}/permission/addPemission";
+            string url = $"{baseURL}/addPemission";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
@@ -52,14 +54,14 @@ namespace TaskManagmant.Services
             bool isDeleted;
             //------------post request-------------
             dynamic credential;
-            string url = $"{Global.HOST}/user/deleteUser?userId={permissionId}";
+            string url = $"{baseURL}/deletePemission?permissionId={permissionId}";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 credential = null;
-                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(credential, Newtonsoft.Json.Formatting.None);
+                string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(credential, Formatting.None);
                 streamWriter.Write(credentialString);
                 streamWriter.Flush();
                 streamWriter.Close();

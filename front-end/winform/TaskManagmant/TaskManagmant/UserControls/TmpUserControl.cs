@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BOL;
+using System;
 using System.Windows.Forms;
 using TaskManagmant.Services;
-using BOL;
 using TaskManagmant.Help;
 using TaskManagmant.Forms;
 using System.Drawing;
@@ -45,7 +45,7 @@ namespace TaskManagmant.UserControls
 
         private void DeleteUser_Click(object sender, EventArgs e)
         {
-            bool isConfirm = Global.createDialog(ParentForm, "Delete User", "Are you sure you want to delete?", true);
+            bool isConfirm = Global.CreateDialog(ParentForm, "Are you sure you want to delete?", "Delete User", true);
             if (isConfirm == true)
             {
                 //if this user is team-worker and he has incomlete hours we can't delete him
@@ -56,7 +56,8 @@ namespace TaskManagmant.UserControls
                     bool hasUncomletedHours = WorkerHoursService.HasIncomletHours(user.UserId, teamProjectIdList);
                     if (hasUncomletedHours)
                     {
-                        MessageBox.Show("Immposible to delete a worker who has incomplete hours");
+                        string message = "Immposible to delete a worker who has incomplete hours";
+                        Global.CreateDialog(ParentForm, message);
                     }
                     else
                     {
@@ -70,13 +71,15 @@ namespace TaskManagmant.UserControls
                     bool hasWorkes = UserService.HasWorkes(user.UserId);
                     if (hasWorkes)
                     {
-                        MessageBox.Show("Impossible to delete team-leader who has workers");
+                        string message = "Impossible to delete team-leader who has workers";
+                        Global.CreateDialog(ParentForm, message);
                         return;
                     }
                     bool hasProjects = ProjectService.HasProjects(user.UserId);
                     if (hasProjects)
                     {
-                        MessageBox.Show("Impossible to delete team-leader who has projects");
+                        string message = "Impossible to delete team-leader who has projects";
+                        Global.CreateDialog(ParentForm, message);
                         return;
                     }
                     UserService.DeleteUser(user);
@@ -134,7 +137,7 @@ namespace TaskManagmant.UserControls
                 button.Name = "btnTeamManagement";
                 button.Text = "Team Management";
                 button.Size = new Size(130, 50);
-                button.Location = new Point(10, 0);
+                button.Location = new Point(75, 0);
                 button.Click += TeamMangement_Click;
                 pnlButtons.Controls.Add(button);
             }

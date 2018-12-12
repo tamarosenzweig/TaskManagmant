@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TaskManagmant.Help;
 using TaskManagmant.Services;
 
 namespace TaskManagmant.Dialogs
@@ -27,23 +28,25 @@ namespace TaskManagmant.Dialogs
         {
             if(count==3)
             {
-                MessageBox.Show("Sorry,For safety reasons, you can only try to recover your password in 10 minutes");
+                string message = "Sorry,For safety reasons, you can only try to recover your password in 10 minutes";
+                Global.CreateDialog(this, message);
                 Close();
                 return;
             }
-            ChangePassword changePassword = new ChangePassword() { UserId = user.UserId, Token = placeHolderTextBox1.Text };
+            ChangePassword changePassword = new ChangePassword() { UserId = user.UserId, Token = txtVerificationCode.Text };
             bool confirmed = UserService.ConfirmToken(changePassword);
             if (confirmed)
             {
                 //open new password form
                 NewPasswordDialog newPasswordDialog = new NewPasswordDialog(user);
                 newPasswordDialog.Show();
+                Close();
             }
             else
             {
-                MessageBox.Show("Sorry, token is missed!");
+                string message = "Sorry, token is missed!";
+                Global.CreateDialog(this, message);
                 count++;
-
             }
         }
     }

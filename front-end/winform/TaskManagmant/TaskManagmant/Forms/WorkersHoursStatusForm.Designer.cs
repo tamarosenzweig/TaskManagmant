@@ -28,43 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.workersGraph = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cmbProjects = new System.Windows.Forms.ComboBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblInstruction = new System.Windows.Forms.Label();
             this.lblProject = new System.Windows.Forms.Label();
             this.lblSelectedProject = new System.Windows.Forms.Label();
+            this.pnlContainer = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.workersGraph)).BeginInit();
+            this.pnlContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // workersGraph
             // 
-            chartArea2.Name = "ChartArea1";
-            this.workersGraph.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.workersGraph.Legends.Add(legend2);
-            this.workersGraph.Location = new System.Drawing.Point(91, 166);
+            chartArea1.Name = "ChartArea1";
+            this.workersGraph.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.workersGraph.Legends.Add(legend1);
+            this.workersGraph.Location = new System.Drawing.Point(187, 161);
             this.workersGraph.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.workersGraph.Name = "workersGraph";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Worker Hours";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Presence Hours";
-            this.workersGraph.Series.Add(series3);
-            this.workersGraph.Series.Add(series4);
-            this.workersGraph.Size = new System.Drawing.Size(752, 254);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Worker Hours";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Presence Hours";
+            this.workersGraph.Series.Add(series1);
+            this.workersGraph.Series.Add(series2);
+            this.workersGraph.Size = new System.Drawing.Size(895, 389);
             this.workersGraph.TabIndex = 11;
             // 
             // cmbProjects
             // 
             this.cmbProjects.FormattingEnabled = true;
-            this.cmbProjects.Location = new System.Drawing.Point(91, 122);
+            this.cmbProjects.Location = new System.Drawing.Point(187, 124);
             this.cmbProjects.Name = "cmbProjects";
             this.cmbProjects.Size = new System.Drawing.Size(250, 29);
             this.cmbProjects.TabIndex = 12;
@@ -74,7 +76,7 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblTitle.Location = new System.Drawing.Point(272, 30);
+            this.lblTitle.Location = new System.Drawing.Point(397, 32);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(406, 37);
             this.lblTitle.TabIndex = 13;
@@ -83,7 +85,7 @@
             // lblInstruction
             // 
             this.lblInstruction.AutoSize = true;
-            this.lblInstruction.Location = new System.Drawing.Point(87, 88);
+            this.lblInstruction.Location = new System.Drawing.Point(183, 91);
             this.lblInstruction.Name = "lblInstruction";
             this.lblInstruction.Size = new System.Drawing.Size(503, 21);
             this.lblInstruction.TabIndex = 14;
@@ -93,7 +95,7 @@
             // 
             this.lblProject.AutoSize = true;
             this.lblProject.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.lblProject.Location = new System.Drawing.Point(347, 125);
+            this.lblProject.Location = new System.Drawing.Point(443, 127);
             this.lblProject.Name = "lblProject";
             this.lblProject.Size = new System.Drawing.Size(68, 21);
             this.lblProject.TabIndex = 15;
@@ -102,29 +104,38 @@
             // lblSelectedProject
             // 
             this.lblSelectedProject.AutoSize = true;
-            this.lblSelectedProject.Location = new System.Drawing.Point(419, 125);
+            this.lblSelectedProject.Location = new System.Drawing.Point(515, 127);
             this.lblSelectedProject.Name = "lblSelectedProject";
             this.lblSelectedProject.Size = new System.Drawing.Size(28, 21);
             this.lblSelectedProject.TabIndex = 16;
             this.lblSelectedProject.Text = "All";
             // 
+            // pnlContainer
+            // 
+            this.pnlContainer.Controls.Add(this.lblTitle);
+            this.pnlContainer.Controls.Add(this.lblSelectedProject);
+            this.pnlContainer.Controls.Add(this.workersGraph);
+            this.pnlContainer.Controls.Add(this.lblProject);
+            this.pnlContainer.Controls.Add(this.cmbProjects);
+            this.pnlContainer.Controls.Add(this.lblInstruction);
+            this.pnlContainer.Location = new System.Drawing.Point(32, 30);
+            this.pnlContainer.Name = "pnlContainer";
+            this.pnlContainer.Size = new System.Drawing.Size(1200, 560);
+            this.pnlContainer.TabIndex = 17;
+            // 
             // WorkersHoursStatusForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 411);
-            this.Controls.Add(this.lblSelectedProject);
-            this.Controls.Add(this.lblProject);
-            this.Controls.Add(this.lblInstruction);
-            this.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.cmbProjects);
-            this.Controls.Add(this.workersGraph);
+            this.ClientSize = new System.Drawing.Size(1280, 617);
+            this.Controls.Add(this.pnlContainer);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.Name = "WorkersHoursStatusForm";
             this.Text = "WorkersHoursStatusForm";
             ((System.ComponentModel.ISupportInitialize)(this.workersGraph)).EndInit();
+            this.pnlContainer.ResumeLayout(false);
+            this.pnlContainer.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -136,5 +147,6 @@
         private System.Windows.Forms.Label lblInstruction;
         private System.Windows.Forms.Label lblProject;
         private System.Windows.Forms.Label lblSelectedProject;
+        private System.Windows.Forms.Panel pnlContainer;
     }
 }

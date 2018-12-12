@@ -96,7 +96,7 @@
             this.Controls.Add(this.pnlHeader);
             this.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.Name = "TeamLeaderForm";
-            this.Text = "TeamLeaderForm";
+            this.Text = "TeamLeader";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TeamLeaderForm_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

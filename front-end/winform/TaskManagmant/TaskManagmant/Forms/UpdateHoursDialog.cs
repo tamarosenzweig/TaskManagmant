@@ -34,7 +34,8 @@ namespace TaskManagmant.Forms
             int editedHours= Convert.ToInt32(numericHours.Value);
             if (editedHours < workerPresence)
             {
-                MessageBox.Show("Worker hours can't be less than presence hours");
+                string message = "Worker hours can't be less than presence hours";
+                Global.CreateDialog(this, message);
                 numericHours.Value= myWorker.WorkerHours[0].NumHours;
                 return;
             }
@@ -42,7 +43,8 @@ namespace TaskManagmant.Forms
             //if workers hours sum greater than hours for this department
             if (workersHoursSum- myWorker.WorkerHours[0].NumHours+ editedHours > departmentHours.NumHours)
             {
-                MessageBox.Show("Hours defined for workers are greater than the hours defined for this department");
+                string message = "Hours defined for workers are greater than the hours defined for this department";
+                Global.CreateDialog(this, message);
                 numericHours.Value = myWorker.WorkerHours[0].NumHours;
                 return;
             }
@@ -50,7 +52,7 @@ namespace TaskManagmant.Forms
             bool edited = WorkerHoursService.EditWorkersHours(myWorker.WorkerHours[0]);
             if (edited)
             {
-                Global.createDialog(this, Text, "Edited successfully!!!", false);
+                Global.CreateDialog(this, "Edited successfully!!!",Text);
                 
                 (Owner.ActiveMdiChild as WorkersHoursForm).UpdateWorkerHours(myWorker, departmentHours);
                 Close();

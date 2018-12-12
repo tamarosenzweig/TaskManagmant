@@ -36,7 +36,9 @@ namespace BLL
         {
             try
             {
-                string query = $"UPDATE task_management.presence_hours SET end_hour={BaseService.FormatDate(((DateTime)presenceHours.EndHour).ToLocalTime(), "yyyy-MM-dd HH:mm:ss")} WHERE presence_hours_id={presenceHours.PresenceHoursId};";
+                string query = "UPDATE task_management.presence_hours " +
+                    $"SET end_hour={BaseService.FormatDate(((DateTime)presenceHours.EndHour).ToLocalTime(), "yyyy-MM-dd HH:mm:ss")}" +
+                    $" WHERE presence_hours_id={presenceHours.PresenceHoursId};";
                 bool created = DBAccess.RunNonQuery(query) == 1;
                 if (created)
                 {
@@ -122,7 +124,9 @@ namespace BLL
         {
             try
             {
-                string query = $"SELECT p.*,u.user_name FROM task_management.presence_hours p JOIN task_management.user u ON p.worker_id=u.user_id WHERE end_hour IS NOT NULL AND worker_id={workerId} AND project_id={projectId};";
+                string query = "SELECT p.*,u.user_name FROM task_management.presence_hours p " +
+                    "JOIN task_management.user u ON p.worker_id=u.user_id " +
+                    $"WHERE end_hour IS NOT NULL AND worker_id={workerId} AND project_id={projectId};";
 
                 Func<MySqlDataReader, List<PresenceHours>> InitPresenceHoursList = (reader) =>
                 {

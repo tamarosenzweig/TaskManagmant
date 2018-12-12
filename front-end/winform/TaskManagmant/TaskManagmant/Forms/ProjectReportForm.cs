@@ -27,6 +27,8 @@ namespace TaskManagmant.Forms
 
         private Dictionary<string, int> projectFilter;
 
+        private SaveFileDialog saveFileDialog;
+
         public ProjectReportForm()
         {
             InitializeComponent();
@@ -47,15 +49,25 @@ namespace TaskManagmant.Forms
         }
 
         private void btnExport_Click(object sender, EventArgs e)
+        {      
+            if (saveFileDialog == null)
+            {
+                saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "*.xlsx|*.xlsx";
+                saveFileDialog.FileName = "ProjecReportChildRowsGrouped";
+            }
+            saveFileDialog.ShowDialog();
+            saveFileDialog.FileOk += SaveFileDialog_FileOk;
+        }
+
+        private void SaveFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             GridViewSpreadExport gridViewSpreadExport = new GridViewSpreadExport(radGridView);
             gridViewSpreadExport.ChildViewExportMode = ChildViewExportMode.ExportAllViews;
             gridViewSpreadExport.ExportChildRowsGrouped = true;
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "*.xlsx|*.xlsx";
-            saveFileDialog.FileName = "ProjecReportChildRowsGrouped";
-            saveFileDialog.ShowDialog();
             gridViewSpreadExport.RunExport(saveFileDialog.FileName, new SpreadExportRenderer());
+            string message = "saved successfully!";
+            Global.CreateDialog(this, message);
         }
 
         private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)

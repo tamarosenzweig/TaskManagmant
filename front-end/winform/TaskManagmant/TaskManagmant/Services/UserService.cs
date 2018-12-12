@@ -17,6 +17,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Collections;
 using TaskManagmant.Forms;
+using System.Diagnostics;
 
 namespace TaskManagmant.Services
 {
@@ -117,20 +118,27 @@ namespace TaskManagmant.Services
 
         public static List<User> GetUsers(string url)
         {
-            int managerId = Global.USER.UserId;
-            List<User> users;
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync(url).Result;
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var json = response.Content.ReadAsStringAsync().Result;
-                users = JsonConvert.DeserializeObject<List<User>>(json);
-                return users;
+                List<User> users;
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = client.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = response.Content.ReadAsStringAsync().Result;
+                    users = JsonConvert.DeserializeObject<List<User>>(json);
+                    return users;
+                }
+                else
+                {
+                    Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                    return null;
+                }
             }
-            else
+            catch(Exception ex)
             {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                string x = ex.Message;
                 return null;
             }
         }
@@ -264,7 +272,7 @@ namespace TaskManagmant.Services
             }
         }
 
-        public static bool AddUser(User myUser)
+        public static bool AddUser(Form form,User myUser)
         {
             //------------post request-------------
             //dynamic credential;
@@ -275,7 +283,6 @@ namespace TaskManagmant.Services
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                //credential = new { password = password.Text, eMail = email.Text };
                 string credentialString = Newtonsoft.Json.JsonConvert.SerializeObject(myUser, Newtonsoft.Json.Formatting.None);
                 streamWriter.Write(credentialString);
                 streamWriter.Flush();
@@ -297,13 +304,14 @@ namespace TaskManagmant.Services
                 using (var stream = ex.Response.GetResponseStream())
                 using (var reader = new StreamReader(stream))
                 {
-                    MessageBox.Show(reader.ReadToEnd());
+                    string message = reader.ReadToEnd();
+                    Global.CreateDialog(form,message);
                 }
                 return created;
             }
         }
 
-        public static bool EditUser(User myUser)
+        public static bool EditUser(Form form,User myUser)
         {
             //------------put request-------------
             //dynamic credential;
@@ -336,7 +344,8 @@ namespace TaskManagmant.Services
                 using (var stream = ex.Response.GetResponseStream())
                 using (var reader = new StreamReader(stream))
                 {
-                    MessageBox.Show(reader.ReadToEnd());
+                    string message = reader.ReadToEnd();
+                    Global.CreateDialog(form, message);
                 }
                 return edited;
             }
@@ -420,7 +429,6 @@ namespace TaskManagmant.Services
         {
             //------------post request-------------
             string url = $"{baseURL}/confirmToken";
-            dynamic credential;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@url);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
@@ -491,7 +499,7 @@ namespace TaskManagmant.Services
         public static bool HasWorkes(int teamLeaderId)
         {
             bool hasWorkes;
-            string url = $"{Global.HOST}/user/hasWorkes?teamLeaderId={teamLeaderId}";
+            string url = $"{Global.HOST}/user/hasWorkers?teamLeaderId={teamLeaderId}";
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync(url).Result;

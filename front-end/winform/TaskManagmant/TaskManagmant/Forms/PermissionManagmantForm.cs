@@ -23,12 +23,16 @@ namespace TaskManagmant.Forms
 
         private List<User> otherWorkers;
 
-        private List<User> permissionList;
+        private List<User> workersWithPermissions;
 
         public PermissionManagmantForm(Project project)
         {
             InitializeComponent();
-            this.myProject = project;
+
+            pnlContainer.Location = new Point((ClientSize.Width - pnlContainer.Width) / 2, (ClientSize.Height - pnlContainer.Height) / 2);
+            pnlContainer.Anchor = AnchorStyles.None;
+
+            myProject = project;
             initData();
         }
 
@@ -67,17 +71,20 @@ namespace TaskManagmant.Forms
             Permission permission = user.Permissions.First(p => p.ProjectId == myProject.ProjectId);
             if (WorkerHoursService.HasIncomletHours(user.UserId, new List<int> { permission.ProjectId }))
             {
-                MessageBox.Show("It is not possible to remove a worker's permission to a project if hours were defined for him to this project");
+                string message = "It is not possible to remove a worker's permission to a project if hours were defined for him to this project";
+                Global.CreateDialog(this,message);
                 return;
             }
             //delete permission
             int permissionId = permission.PermissionId;
             deletedWorkers.Add(permissionId);
 
-            permissionList.Remove(user);
+            workersWithPermissions.Remove(user);
+            listPermissionWorkers.DataSource = null;
+            listPermissionWorkers.DataSource = workersWithPermissions;
+            listProjectWorkers.DisplayMember = "UserName";
 
             otherWorkers.Add(user);
-
             cmbOtherWorkers.Items.Add(user);
         }
 
@@ -85,18 +92,18 @@ namespace TaskManagmant.Forms
         {
             if (selectedWorkers.Count > 0)
             {
-                bool edited = true;
+                bool created = true;
                 selectedWorkers.ForEach(permissionToworker =>
                 {
                     permissionToworker.WorkerId = permissionToworker.Worker.UserId;
                     permissionToworker.ProjectId = myProject.ProjectId;
                     permissionToworker.Worker = null;
-                    edited = edited && PermissionService.AddPermission(permissionToworker);
+                    created = created && PermissionService.AddPermission(permissionToworker);
                 });
-                if (edited)
-                    Global.createDialog(this, "Add Permission", "Saved Successfully!", false);
+                if (created)
+                    Global.CreateDialog(this, "Saved Successfully!", "Add Permission");
                 else
-                    Global.createDialog(this, "Add Permission", "Saving Failed", false);
+                    Global.CreateDialog(this, "Saving Failed", "Add Permission");
             }
 
             if (deletedWorkers.Count > 0)
@@ -107,9 +114,9 @@ namespace TaskManagmant.Forms
                     deleted = deleted && PermissionService.DeletePemission(permissionToworker);
                 });
                 if (deleted)
-                    Global.createDialog(this, "Delete Permission", "Saved Successfully!", false);
+                    Global.CreateDialog(this, "Saved Successfully!", "Delete Permission");
                 else
-                    Global.createDialog(this, "Delete Permission", "Saving Failed", false);
+                    Global.CreateDialog(this, "Saving Failed", "Delete Permission");
             }
             Close();
 
@@ -119,13 +126,21 @@ namespace TaskManagmant.Forms
         {
             List<User> Allworkers = myProject.DepartmentsHours.SelectMany(departmentHour => departmentHour.Department.Workers).ToList();
             List<User> workers = Allworkers.Where(worker => worker.TeamLeaderId == myProject.TeamLeaderId).ToList();
-            permissionList = Allworkers.Where(worker => worker.TeamLeaderId != myProject.TeamLeaderId).ToList();
+            workersWithPermissions = Allworkers.Where(worker => worker.TeamLeaderId != myProject.TeamLeaderId).ToList();
             otherWorkers = UserService.GetAllUsers().Where(worker => worker.TeamLeaderId != null && !Allworkers.Any(user => user.UserId == worker.UserId)).ToList();
+
+            List<User> workersWithDeletedPermission = workersWithPermissions.Where(worker => worker.Permissions.FirstOrDefault(p => p.ProjectId == myProject.ProjectId) == null || worker.Permissions.First(p => p.ProjectId == myProject.ProjectId).IsActive == false).ToList();
+            workersWithDeletedPermission.ForEach(worker =>
+            {
+                workersWithPermissions.Remove(worker);
+            });
+            otherWorkers.AddRange(workersWithDeletedPermission);
+
 
             listProjectWorkers.DataSource = workers;
             listProjectWorkers.DisplayMember = "UserName";
 
-            listPermissionWorkers.DataSource = permissionList;
+            listPermissionWorkers.DataSource = workersWithPermissions;
             listProjectWorkers.DisplayMember = "UserName";
 
             cmbOtherWorkers.Items.AddRange(otherWorkers.ToArray());

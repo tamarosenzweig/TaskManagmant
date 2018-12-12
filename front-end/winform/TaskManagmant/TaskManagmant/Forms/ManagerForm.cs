@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using TaskManagmant.UserControls;
 using TaskManagmant.Services;
+using System.Windows.Forms;
 
 namespace TaskManagmant.Forms
 {
@@ -17,7 +18,9 @@ namespace TaskManagmant.Forms
             this.loginForm = loginForm;
 
             IsMdiContainer = true;
-            pnlHeader.Controls.Add(new HeaderControl());
+            HeaderControl header = new HeaderControl();
+            header.Dock = DockStyle.Fill;
+            pnlHeader.Controls.Add(header);
         }
 
         private void AllUsers_Click(object sender, EventArgs e)

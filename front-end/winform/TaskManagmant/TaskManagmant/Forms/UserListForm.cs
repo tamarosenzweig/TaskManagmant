@@ -1,4 +1,5 @@
 ﻿using BOL;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -18,6 +19,7 @@ namespace TaskManagmant.Forms
         {
             InitializeComponent();
             this.isWorkerList = isWorkerList;
+
             InitForm();
         }
 
@@ -49,7 +51,7 @@ namespace TaskManagmant.Forms
                 tmpUserControl.Name = users[i].UserName;
                 tmpUserControl.Location = new Point(x, y);
 
-                if (Width - x < tmpUserControl.Width + marginX)
+                if (Global.SIZE.Width - x < (tmpUserControl.Width + marginX)*2)
                 {
                     y = y + tmpUserControl.Height + marginY;
                     x = marginX;

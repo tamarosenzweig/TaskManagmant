@@ -23,7 +23,9 @@ namespace TaskManagmant.Forms
             this.loginForm = loginForm;
 
             IsMdiContainer = true;
-            pnlHeader.Controls.Add(new HeaderControl());
+            HeaderControl header = new HeaderControl();
+            header.Dock = DockStyle.Fill;
+            pnlHeader.Controls.Add(header);
         }
         
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)

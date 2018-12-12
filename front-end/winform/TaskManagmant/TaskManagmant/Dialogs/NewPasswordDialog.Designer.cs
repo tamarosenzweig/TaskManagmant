@@ -30,63 +30,64 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btnContinue = new System.Windows.Forms.Button();
-            this.txtPassword = new TaskManagmant.Help.PlaceHolderTextBox();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.txtConfirmPassword = new TaskManagmant.Help.PlaceHolderTextBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.lblConfirmPassword = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtConfirmPassword = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // btnContinue
             // 
-            this.btnContinue.Location = new System.Drawing.Point(36, 201);
+            this.btnContinue.Location = new System.Drawing.Point(70, 200);
             this.btnContinue.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.btnContinue.Name = "btnContinue";
-            this.btnContinue.Size = new System.Drawing.Size(141, 50);
+            this.btnContinue.Size = new System.Drawing.Size(140, 50);
             this.btnContinue.TabIndex = 15;
             this.btnContinue.Text = "Finish";
             this.btnContinue.UseVisualStyleBackColor = true;
             this.btnContinue.Click += new System.EventHandler(this.btnContinue_Click);
             // 
-            // txtPassword
-            // 
-            this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
-            this.txtPassword.ForeColor = System.Drawing.Color.Gray;
-            this.txtPassword.Location = new System.Drawing.Point(36, 114);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PlaceHolderText = null;
-            this.txtPassword.Size = new System.Drawing.Size(194, 20);
-            this.txtPassword.TabIndex = 14;
-            this.txtPassword.Text = "enter your new password\r\n";
-            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(32, 54);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(241, 42);
-            this.lblTitle.TabIndex = 13;
-            this.lblTitle.Text = "Forgot password? We\'ll help you \r\nget another one!\r\n";
-            // 
-            // txtConfirmPassword
-            // 
-            this.txtConfirmPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic);
-            this.txtConfirmPassword.ForeColor = System.Drawing.Color.Gray;
-            this.txtConfirmPassword.Location = new System.Drawing.Point(36, 150);
-            this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.txtConfirmPassword.Name = "txtConfirmPassword";
-            this.txtConfirmPassword.PlaceHolderText = null;
-            this.txtConfirmPassword.Size = new System.Drawing.Size(194, 20);
-            this.txtConfirmPassword.TabIndex = 16;
-            this.txtConfirmPassword.Text = "confirm your new password";
-            this.txtConfirmPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
-            // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
+            // 
+            // lblPassword
+            // 
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Location = new System.Drawing.Point(35, 45);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(193, 21);
+            this.lblPassword.TabIndex = 17;
+            this.lblPassword.Text = "Enter your new password: ";
+            // 
+            // lblConfirmPassword
+            // 
+            this.lblConfirmPassword.AutoSize = true;
+            this.lblConfirmPassword.Location = new System.Drawing.Point(35, 125);
+            this.lblConfirmPassword.Name = "lblConfirmPassword";
+            this.lblConfirmPassword.Size = new System.Drawing.Size(207, 21);
+            this.lblConfirmPassword.TabIndex = 18;
+            this.lblConfirmPassword.Text = "Confirm your new password";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(35, 70);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(235, 29);
+            this.txtPassword.TabIndex = 19;
+            this.txtPassword.TextChanged += new System.EventHandler(this.txt_TextChanged);
+            this.txtPassword.Leave += new System.EventHandler(this.txt_Leave);
+            // 
+            // txtConfirmPassword
+            // 
+            this.txtConfirmPassword.Location = new System.Drawing.Point(35, 150);
+            this.txtConfirmPassword.Name = "txtConfirmPassword";
+            this.txtConfirmPassword.Size = new System.Drawing.Size(235, 29);
+            this.txtConfirmPassword.TabIndex = 20;
+            this.txtConfirmPassword.TextChanged += new System.EventHandler(this.txt_TextChanged);
+            this.txtConfirmPassword.Leave += new System.EventHandler(this.txt_Leave);
             // 
             // NewPasswordDialog
             // 
@@ -94,9 +95,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 281);
             this.Controls.Add(this.txtConfirmPassword);
-            this.Controls.Add(this.btnContinue);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.lblTitle);
+            this.Controls.Add(this.lblConfirmPassword);
+            this.Controls.Add(this.lblPassword);
+            this.Controls.Add(this.btnContinue);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "NewPasswordDialog";
@@ -111,9 +113,10 @@
         #endregion
 
         private System.Windows.Forms.Button btnContinue;
-        private Help.PlaceHolderTextBox txtPassword;
-        private System.Windows.Forms.Label lblTitle;
-        private Help.PlaceHolderTextBox txtConfirmPassword;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.Label lblConfirmPassword;
+        private System.Windows.Forms.TextBox txtConfirmPassword;
     }
 }

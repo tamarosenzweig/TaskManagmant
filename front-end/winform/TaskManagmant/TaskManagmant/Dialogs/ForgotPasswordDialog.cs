@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TaskManagmant.Help;
 using TaskManagmant.Help.Validators;
 using TaskManagmant.Services;
 
@@ -22,22 +23,13 @@ namespace TaskManagmant.Dialogs
         {
             InitializeComponent();
             InitData();
-            placeHolderTxtEmail.TabStop = true;
+            txtEamil.TabStop = true;
         }
 
-        private void InitData()
+        private void txtEamil_TextChanged(object sender, EventArgs e)
         {
-            email = "";
-           emailValidator = new StringValidator("Email", true, 15, 30, @"^([a-zA-Z0-9_\-])([a-zA-Z0-9_\-\.]*)@(\[((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}|((([a-zA-Z0-9\-]+)\.)+))([a-zA-Z]{2,}|(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\])$");
-        }
-
-        private void placeHolderTextBox1_TextChanged(object sender, EventArgs e)
-        {
-            string errorMessage = emailValidator.GetValidationMessage(placeHolderTxtEmail.Text);
-            if (emailValidator.IsTouched == true)
-            {
-                errorProvider.SetError(sender as Control, errorMessage);
-            }
+            string errorMessage = emailValidator.GetValidationMessage(txtEamil.Text);
+            errorProvider.SetError(sender as Control, errorMessage);
             btnContinue.Enabled = emailValidator.IsValid;
         }
 
@@ -46,11 +38,12 @@ namespace TaskManagmant.Dialogs
             try
             {
                 bool isExist;
-                email = placeHolderTxtEmail.Text;
+                email = txtEamil.Text;
                 User user = UserService.GetUserByEmail(email);
-                if(user==null)
+                if (user == null)
                 {
-                    MessageBox.Show("Username doesn't exist!");
+                    string message = "Username doesn't exist!";
+                    Global.CreateDialog(this, message);
                     return;
                 }
                 isExist = UserService.ForgotPassword(email);
@@ -62,7 +55,8 @@ namespace TaskManagmant.Dialogs
                 }
                 else
                 {
-                    MessageBox.Show("Sorry,For safety reasons, you can only try to recover your password in 10 minutes");
+                    string message = "Sorry,For safety reasons, you can only try to recover your password in 10 minutes";
+                    Global.CreateDialog(this, message);
                     Close();
                 }
                 Close();
@@ -72,6 +66,10 @@ namespace TaskManagmant.Dialogs
                 MessageBox.Show(ex.Message);
             }
         }
-
+        private void InitData()
+        {
+            email = "";
+            emailValidator = new StringValidator("Email", true, 15, 30, @"^([a-zA-Z0-9_\-])([a-zA-Z0-9_\-\.]*)@(\[((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}|((([a-zA-Z0-9\-]+)\.)+))([a-zA-Z]{2,}|(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\])$");
+        }
     }
 }

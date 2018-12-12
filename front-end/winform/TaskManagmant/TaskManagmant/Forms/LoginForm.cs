@@ -20,7 +20,10 @@ namespace TaskManagmant.Forms
         public LoginForm()
         {
             InitializeComponent();
-            pnlHeader.Controls.Add(new HeaderControl());
+            HeaderControl header = new HeaderControl();
+            header.Dock = DockStyle.Fill;
+            pnlHeader.Controls.Add(header);
+
             //locate login form in the middle
             PnlContainer.Location = new Point((Global.SIZE.Width - PnlContainer.Width) / 2, (Global.SIZE.Height - PnlContainer.Height) / 2);
 
@@ -41,8 +44,16 @@ namespace TaskManagmant.Forms
             if (parseSuccess)
             {
                 User currentUser = UserService.GetUserById(currentUserId);
-                Global.USER = currentUser;
-                OpenSuitableForm(currentUser);
+                if (currentUser != null)
+                {
+                    Global.USER = currentUser;
+                    OpenSuitableForm(currentUser);
+                }
+                else
+                {
+                    Global.UpdateCurrentUser(string.Empty);
+                    Show();
+                }
             }
             else
                 Show();
@@ -86,7 +97,8 @@ namespace TaskManagmant.Forms
                 }
                 else
                 {
-                    MessageBox.Show("Email or password is not correct!");
+                    string message = "Email or password is not correct!";
+                    Global.CreateDialog(this, message);
                 }
             }
             catch (Exception ex)

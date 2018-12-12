@@ -165,7 +165,13 @@ namespace BLL
             try
             {
                 User oldUser = GetUserById(user.UserId);
-                string query = $"UPDATE task_management.user SET user_name='{user.UserName}',email='{user.Email}',profile_image_name={BaseService.GetStringValueOrNull(user.ProfileImageName)},department_id={BaseService.GetIntValueOrNull(user.DepartmentId)},team_leader_id={BaseService.GetIntValueOrNull(user.TeamLeaderId)} where user_id={user.UserId};";
+                string query = "UPDATE task_management.user " +
+                    $"SET user_name='{user.UserName}'," +
+                    $"email='{user.Email}'," +
+                    $"profile_image_name={BaseService.GetStringValueOrNull(user.ProfileImageName)}," +
+                    $"department_id={BaseService.GetIntValueOrNull(user.DepartmentId)}," +
+                    $"team_leader_id={BaseService.GetIntValueOrNull(user.TeamLeaderId)} " +
+                    $"where user_id={user.UserId};";
                 bool edited = DBAccess.RunNonQuery(query) == 1;
                 if (edited)
                 {
@@ -249,7 +255,7 @@ namespace BLL
                 {
                     Subject = "A verification code has been sent to you",
                     Body = $"Please enter the following verification code:{myToken}" +
-                    $" The code is only valid for an hour.",
+                    $" The code is only valid for ten minutes.",
                 };
                 myEmail.ToAddress.Add(user.Email);
                 BaseService.SendEmail(myEmail);
@@ -263,14 +269,16 @@ namespace BLL
             try
             {
 
-                string query = $"SELECT COUNT(*) FROM task_management.change_password WHERE user_id = {changePassword.UserId} AND token = '{changePassword.Token}' AND attemp_num<3;";
+                string query = "SELECT COUNT(*) FROM task_management.change_password " +
+                    $"WHERE user_id = {changePassword.UserId} AND token = '{changePassword.Token}' AND attemp_num<3;";
                 int count = Convert.ToInt32(DBAccess.RunScalar(query));
 
                 if (count > 0)
                 {
                     return true;
                 }
-                query = $"UPDATE task_management.change_password SET attemp_num=attemp_num+1 WHERE user_id={changePassword.UserId};";
+                query = "UPDATE task_management.change_password " +
+                    $"SET attemp_num=attemp_num+1 WHERE user_id={changePassword.UserId};";
                 DBAccess.RunNonQuery(query);
                 return false;
             }
@@ -298,7 +306,8 @@ namespace BLL
         {
             try
             {
-                string query = $"{GetUsersQuery()} AND u.department_id={departmentId} AND u.user_id in (SELECT worker_id FROM task_management.worker_hours WHERE project_id={projectId})";
+                string query = $"{GetUsersQuery()} AND u.department_id={departmentId} AND u.user_id in " +
+                    $"(SELECT worker_id FROM task_management.worker_hours WHERE project_id={projectId})";
                 List<User> userList = GetAllUsers(query);
                 return userList;
             }
@@ -331,7 +340,8 @@ namespace BLL
         {
             try
             {
-                string query = $"INSERT INTO task_management.change_password(user_id, token, sending_date) VALUES('{userId}', '{token}', {BaseService.FormatDate(DateTime.Now, "yyyy-MM-dd HH:mm:ss")});";
+                string query = "INSERT INTO task_management.change_password(user_id, token, sending_date) " +
+                    $"VALUES('{userId}', '{token}', {BaseService.FormatDate(DateTime.Now, "yyyy-MM-dd HH:mm:ss")});";
                 bool created = DBAccess.RunNonQuery(query) == 1;
                 return created;
             }

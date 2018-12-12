@@ -25,7 +25,7 @@ namespace TaskManagmant.Help
 
         public static object UPLOADS { get; set; } = $"{ConfigurationManager.AppSettings["host"] }/Images";
 
-        public static bool createDialog(Form form, string title, string msg, bool dialog)
+        public static bool CreateDialog(Form form, string message, string title="", bool isConfirmDialog=false)
         {
             DialogResult result;
             using (var popup = new Form())
@@ -42,10 +42,10 @@ namespace TaskManagmant.Help
                 lbl.MaximumSize = new Size(popup.Width - 20, popup.Height);
                 lbl.Font = new Font("Microsoft Sans Serif", 14f);
                 lbl.ForeColor = Color.Orange;
-                lbl.Text = msg;
+                lbl.Text = message;
                 popup.Controls.Add(lbl);
                 // HERE you will add your dynamic button creation instead of  my hardcoded
-                if (dialog)
+                if (isConfirmDialog)
                 {
                     var btnYes = new Button { Text = "Yes" };
                     btnYes.Location = new Point((popup.Width / 2 - btnYes.Width) - 20, lbl.Location.Y + lbl.Height + 20);

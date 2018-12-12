@@ -19,7 +19,10 @@ namespace TaskManagmant.Forms
         public AddProjectForm()
         {
             InitializeComponent();
-            pnlContainer.Location = new Point((Global.SIZE.Width - pnlContainer.Width) / 2, 20);
+
+            pnlContainer.Location = new Point((ClientSize.Width - pnlContainer.Width) / 2, (ClientSize.Height - pnlContainer.Height) / 2);
+            pnlContainer.Anchor = AnchorStyles.None;
+
             InitData();
             InitControlsValidations();
         }
@@ -97,10 +100,11 @@ namespace TaskManagmant.Forms
                 DepartmentHours departmentHours = new DepartmentHours() { NumHours = Convert.ToInt32(numericUpDown.Value), DepartmentId = ++index };
                 project.DepartmentsHours.Add(departmentHours);
             });
-            bool isCreated = ProjectService.AddProject(project);
+            bool isCreated = ProjectService.AddProject(this,project);
             if (isCreated)
             {
-                MessageBox.Show($"{project.ProjectName} added succesfully");
+                string message = $"{project.ProjectName} added succesfully";
+                Global.CreateDialog(this, message);
                 Close();
             }
         }
