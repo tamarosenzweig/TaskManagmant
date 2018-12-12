@@ -38,7 +38,7 @@ export class ValidatorsService {
 
     requiredValidator(ctrlName: string): ValidatorFn {
         return f => {
-            return f.value === undefined || f.value === null ? { 'val': `'${ctrlName}'  is required` } : null
+            return f.value === undefined || f.value === null||f.value=='' ? { 'val': `'${ctrlName}'  is required` } : null
         };
     }
 

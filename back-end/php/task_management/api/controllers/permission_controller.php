@@ -11,9 +11,10 @@ class permission_controller extends controller_singletone {
 
     //post
     //route=deletePermission
-    public function delete_pemission($params) {
-        $deleted = $this->service->delete_pemission($params['permissionId']);
+    public function delete_permission($params) {
+        $deleted = $this->service->delete_permission($params['permissionId']);
         return $deleted;
     }
+    
 
 }

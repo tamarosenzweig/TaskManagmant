@@ -38,7 +38,7 @@ export class TmpPermissionComponent {
       }) 
      } 
     else
-      this.permissionService.deletePemission(this.permission.permissionId).subscribe(
+      this.permissionService.deletePermission(this.permission.permissionId).subscribe(
         (deleted: boolean) => {
           if (deleted)
             this.permissionService.deletePermissionSubject.next(this.permission);

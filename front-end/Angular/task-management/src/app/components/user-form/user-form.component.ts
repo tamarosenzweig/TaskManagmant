@@ -26,8 +26,7 @@ export class UserFormComponent implements OnInit {
   departments: Department[];
   teamLeaders: User[];
   teamProjectIdList: number[];
-  types: string[];
-  placeholders: string[];
+
   @Input()
   caption: string;
 
@@ -37,7 +36,6 @@ export class UserFormComponent implements OnInit {
   @Output()
   dataEvent: EventEmitter<{ user: User, imageFile: string }>;
 
-  end: number;
 
   //----------------CONSTRUCTOR------------------
 
@@ -49,8 +47,7 @@ export class UserFormComponent implements OnInit {
     private validatorsService: ValidatorsService
   ) {
     this.imageUrl = null;
-    this.types = ['text', 'text', 'password', 'password'];
-    this.placeholders = ['Use name', 'Email', 'Password', 'Confirm password'];
+
     this.dataEvent = new EventEmitter<{ user: User, imageFile: string }>();
   }
 
@@ -77,7 +74,6 @@ export class UserFormComponent implements OnInit {
     if (this.user.userId > 0) {
       this.userFormGroup.removeControl("password");
       this.userFormGroup.removeControl("confirmPassword");
-      this.end = 2;
       //team-leader-validation
       if (this.user.teamLeaderId != null) {
         {
@@ -91,7 +87,7 @@ export class UserFormComponent implements OnInit {
     else {
       this.confirmPassword.setValidators(this.validatorsService.confirmPasswordValidator(this.userFormGroup));
       this.password.setValidators(this.validatorsService.confirmPasswordValidator(this.userFormGroup));
-      this.end = 4;
+     
     }
     this.isTeamLeader.valueChanges.subscribe(
       () => {
@@ -202,6 +198,6 @@ export class UserFormComponent implements OnInit {
   get isTeamLeader() {
     return this.userFormGroup.controls['isTeamLeader'];
   }
-  
+
 }
 

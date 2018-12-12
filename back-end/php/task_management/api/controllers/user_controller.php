@@ -84,8 +84,8 @@ class user_controller extends controller_singletone {
 
     //get
     //route=hasWorkers
-    public function has_workes($params) {
-        return $this->service->has_workes($params['teamLeaderId']);
+    public function has_workers($params) {
+        return $this->service->has_workers($params['teamLeaderId']);
     }
 
     //post

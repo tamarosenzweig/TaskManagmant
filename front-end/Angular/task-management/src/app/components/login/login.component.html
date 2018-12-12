@@ -17,12 +17,21 @@
       <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
 
         <!-- email -->
-        <app-input [formControl]="email" [placeholder]="'Email'" (keyUpEvent)="removeValidationMassage()"
+        <app-input [formControl]="email" placeholder="Email" (keyUpEvent)="removeValidationMassage()"
           ngDefaultControl></app-input>
 
         <!-- password -->
-        <app-input [formControl]="password" [placeholder]="'Password'" [type]="'password'" (keyUpEvent)="removeValidationMassage()"
-          ngDefaultControl></app-input>
+
+        <!-- <show-hide-password size="lg" icon="entypo" btnStyle="primary" [btnOutline]="false"> -->
+        <!-- <app-input [formControl]="password" [placeholder]="Password" [type]="password" (keyUpEvent)="removeValidationMassage()"
+            ngDefaultControl></app-input> -->
+        <!-- <input type="password" [placeholder]="Password" [formControl]="password" (keyUpEvent)="removeValidationMassage()">
+          </show-hide-password> -->
+        
+        <app-input [formControl]="password" placeholder="Password" type="password" (keyUpEvent)="removeValidationMassage()"
+          ngDefaultControl>
+
+        </app-input>
 
         <p *ngIf="!isExistUser" class="myAlert">Email or password is not correct</p>
 

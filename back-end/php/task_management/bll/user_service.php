@@ -168,7 +168,7 @@ class user_service extends base_service {
         return null;
     }
 
-    public function has_workes($team_leader_id) {
+    public function has_workers($team_leader_id) {
         $query = "SELECT COUNT(*) as count FROM task_management.user WHERE team_leader_id=$team_leader_id;";
         $count = db_access::run_scalar($query);
         return $count > 0;
@@ -187,7 +187,7 @@ class user_service extends base_service {
             $email['subject'] = "A verification code has been sent to you";
             ;
             $email['body'] = "Please enter the following verification code:$my_token" .
-                    " The code is only valid for an hour.";
+                    " The code is only valid for 10 minutes.";
 
             $this->basic_send_email($email);
             return true;

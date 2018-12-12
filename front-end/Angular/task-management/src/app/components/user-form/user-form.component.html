@@ -13,9 +13,15 @@
 
         <!-- userName,email,password,confirmPassword -->
         <div class="row">
-          <app-input *ngFor="let control of objectHolder.values(userFormGroup.controls)| slice:0:end;let i=index"
-            [formControl]="control" [type]="types[i]" [placeholder]="placeholders[i]" ngDefaultControl class="col-md-6"></app-input>
+          <app-input  [formControl]="userName"  placeholder="User name" ngDefaultControl class="col-md-6"></app-input>
+          <app-input [formControl]="email"  placeholder="Email" ngDefaultControl class="col-md-6"></app-input>
         </div>
+
+        <div class="row" *ngIf="!user.userId">
+          <app-input [formControl]="password" type="password" placeholder="password" ngDefaultControl class="col-md-6"></app-input>
+          <app-input [formControl]="confirmPassword" type="password" placeholder="confirm password" ngDefaultControl class="col-md-6"></app-input>
+        </div>
+        
 
         <div class="row">
           <div class="col-md-6">

@@ -28,8 +28,8 @@ export class PermissionService {
     }
 
     //POST
-    deletePemission(permissionId:number): Observable<any> {
-        let url: string = `${this.basicURL}/deletePemission?permissionId=${permissionId}`;
+    deletePermission(permissionId:number): Observable<any> {
+        let url: string = `${this.basicURL}/deletePermission?permissionId=${permissionId}`;
         return this.http.post(url, null);
     }
     

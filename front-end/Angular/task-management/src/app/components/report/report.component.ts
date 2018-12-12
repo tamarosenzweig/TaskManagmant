@@ -18,7 +18,7 @@ export class ReportComponent implements OnInit {
   state: string;
 
   @ViewChild('projectReportList')
-  projectReportList:ElementRef;
+  projectReportList:any;
 
   //----------------CONSTRUCTOR------------------
 
