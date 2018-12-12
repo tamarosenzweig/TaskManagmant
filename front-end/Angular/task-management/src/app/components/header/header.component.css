@@ -11,6 +11,11 @@ header{
     -webkit-box-align: center;
     -webkit-box-pack: center;
 }
+.logo H1{
+    margin: 0 5%;
+    color: #3f51b5;
+    font-size: 50px;
+}
 .user{
     float:right;
 }

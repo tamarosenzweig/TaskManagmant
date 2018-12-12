@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   //for c#
-  host: 'http://localhost:4722'
+  // host: 'http://localhost:4722'
 
   // for php
-  //host:'http://localhost:8080/task_management'
+  host:'http://localhost:8080/task_management'
 };
 
 /*

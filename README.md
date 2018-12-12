@@ -260,7 +260,7 @@ Task Managmant uses a number of extension:
 ## WinForms +  Angular
 ### login 
 ### Manager page
-![picture](add_project.png)  
+![picture](screens/add_project.png)  
 ![picture](team_management.png) 
 ![picture](add_worker.png)  
 ![picture](edit_worker.png)
