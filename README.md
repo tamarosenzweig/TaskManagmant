@@ -259,15 +259,23 @@ Task Managmant uses a number of extension:
 ***
 ## WinForms +  Angular
 ### login 
+![picture](screens/login.png)
 ### Manager page
-![picture](screens/add_project.png)  
-![picture](team_management.png) 
-![picture](add_worker.png)  
-![picture](edit_worker.png)
+![picture](screens/AddProject.png) 
+![picture](screens/allUsers.png)  
+![picture](screens/AddUser.png) 
+![picture](screens/EditUser.png) 
+![picture](screens/DeleteUser.png) 
+![picture](screens/AddPermission.png) 
+![picture](screens/TeamManagement.png)  
+![picture](screens/reports.png)
 ### Team leader page
-![picture](worker_list.png) 
-![picture](graph_hours_status.png) 
+![picture](screens/allProjects.png) 
+![picture](screens/workersHoursStatus.png) 
+![picture](screens/updateDepartmentHours.png) 
+
 ### Worker page 
-![picture](home_page.png)  
+![picture](screens/home.png)  
+![picture](screens/sendEmail.png)  
 
  
