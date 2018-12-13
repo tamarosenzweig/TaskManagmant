@@ -52,7 +52,7 @@ namespace TaskManagmant.Forms
 
         private void EnableWorkerTasks(WorkerTaskControl workerTaskControl, bool enable)
         {
-            List<WorkerTaskControl> workerTaskControls = PnlWorkerTaskList.Controls.Cast<WorkerTaskControl>().ToList();
+            List<WorkerTaskControl> workerTaskControls = PnlWorkerTaskList.Controls.OfType<WorkerTaskControl>().ToList();
             workerTaskControls.ForEach(control =>
             {
                 (control.Controls["BtnStartOrStop"] as Button).Enabled = enable;
@@ -111,7 +111,7 @@ namespace TaskManagmant.Forms
 
             lblTitleGraph.Location = new Point((Global.SIZE.Width - lblTitleGraph.Width) / 2, PnlWorkerTaskList.Location.Y + PnlWorkerTaskList.Height+lblTitleGraph.Height);
             projectsGraph.Size = new Size(Global.SIZE.Width / 2, Global.SIZE.Height / 3);
-            projectsGraph.Location = new Point(PnlWorkerTaskList.Location.X / 2, lblTitleGraph.Location.Y-lblTitleGraph.Height);
+            projectsGraph.Location = new Point(0, lblTitleGraph.Location.Y-lblTitleGraph.Height);
         }
     }
 }

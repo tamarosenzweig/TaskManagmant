@@ -27,3 +27,14 @@ C:\Users\User\Documents\GitHub\TaskManagmant\back-end\c#\TaskManagement\BOL\bin\
 C:\Users\User\Documents\GitHub\TaskManagmant\back-end\c#\TaskManagement\BOL\obj\Debug\BOL.csprojResolveAssemblyReference.cache
 C:\Users\User\Documents\GitHub\TaskManagmant\back-end\c#\TaskManagement\BOL\obj\Debug\BOL.dll
 C:\Users\User\Documents\GitHub\TaskManagmant\back-end\c#\TaskManagement\BOL\obj\Debug\BOL.pdb
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\bin\Debug\BOL.dll
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\bin\Debug\BOL.pdb
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\bin\Debug\Google.Protobuf.dll
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\bin\Debug\MySql.Data.dll
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\bin\Debug\Google.Protobuf.xml
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\bin\Debug\MySql.Data.xml
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\obj\Debug\BOL.csprojAssemblyReference.cache
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\obj\Debug\BOL.csproj.CoreCompileInputs.cache
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\obj\Debug\BOL.csproj.CopyComplete
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\obj\Debug\BOL.dll
+C:\Users\rosenzweigt\Desktop\c#\TaskManagement\BOL\obj\Debug\BOL.pdb

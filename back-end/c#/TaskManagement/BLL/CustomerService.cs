@@ -12,7 +12,7 @@ namespace BLL
         {
             try
             {
-                string query = "SELECT * FROM task_management.customer;";
+                string query = "SELECT * FROM task_management.customer ORDER BY customer_name;";
                 Func<MySqlDataReader, List<Customer>> func = (reader) =>
                 {
                     List<Customer> customers = new List<Customer>();
