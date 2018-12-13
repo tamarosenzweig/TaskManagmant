@@ -189,7 +189,7 @@ namespace TaskManagmant.Forms
             radGridView.Location = new Point(0, 90);
             radGridView.Relations.AddSelfReference(radGridView.MasterTemplate, "Id", "ParentId");
             radGridView.DataSource = report;
-            List<PropertyInfo> ReportItemProps = Type.GetType("TaskManagmant.Help.ReportItem").GetProperties().ToList();
+            List<PropertyInfo> ReportItemProps = Type.GetType("TaskManagmant.Help.Models.ReportItem").GetProperties().ToList();
             ReportItemProps.ForEach(property =>
             {
                 GridViewTextBoxColumn textBoxColumn = new GridViewTextBoxColumn();
