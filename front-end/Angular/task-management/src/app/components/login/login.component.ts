@@ -44,7 +44,6 @@ export class LoginComponent {
 
   async onSubmit() {
     this.hashPassword = await this.userService.hashValue(this.password.value);
-    console.log(this.hashPassword);
     this.login();
   }
 

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import {
   PresenceHoursService,
-  WorkerHours, PresenceHours, 
+  WorkerHours, PresenceHours,
   Global
 } from '../../imports';
 import swal from 'sweetalert2';
@@ -12,7 +12,7 @@ import swal from 'sweetalert2';
   styleUrls: ['./tmp-worker-task.component.css']
 })
 export class TmpWorkerTaskComponent implements OnInit {
- 
+
   //----------------PROPERTIRS-------------------
 
   @Input()
@@ -24,14 +24,14 @@ export class TmpWorkerTaskComponent implements OnInit {
   @Output()
   isStartedEvent: EventEmitter<boolean>;
 
-  
+
   isStarted: boolean;
   btnMessage: string;
   btnIcon: string;
   presenceHours: PresenceHours;
 
   presenceSum: number;
-  presence:Date;
+  presence: Date;
   stopHandle;
   complete: boolean;
 
@@ -48,7 +48,7 @@ export class TmpWorkerTaskComponent implements OnInit {
   //----------------METHODS-------------------
 
   ngOnInit() {
-   this.updatePresenceSum();
+    this.updatePresenceSum();
   }
 
   btnTaskClick() {
@@ -67,7 +67,6 @@ export class TmpWorkerTaskComponent implements OnInit {
     this.presenceHours = new PresenceHours(0, userId, this.workerHour.projectId, startDate, null);
     this.presenceHoursService.addPresenceHours(this.presenceHours).subscribe(
       (presenceHoursId) => {
-        console.log(presenceHoursId);
         this.presenceHours.presenceHoursId = presenceHoursId;
       },
       err => {
@@ -79,8 +78,7 @@ export class TmpWorkerTaskComponent implements OnInit {
   editPresenceHours() {
     this.presenceHours.endHour = new Date();
     this.presenceHoursService.editPresenceHours(this.presenceHours).subscribe(
-      (res) => {
-        console.log(res);
+      () => {
         this.updatePresenceSum();
       },
       err => {
@@ -99,7 +97,7 @@ export class TmpWorkerTaskComponent implements OnInit {
     this.stopHandle = setTimeout(() => {
       this.btnTaskClick();
       this.complete = true;
-      let msg:string= 'You can turn to another task.if you need more time to this task pleas contact your team-leader';
+      let msg: string = 'You can turn to another task.if you need more time to this task pleas contact your team-leader';
       swal({
         type: 'info',
         title: 'Your task is complete',
@@ -117,18 +115,17 @@ export class TmpWorkerTaskComponent implements OnInit {
     this.presenceHoursService.UpdatePresenceSubject.next();
   }
 
-  updatePresenceSum(){
+  updatePresenceSum() {
     this.presenceHoursService.getPresenceHoursSum(this.workerHour.projectId, this.workerHour.workerId).subscribe(
       (presenceSum: number) => {
-        console.log(presenceSum);
         this.presenceSum = presenceSum;
-        this.presence=new Date();
-        this.presence.setHours(0,0,this.presenceSum*60*60,0);
+        this.presence = new Date();
+        this.presence.setHours(0, 0, this.presenceSum * 60 * 60, 0);
       },
       err => {
         console.log(err);
       }
     );
-   }
-   
+  }
+
 }

@@ -24,7 +24,7 @@ export class WorkerTaskListComponent implements OnInit {
   }
 
   //----------------METHODS------------------
-  
+
   ngOnInit() {
     this.getAllWorkerHours();
   }
@@ -34,6 +34,7 @@ export class WorkerTaskListComponent implements OnInit {
     this.workerHoursService.getAllWorkerHours(workerId).subscribe(
       (workerHours: WorkerHours[]) => {
         this.workerHours = workerHours;
+        this.workerHours = this.workerHours.filter(workerHours => workerHours.numHours > 0);
       },
       err => {
         console.log(err);

@@ -22,9 +22,8 @@ class presence_hours_service extends base_service {
         $created = db_access::run_non_query($query) == 1;
         if ($created) {
             $worker_hours_service = worker_hours_service::get_instance();
-
+            $worker_hours = $worker_hours_service->get_worker_hours_per_project($presence_hours['workerId'], $presence_hours['projectId'])[0];
             $worker_hours_service->edit_worker_hours($worker_hours);
-            //tocheck
         }
         return $created;
     }

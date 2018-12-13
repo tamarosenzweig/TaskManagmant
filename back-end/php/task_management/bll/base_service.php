@@ -6,6 +6,10 @@ class base_service extends singleton {
         return array_key_exists($key, $array) && isset($array[$key]) ? "'{$array[$key]}'" : 'null';
     }
 
+    public function get_boolean_value($value) {
+        return $value == true ? '1' : '0';
+    }
+
     public function format_date($date = null, $format = 'Y-m-d') {
         $format_date;
         if (isset($date)) {

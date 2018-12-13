@@ -19,7 +19,7 @@ class worker_hours_service extends base_service {
         $project_service = project_service::get_instance();
         $project_service->update_project_status($worker_hours['projectId']);
         $query = "UPDATE task_management.worker_hours " .
-                "SET num_hours={$worker_hours['numHours']},is_complete={$worker_hours['isComplete']} " .
+                "SET num_hours={$worker_hours['numHours']},is_complete={$this->get_boolean_value($worker_hours['isComplete'])} " .
                 "WHERE worker_hours_id={$worker_hours['workerHoursId']};";
         $edited = db_access::run_non_query($query) == 1;
         return $edited;
@@ -49,7 +49,7 @@ class worker_hours_service extends base_service {
     }
 
     public function get_uncompleted_workers_hours($project_id) {
-        $query = $this->get_worker_hours_query() . " WHERE w.is_complete=false AND w.project_id =$project_id;";
+        $query = $this->get_worker_hours_query() . " WHERE w.is_complete=0 AND w.project_id =$project_id;";
         return $this->get_workers_hours($query);
     }
 

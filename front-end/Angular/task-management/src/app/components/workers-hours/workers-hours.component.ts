@@ -63,7 +63,8 @@ export class WorkersHoursComponent implements OnInit {
       if (numHours) {
         worker.workerHours[0].numHours = +numHours;
         this.workerHoursService.editWorkerHours(worker.workerHours[0]).subscribe(
-          () => { },
+          () => {
+          },
           err => {
             console.log(err);
           }

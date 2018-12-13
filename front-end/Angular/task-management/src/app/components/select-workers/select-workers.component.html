@@ -3,7 +3,6 @@
   <hr />
   <div class="col-md-6">
     <!-- workers-dropDownList -->
-    {{selectedWorkerControl.valid}}
     <app-select [list]="workers" [key]="'userId'" [value]="'userName'" [formControl]="selectedWorkerControl"
       [placeholder]="'Worker'" (onChangeEvent)="addWorker()" ngDefaultControl></app-select>
   </div>

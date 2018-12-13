@@ -76,7 +76,7 @@ class project_service extends base_service {
 
     public function get_all_projects_with_deadline_tomorrow($date) {
         $tommorow_date = $date->modify('+1 day');
-        $query = "{$this->get_all_projects_query()} WHERE end_date={$this->format_date($tommorow_date)} AND is_complete=false;";
+        $query = "{$this->get_all_projects_query()} WHERE end_date={$this->format_date($tommorow_date)} AND is_complete=0;";
         $projectsList = $this->get_projects($query);
         return $projectsList;
     }

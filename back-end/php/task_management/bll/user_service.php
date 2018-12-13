@@ -140,7 +140,7 @@ class user_service extends base_service {
         $manager_id = $user['managerId'];
         $manager = $this->get_user_by_id($manager_id);
         $email['to_address'] = $manager['email'];
-        $email['body'] .= PHP_EOL . 'from' . $user['userName'];
+        $email['body'] .= PHP_EOL . 'from ' . $user['userName'];
         return $this->basic_send_email($email);
     }
 
