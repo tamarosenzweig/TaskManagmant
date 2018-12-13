@@ -97,7 +97,9 @@ Task Managmant uses a number of extension:
 
 
 ***
-## Web api
+
+## Login 
+![picture](db_schema.mwb)
 
 ### Models
 * User:
@@ -184,6 +186,8 @@ Task Managmant uses a number of extension:
 
      * Email - string -  reqiered ,pattern
      * Password - string - minLength: 2, maxLength:20, reqiered
+
+
 
 ### Controllers
 
