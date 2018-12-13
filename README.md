@@ -98,8 +98,8 @@ Task Managmant uses a number of extension:
 
 ***
 
-## Login 
-![picture](db_schema.mwb)
+## DB schema 
+![picture](db_schema.png)
 
 ### Models
 * User:
