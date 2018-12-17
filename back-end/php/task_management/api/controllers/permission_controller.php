@@ -4,8 +4,8 @@ class permission_controller extends controller_singletone {
 
     //post
     //route=addPermission
-    public function add_pemission($params) {
-        $permission_id = $this->service->add_pemission($params);
+    public function add_permission($params) {
+        $permission_id = $this->service->add_permission($params);
         return $permission_id;
     }
 

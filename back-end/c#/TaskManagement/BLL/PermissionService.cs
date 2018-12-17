@@ -8,7 +8,7 @@ namespace BLL
 {
     public static class PermissionService
     {
-        public static int AddPemission(Permission permission)
+        public static int AddPermission(Permission permission)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace BLL
             }
         }
 
-        public static bool DeletePemission(int permissionId)
+        public static bool DeletePermission(int permissionId)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace BLL
             List<Permission> workerPermissions = GetWorkerPermissionToTeamProjects(user);
             workerPermissions.ForEach(permission =>
             {
-                DeletePemission(permission.PermissionId);
+                DeletePermission(permission.PermissionId);
             });
         }
 

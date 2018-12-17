@@ -2,7 +2,7 @@
 
 class permission_service extends base_service {
 
-    public function add_pemission($permission) {
+    public function add_permission($permission) {
         $query = "INSERT INTO task_management.permission(worker_id,project_id) " .
                 "VALUES({$permission['workerId']},{$permission['projectId']});";
         $permission_id = db_access::run_non_query($query);

@@ -15,14 +15,14 @@ namespace API.Controllers
     public class PermissionController : BaseController
     {
         [HttpPost]
-        [Route("addPemission")]
-        public HttpResponseMessage AddPemission(Permission permission)
+        [Route("addPermission")]
+        public HttpResponseMessage AddPermission(Permission permission)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    int permissionId = PermissionService.AddPemission(permission);
+                    int permissionId = PermissionService.AddPermission(permission);
                     return Request.CreateResponse(HttpStatusCode.Created, permissionId);
                 }
                 List<string> errors = GetErrorList(ModelState.Values.ToList());
@@ -37,12 +37,12 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route("deletePemission")]
-        public HttpResponseMessage DeletePemission(int permissionId)
+        [Route("deletePermission")]
+        public HttpResponseMessage DeletePermission(int permissionId)
         {
             try
             {
-                bool deleted = PermissionService.DeletePemission(permissionId);
+                bool deleted = PermissionService.DeletePermission(permissionId);
                 return Request.CreateResponse(HttpStatusCode.OK, deleted);
             }
             catch (Exception ex)

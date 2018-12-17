@@ -59,8 +59,8 @@ export class EditUserComponent implements OnInit {
     this.user.email = user.email;
     this.user.departmentId = user.departmentId;
     this.user.teamLeaderId = user.teamLeaderId;
-    user.department=null;
-    user.teamLeader=null;
+    this.user.department=null;
+    this.user.teamLeader=null;
   }
 
   uploadImage(data: { user: User, imageFile: string }) {
@@ -71,15 +71,15 @@ export class EditUserComponent implements OnInit {
           //placement image name to the user object
           console.log(newFilename);
           this.user.profileImageName = newFilename;
-          this.editUser(this.user);
+          this.editUser();
         });
     }
     else
-      this.editUser(this.user);
+      this.editUser();
   }
 
-  editUser(user: User) {
-    this.userService.editUser(user).subscribe(
+  editUser() {
+    this.userService.editUser(this.user).subscribe(
       (edited:boolean) => {
         if (edited) {
           swal({

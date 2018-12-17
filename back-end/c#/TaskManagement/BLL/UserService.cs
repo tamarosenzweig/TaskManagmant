@@ -201,7 +201,7 @@ namespace BLL
                     PermissionService.GetPermissions(userId).ForEach(
                         permission =>
                         {
-                            PermissionService.DeletePemission(permission.PermissionId);
+                            PermissionService.DeletePermission(permission.PermissionId);
                         });
                 }
                 return deleted;
